@@ -1,0 +1,46 @@
+{
+    "name":  "waynha-app",
+    "version":  "0.1.0",
+    "private":  true,
+    "scripts":  {
+                    "dev":  "next dev",
+                    "build":  "next build",
+                    "start":  "next start",
+                    "lint":  "eslint",
+                    "db:start":  "node scripts/db.mjs start",
+                    "db:stop":  "node scripts/db.mjs stop",
+                    "db:status":  "node scripts/db.mjs status",
+                    "db:migrate":  "prisma migrate dev",
+                    "db:seed":  "prisma db seed",
+                    "db:setup":  "npm run db:start \u0026\u0026 prisma migrate deploy \u0026\u0026 npm run db:seed",
+                    "typecheck":  "tsc --noEmit",
+                    "postinstall":  "prisma generate",
+                    "test:search":  "tsx scripts/check-search.mts",
+                    "test:assistant":  "tsx scripts/test-assistant.mts",
+                    "bench:assistant":  "tsx scripts/bench-assistant.mts"
+                },
+    "dependencies":  {
+                         "@google/genai":  "^2.24.0",
+                         "@prisma/adapter-pg":  "^7.10.0",
+                         "@prisma/client":  "^7.10.0",
+                         "dotenv":  "^18.0.2",
+                         "next":  "16.3.5",
+                         "pg":  "^8.23.0",
+                         "react":  "19.2.8",
+                         "react-dom":  "19.2.8",
+                         "server-only":  "^0.0.1",
+                         "zod":  "^4.6.5"
+                     },
+    "devDependencies":  {
+                            "@types/node":  "^20",
+                            "@types/pg":  "^8.23.1",
+                            "@types/react":  "^19",
+                            "@types/react-dom":  "^19",
+                            "embedded-postgres":  "^18.4.0-beta.17",
+                            "eslint":  "^9",
+                            "eslint-config-next":  "16.3.5",
+                            "prisma":  "^7.10.0",
+                            "tsx":  "^4.23.15",
+                            "typescript":  "^5"
+                        }
+}

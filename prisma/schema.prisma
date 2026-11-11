@@ -1,0 +1,205 @@
+// WAYNHA | وينها - قاعدة بيانات الإجراءات والجهات الحكومية
+// كل النصوص مخزنة بالعربية والإنجليزية (حقول Ar / En).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Category {
+  id        String   @id
+  icon      String
+  color     String
+  titleAr   String
+  titleEn   String
+  sortOrder Int      @default(0)
+
+  services Service[]
+  offices  OfficeCategory[]
+
+  @@map("categories")
+}
+
+model City {
+  id     String   @id
+  nameAr String
+  nameEn String
+  offices Office[]
+
+  @@map("cities")
+}
+
+model Service {
+  id         String   @id
+  categoryId String
+  icon       String   @default("📄")
+  popular    Boolean  @default(false)
+  verified   Boolean  @default(false)
+  /// بيانات تجريبية للعرض فقط — تُعرض للمستخدم مع تنبيه واضح
+  isDemo     Boolean  @default(true)
+
+  titleAr       String
+  titleEn       String
+  shortDescAr   String
+  shortDescEn   String
+  departmentAr  String
+  departmentEn  String
+  feesAr        String
+  feesEn        String
+  durationAr    String
+  durationEn    String
+  hoursAr       String
+  hoursEn       String
+  eligibilityAr String
+  eligibilityEn String
+  sourceAr      String
+  sourceEn      String
+
+  lastReviewedAt DateTime?
+
+  /// نص البحث بعد التطبيع (عربي + إنجليزي) — يُستخدم في بحث SQL
+  searchText String
+
+  // للتوسعة لاحقاً: عمود embedding vector(1536) عبر pgvector للبحث الدلالي.
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category    Category           @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  steps       ServiceStep[]
+  documents   ServiceDocument[]
+  notes       ServiceNote[]
+  faqs        ServiceFaq[]
+  keywords    ServiceKeyword[]
+  relatedTo   ServiceRelation[]  @relation("RelationFrom")
+  relatedFrom ServiceRelation[]  @relation("RelationTo")
+
+  @@index([categoryId])
+  @@index([popular])
+  @@map("services")
+}
+
+model ServiceStep {
+  id        Int    @id @default(autoincrement())
+  serviceId String
+  position  Int
+  textAr    String
+  textEn    String
+
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@index([serviceId, position])
+  @@map("service_steps")
+}
+
+model ServiceDocument {
+  id        Int    @id @default(autoincrement())
+  serviceId String
+  position  Int
+  textAr    String
+  textEn    String
+
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@index([serviceId, position])
+  @@map("service_documents")
+}
+
+model ServiceNote {
+  id        Int    @id @default(autoincrement())
+  serviceId String
+  position  Int
+  textAr    String
+  textEn    String
+
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@index([serviceId, position])
+  @@map("service_notes")
+}
+
+model ServiceFaq {
+  id         Int    @id @default(autoincrement())
+  serviceId  String
+  position   Int
+  questionAr String
+  questionEn String
+  answerAr   String
+  answerEn   String
+
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@index([serviceId, position])
+  @@map("service_faqs")
+}
+
+/// كلمات البحث بما فيها اللهجة الليبية ("ضيعت جوازي"، "نطلع ورقة ميلاد")
+model ServiceKeyword {
+  id        Int    @id @default(autoincrement())
+  serviceId String
+  /// الكلمة بعد التطبيع (بدون تشكيل، أ/إ/آ → ا، ة → ه)
+  keyword   String
+  weight    Int    @default(3)
+
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceId, keyword])
+  @@index([keyword])
+  @@map("service_keywords")
+}
+
+model ServiceRelation {
+  fromId String
+  toId   String
+
+  from Service @relation("RelationFrom", fields: [fromId], references: [id], onDelete: Cascade)
+  to   Service @relation("RelationTo", fields: [toId], references: [id], onDelete: Cascade)
+
+  @@id([fromId, toId])
+  @@map("service_relations")
+}
+
+model Office {
+  id           Int     @id @default(autoincrement())
+  nameAr       String
+  nameEn       String
+  departmentAr String
+  departmentEn String
+  cityId       String
+  addressAr    String
+  addressEn    String
+  phone        String
+  lat          Float
+  lng          Float
+  /// مغلق مؤقتاً بقرار إداري (تُحسب حالة "مفتوح الآن" من أوقات الدوام)
+  temporarilyClosed Boolean @default(false)
+  /// أيام الدوام: 0 = الأحد ... 6 = السبت
+  openDays     Int[]
+  openTime     String
+  closeTime    String
+  /// بيانات تجريبية للعرض فقط
+  isDemo       Boolean @default(true)
+
+  searchText String @default("")
+
+  city       City             @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  categories OfficeCategory[]
+
+  @@index([cityId])
+  @@map("offices")
+}
+
+model OfficeCategory {
+  officeId   Int
+  categoryId String
+
+  office   Office   @relation(fields: [officeId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([officeId, categoryId])
+  @@map("office_categories")
+}

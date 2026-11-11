@@ -1,0 +1,1283 @@
+{
+  "categories": [
+    {
+      "id": "passports",
+      "icon": "🛂",
+      "color": "#1a56db",
+      "titleAr": "الجوازات والهوية",
+      "titleEn": "Passports & Identity",
+      "sortOrder": 0
+    },
+    {
+      "id": "civil",
+      "icon": "👨‍👩‍👧‍👦",
+      "color": "#059669",
+      "titleAr": "السجل المدني",
+      "titleEn": "Civil Registry",
+      "sortOrder": 1
+    },
+    {
+      "id": "traffic",
+      "icon": "🚗",
+      "color": "#ea580c",
+      "titleAr": "المرور والمركبات",
+      "titleEn": "Traffic & Vehicles",
+      "sortOrder": 2
+    },
+    {
+      "id": "municipal",
+      "icon": "🏛️",
+      "color": "#8b5cf6",
+      "titleAr": "البلديات",
+      "titleEn": "Municipal Services",
+      "sortOrder": 3
+    },
+    {
+      "id": "health",
+      "icon": "🏥",
+      "color": "#ef4444",
+      "titleAr": "الصحة",
+      "titleEn": "Health",
+      "sortOrder": 4
+    },
+    {
+      "id": "education",
+      "icon": "🎓",
+      "color": "#0ea5e9",
+      "titleAr": "التعليم",
+      "titleEn": "Education",
+      "sortOrder": 5
+    },
+    {
+      "id": "taxes",
+      "icon": "💰",
+      "color": "#65a30d",
+      "titleAr": "الضرائب",
+      "titleEn": "Taxes",
+      "sortOrder": 6
+    },
+    {
+      "id": "social",
+      "icon": "🤝",
+      "color": "#d946ef",
+      "titleAr": "الشؤون الاجتماعية",
+      "titleEn": "Social Affairs",
+      "sortOrder": 7
+    },
+    {
+      "id": "work",
+      "icon": "💼",
+      "color": "#64748b",
+      "titleAr": "العمل",
+      "titleEn": "Employment",
+      "sortOrder": 8
+    },
+    {
+      "id": "residency",
+      "icon": "🌍",
+      "color": "#0d9488",
+      "titleAr": "الإقامة والجنسية",
+      "titleEn": "Residency & Citizenship",
+      "sortOrder": 9
+    },
+    {
+      "id": "property",
+      "icon": "🏠",
+      "color": "#ca8a04",
+      "titleAr": "العقارات",
+      "titleEn": "Property",
+      "sortOrder": 10
+    },
+    {
+      "id": "business",
+      "icon": "🏢",
+      "color": "#334155",
+      "titleAr": "الشركات والأعمال",
+      "titleEn": "Business Services",
+      "sortOrder": 11
+    }
+  ],
+  "cities": [
+    {
+      "id": "trip",
+      "nameAr": "طرابلس",
+      "nameEn": "Tripoli"
+    },
+    {
+      "id": "beng",
+      "nameAr": "بنغازي",
+      "nameEn": "Benghazi"
+    },
+    {
+      "id": "misr",
+      "nameAr": "مصراتة",
+      "nameEn": "Misrata"
+    },
+    {
+      "id": "zawi",
+      "nameAr": "الزاوية",
+      "nameEn": "Zawiya"
+    },
+    {
+      "id": "seb",
+      "nameAr": "سبها",
+      "nameEn": "Sebha"
+    },
+    {
+      "id": "bay",
+      "nameAr": "البيضاء",
+      "nameEn": "Bayda"
+    },
+    {
+      "id": "kho",
+      "nameAr": "الخمس",
+      "nameEn": "Khoms"
+    },
+    {
+      "id": "zli",
+      "nameAr": "زليتن",
+      "nameEn": "Zliten"
+    },
+    {
+      "id": "sur",
+      "nameAr": "صرمان",
+      "nameEn": "Sorman"
+    },
+    {
+      "id": "sab",
+      "nameAr": "صبراتة",
+      "nameEn": "Sabratha"
+    }
+  ],
+  "offices": [
+    {
+      "id": 1,
+      "nameAr": "فرع جوازات طرابلس المركزي",
+      "nameEn": "Tripoli Central Passports Branch",
+      "departmentAr": "مصلحة الجوازات والجنسية",
+      "departmentEn": "Passports & Citizenship Authority",
+      "cityId": "trip",
+      "addressAr": "طريق السكة، طرابلس",
+      "addressEn": "Sikka Road, Tripoli",
+      "phone": "021-1234567",
+      "lat": 32.8802,
+      "lng": 13.1873,
+      "temporarilyClosed": false,
+      "openDays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "openTime": "08:30",
+      "closeTime": "14:00",
+      "categoryIds": [
+        "passports",
+        "residency"
+      ]
+    },
+    {
+      "id": 2,
+      "nameAr": "قسم جوازات حي الأندلس",
+      "nameEn": "Hai Al-Andalus Passports Dept",
+      "departmentAr": "مصلحة الجوازات والجنسية",
+      "departmentEn": "Passports & Citizenship Authority",
+      "cityId": "trip",
+      "addressAr": "حي الأندلس، طرابلس",
+      "addressEn": "Hai Al-Andalus, Tripoli",
+      "phone": "021-7654321",
+      "lat": 32.8687,
+      "lng": 13.1362,
+      "temporarilyClosed": true,
+      "openDays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "openTime": "08:30",
+      "closeTime": "14:00",
+      "categoryIds": [
+        "passports"
+      ]
+    },
+    {
+      "id": 3,
+      "nameAr": "مكتب السجل المدني طرابلس",
+      "nameEn": "Tripoli Civil Registry Office",
+      "departmentAr": "مصلحة الأحوال المدنية",
+      "departmentEn": "Civil Registry Authority",
+      "cityId": "trip",
+      "addressAr": "شارع عمر المختار، طرابلس",
+      "addressEn": "Omar Mukhtar St, Tripoli",
+      "phone": "021-3344556",
+      "lat": 32.9021,
+      "lng": 13.1802,
+      "temporarilyClosed": false,
+      "openDays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "openTime": "09:00",
+      "closeTime": "13:30",
+      "categoryIds": [
+        "civil"
+      ]
+    },
+    {
+      "id": 4,
+      "nameAr": "مديرية المرور طرابلس",
+      "nameEn": "Tripoli Traffic Directorate",
+      "departmentAr": "إدارة المرور والتراخيص",
+      "departmentEn": "Traffic & Licensing Dept",
+      "cityId": "trip",
+      "addressAr": "طريق الشط، طرابلس",
+      "addressEn": "Shat Road, Tripoli",
+      "phone": "021-9988776",
+      "lat": 32.8755,
+      "lng": 13.1955,
+      "temporarilyClosed": false,
+      "openDays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "openTime": "08:30",
+      "closeTime": "13:30",
+      "categoryIds": [
+        "traffic"
+      ]
+    },
+    {
+      "id": 5,
+      "nameAr": "فرع جوازات بنغازي",
+      "nameEn": "Benghazi Passports Branch",
+      "departmentAr": "مصلحة الجوازات والجنسية",
+      "departmentEn": "Passports & Citizenship Authority",
+      "cityId": "beng",
+      "addressAr": "شارع الجمهورية، بنغازي",
+      "addressEn": "Republic St, Benghazi",
+      "phone": "061-5544332",
+      "lat": 32.1114,
+      "lng": 20.0671,
+      "temporarilyClosed": false,
+      "openDays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "openTime": "08:00",
+      "closeTime": "14:00",
+      "categoryIds": [
+        "passports",
+        "residency"
+      ]
+    },
+    {
+      "id": 6,
+      "nameAr": "مكتب الضمان الاجتماعي طرابلس",
+      "nameEn": "Tripoli Social Security Office",
+      "departmentAr": "الصندوق الوطني للضمان الاجتماعي",
+      "departmentEn": "National Social Security Fund",
+      "cityId": "trip",
+      "addressAr": "شارع الزاوية، طرابلس",
+      "addressEn": "Zawiya St, Tripoli",
+      "phone": "021-6677889",
+      "lat": 32.8901,
+      "lng": 13.1651,
+      "temporarilyClosed": false,
+      "openDays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "openTime": "08:00",
+      "closeTime": "14:00",
+      "categoryIds": [
+        "social",
+        "work"
+      ]
+    }
+  ],
+  "services": [
+    {
+      "id": "lost-passport",
+      "categoryId": "passports",
+      "icon": "📕",
+      "popular": true,
+      "verified": true,
+      "titleAr": "إجراءات فقدان جواز السفر",
+      "titleEn": "Lost Passport Procedures",
+      "shortDescAr": "الخطوات والمستندات المطلوبة لاستخراج بدل فاقد لجواز السفر الليبي.",
+      "shortDescEn": "Steps and documents required to issue a replacement for a lost Libyan passport.",
+      "departmentAr": "مصلحة الجوازات والجنسية وشؤون الأجانب",
+      "departmentEn": "Passports, Citizenship and Foreign Affairs Authority",
+      "feesAr": "75 دينار ليبي",
+      "feesEn": "75 LYD",
+      "durationAr": "من أسبوعين إلى 4 أسابيع",
+      "durationEn": "2 to 4 weeks",
+      "hoursAr": "08:30 ص - 02:00 م",
+      "hoursEn": "08:30 AM - 02:00 PM",
+      "eligibilityAr": "المواطنون الليبيون حاملو الرقم الوطني.",
+      "eligibilityEn": "Libyan citizens holding a National ID.",
+      "sourceAr": "مصلحة الجوازات والجنسية",
+      "sourceEn": "Passports & Citizenship Authority",
+      "lastReviewedAt": "2026-09-10",
+      "steps": [
+        {
+          "textAr": "التوجه إلى أقرب مركز شرطة (التابع لمنطقة فقدان الجواز) للإبلاغ وفتح محضر بالواقعة.",
+          "textEn": "Go to the nearest police station to report and open an official case."
+        },
+        {
+          "textAr": "الانتظار لمدة 15 يوماً (المدة القانونية) بعد فتح المحضر كتعميم.",
+          "textEn": "Wait for 15 days (legal period) after opening the report."
+        },
+        {
+          "textAr": "الحصول على شهادة ضياع رسمية معتمدة من مركز الشرطة ومديرية الأمن.",
+          "textEn": "Obtain an official loss certificate certified by the police station."
+        },
+        {
+          "textAr": "تجهيز المستندات المطلوبة والتوجه إلى فرع الجوازات التابع لمقر سكنك.",
+          "textEn": "Prepare documents and go to your local passports branch."
+        },
+        {
+          "textAr": "تعبئة نموذج طلب استخراج بدل فاقد وتقديم المستندات للموظف المختص.",
+          "textEn": "Fill out the replacement form and submit documents."
+        },
+        {
+          "textAr": "دفع الرسوم المقررة في الخزينة والاحتفاظ بالإيصال.",
+          "textEn": "Pay the prescribed fees and keep the receipt."
+        },
+        {
+          "textAr": "التصوير وأخذ البصمة (في حال طلب ذلك)، واستلام موعد استلام الجواز.",
+          "textEn": "Take photo and fingerprints, receive scheduled collection date."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "محضر الشرطة وشهادة الضياع المعتمدة (الأصل + صورة).",
+          "textEn": "Police report and certified loss certificate."
+        },
+        {
+          "textAr": "إثبات هوية (كتيب العائلة أو بطاقة شخصية).",
+          "textEn": "Proof of identity (Family Book or ID card)."
+        },
+        {
+          "textAr": "الرقم الوطني مختوم من السجل المدني.",
+          "textEn": "National ID number stamped by Civil Registry."
+        },
+        {
+          "textAr": "عدد 4 صور شخصية حديثة (خلفية بيضاء).",
+          "textEn": "4 recent personal photos (white background)."
+        },
+        {
+          "textAr": "إفادة بالرقم الوطني مطابقة لبيانات الجواز المفقود.",
+          "textEn": "National ID certificate matching lost passport data."
+        },
+        {
+          "textAr": "تعبئة النموذج الخاص ببدل فاقد.",
+          "textEn": "Completed replacement form."
+        }
+      ],
+      "notes": [
+        {
+          "textAr": "يجب الحضور شخصياً للتصوير والبصمة.",
+          "textEn": "Personal attendance required for photo and fingerprint."
+        },
+        {
+          "textAr": "في حال ضياع الجواز خارج ليبيا، يجب التوجه فوراً للسفارة الليبية.",
+          "textEn": "If lost outside Libya, go to the Libyan embassy immediately."
+        }
+      ],
+      "faqs": [
+        {
+          "questionAr": "هل يمكنني السفر بمحضر الشرطة؟",
+          "questionEn": "Can I travel with the police report?",
+          "answerAr": "لا، محضر الشرطة ليس وثيقة سفر. يجب استخراج جواز جديد.",
+          "answerEn": "No, the police report is not a travel document."
+        }
+      ],
+      "related": [
+        "renew-passport",
+        "national-id"
+      ],
+      "keywords": [
+        "ضاع",
+        "فقدت",
+        "ريحته",
+        "ريحت",
+        "lost",
+        "ضيعت",
+        "جوازي",
+        "جواز سفري",
+        "بدل فاقد",
+        "فقدان جواز"
+      ]
+    },
+    {
+      "id": "renew-passport",
+      "categoryId": "passports",
+      "icon": "🛂",
+      "popular": true,
+      "verified": true,
+      "titleAr": "تجديد جواز السفر",
+      "titleEn": "Passport Renewal",
+      "shortDescAr": "خطوات تجديد جواز السفر الليبي المنتهي أو القارب على الانتهاء.",
+      "shortDescEn": "Steps to renew an expired or near-expiry Libyan passport.",
+      "departmentAr": "مصلحة الجوازات والجنسية",
+      "departmentEn": "Passports & Citizenship Authority",
+      "feesAr": "50 دينار ليبي",
+      "feesEn": "50 LYD",
+      "durationAr": "أسبوعان إلى 3 أسابيع",
+      "durationEn": "2 to 3 weeks",
+      "hoursAr": "08:30 ص - 02:00 م",
+      "hoursEn": "08:30 AM - 02:00 PM",
+      "eligibilityAr": "المواطنون الليبيون",
+      "eligibilityEn": "Libyan citizens",
+      "sourceAr": "مصلحة الجوازات والجنسية",
+      "sourceEn": "Passports & Citizenship Authority",
+      "lastReviewedAt": "2026-09-05",
+      "steps": [
+        {
+          "textAr": "التوجه لفرع الجوازات التابع لمنطقة سكنك.",
+          "textEn": "Go to your local passports branch."
+        },
+        {
+          "textAr": "تقديم الجواز القديم والمستندات المطلوبة للموظف.",
+          "textEn": "Submit old passport and required documents."
+        },
+        {
+          "textAr": "تعبئة نموذج طلب التجديد.",
+          "textEn": "Fill out the renewal form."
+        },
+        {
+          "textAr": "دفع الرسوم في الخزينة والاحتفاظ بالإيصال.",
+          "textEn": "Pay fees and keep receipt."
+        },
+        {
+          "textAr": "التصوير وأخذ البصمة البيومترية.",
+          "textEn": "Take biometric photo and fingerprints."
+        },
+        {
+          "textAr": "استلام الجواز الجديد في الموعد المحدد.",
+          "textEn": "Collect new passport on scheduled date."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "الجواز القديم (الأصل).",
+          "textEn": "Old passport (original)."
+        },
+        {
+          "textAr": "كتيب العائلة أو بطاقة الهوية الشخصية.",
+          "textEn": "Family Book or personal ID."
+        },
+        {
+          "textAr": "عدد 4 صور شخصية حديثة (خلفية بيضاء).",
+          "textEn": "4 recent personal photos (white background)."
+        },
+        {
+          "textAr": "إيصال الدفع.",
+          "textEn": "Payment receipt."
+        }
+      ],
+      "notes": [
+        {
+          "textAr": "يمكن البدء في التجديد قبل 6 أشهر من تاريخ الانتهاء.",
+          "textEn": "You can start renewal up to 6 months before expiry."
+        }
+      ],
+      "faqs": [],
+      "related": [
+        "lost-passport",
+        "national-id"
+      ],
+      "keywords": [
+        "تجديد جواز",
+        "نجدد جواز",
+        "renew passport",
+        "جوازي انتهى",
+        "جوازي خلص",
+        "passport expired"
+      ]
+    },
+    {
+      "id": "birth-certificate",
+      "categoryId": "civil",
+      "icon": "👶",
+      "popular": true,
+      "verified": true,
+      "titleAr": "استخراج شهادة ميلاد",
+      "titleEn": "Birth Certificate Issuance",
+      "shortDescAr": "إجراءات استخراج شهادة ميلاد حديثة بالرقم الوطني.",
+      "shortDescEn": "Procedures to issue a recent birth certificate with National ID.",
+      "departmentAr": "مصلحة الأحوال المدنية (السجل المدني)",
+      "departmentEn": "Civil Registry Authority",
+      "feesAr": "مجاناً (أو رسوم رمزية)",
+      "feesEn": "Free (or nominal fee)",
+      "durationAr": "فوري",
+      "durationEn": "Immediate",
+      "hoursAr": "09:00 ص - 01:00 م",
+      "hoursEn": "09:00 AM - 01:00 PM",
+      "eligibilityAr": "الجميع",
+      "eligibilityEn": "Everyone",
+      "sourceAr": "مصلحة الأحوال المدنية",
+      "sourceEn": "Civil Registry Authority",
+      "lastReviewedAt": "2026-09-01",
+      "steps": [
+        {
+          "textAr": "التوجه إلى مكتب السجل المدني التابع له قيدك.",
+          "textEn": "Go to the Civil Registry office where you are registered."
+        },
+        {
+          "textAr": "إبراز كتيب العائلة الأصلي أو بطاقة الهوية.",
+          "textEn": "Show original Family Book or ID card."
+        },
+        {
+          "textAr": "طلب استخراج شهادة الميلاد بالرقم الوطني.",
+          "textEn": "Request birth certificate with National ID."
+        },
+        {
+          "textAr": "دفع الرسوم واستلام الشهادة فوراً.",
+          "textEn": "Pay fees and receive certificate immediately."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "كتيب العائلة أو البطاقة الشخصية.",
+          "textEn": "Family Book or Personal ID card."
+        }
+      ],
+      "notes": [],
+      "faqs": [],
+      "related": [
+        "national-id",
+        "family-book"
+      ],
+      "keywords": [
+        "ميلاد",
+        "شهادة",
+        "نطلع",
+        "birth",
+        "شهادة ميلاد",
+        "شهادتي",
+        "وثيقة ميلاد"
+      ]
+    },
+    {
+      "id": "national-id",
+      "categoryId": "civil",
+      "icon": "🪪",
+      "popular": true,
+      "verified": true,
+      "titleAr": "استخراج بطاقة الهوية الوطنية",
+      "titleEn": "National ID Card Issuance",
+      "shortDescAr": "خطوات استخراج بطاقة الرقم الوطني لأول مرة أو تجديدها.",
+      "shortDescEn": "Steps to issue or renew the national ID card.",
+      "departmentAr": "مصلحة الأحوال المدنية (السجل المدني)",
+      "departmentEn": "Civil Registry Authority",
+      "feesAr": "5 دينار ليبي",
+      "feesEn": "5 LYD",
+      "durationAr": "7 إلى 14 يوم عمل",
+      "durationEn": "7 to 14 working days",
+      "hoursAr": "09:00 ص - 01:00 م",
+      "hoursEn": "09:00 AM - 01:00 PM",
+      "eligibilityAr": "الليبيون الذين بلغوا 18 عاماً",
+      "eligibilityEn": "Libyans who have reached 18 years",
+      "sourceAr": "مصلحة الأحوال المدنية",
+      "sourceEn": "Civil Registry Authority",
+      "lastReviewedAt": "2026-08-20",
+      "steps": [
+        {
+          "textAr": "التوجه لمكتب السجل المدني المختص.",
+          "textEn": "Go to the relevant Civil Registry office."
+        },
+        {
+          "textAr": "تقديم طلب استخراج بطاقة الرقم الوطني.",
+          "textEn": "Submit application for national ID card."
+        },
+        {
+          "textAr": "تقديم المستندات المطلوبة للموظف.",
+          "textEn": "Submit required documents to the officer."
+        },
+        {
+          "textAr": "التصوير والبصمة (للبطاقة الأولى).",
+          "textEn": "Photo and fingerprint (for first-time issuance)."
+        },
+        {
+          "textAr": "دفع الرسوم واستلام إيصال الاستلام.",
+          "textEn": "Pay fees and receive collection receipt."
+        },
+        {
+          "textAr": "استلام البطاقة بعد أسبوع إلى أسبوعين.",
+          "textEn": "Collect card after 1-2 weeks."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "شهادة ميلاد أصلية موثقة.",
+          "textEn": "Original certified birth certificate."
+        },
+        {
+          "textAr": "كتيب العائلة (الأصل + صورة).",
+          "textEn": "Family book (original + copy)."
+        },
+        {
+          "textAr": "عدد 2 صورة شخصية حديثة.",
+          "textEn": "2 recent personal photos."
+        }
+      ],
+      "notes": [
+        {
+          "textAr": "يجب تجديد البطاقة كل 10 سنوات.",
+          "textEn": "Card must be renewed every 10 years."
+        }
+      ],
+      "faqs": [],
+      "related": [
+        "birth-certificate",
+        "family-book"
+      ],
+      "keywords": [
+        "هوية",
+        "بطاقة هوية",
+        "رقم وطني",
+        "national id",
+        "بطاقة شخصية",
+        "هويتي",
+        "هويتي انتهت",
+        "هوية وطنية"
+      ]
+    },
+    {
+      "id": "family-book",
+      "categoryId": "civil",
+      "icon": "📒",
+      "popular": false,
+      "verified": true,
+      "titleAr": "استخراج كتيب العائلة",
+      "titleEn": "Family Book Issuance",
+      "shortDescAr": "إجراءات الحصول على كتيب عائلة جديد أو نسخة منه.",
+      "shortDescEn": "Procedures to obtain a new or duplicate family book.",
+      "departmentAr": "مصلحة الأحوال المدنية",
+      "departmentEn": "Civil Registry Authority",
+      "feesAr": "10 دينار ليبي",
+      "feesEn": "10 LYD",
+      "durationAr": "3 إلى 7 أيام عمل",
+      "durationEn": "3 to 7 working days",
+      "hoursAr": "09:00 ص - 01:00 م",
+      "hoursEn": "09:00 AM - 01:00 PM",
+      "eligibilityAr": "ربّ الأسرة الليبي",
+      "eligibilityEn": "Libyan head of family",
+      "sourceAr": "مصلحة الأحوال المدنية",
+      "sourceEn": "Civil Registry Authority",
+      "lastReviewedAt": "2026-08-15",
+      "steps": [
+        {
+          "textAr": "التوجه لمكتب السجل المدني التابع لمنطقتك.",
+          "textEn": "Go to your local Civil Registry office."
+        },
+        {
+          "textAr": "تقديم طلب رسمي مكتوب يوضح الغرض من الاستخراج.",
+          "textEn": "Submit a written formal request stating the purpose."
+        },
+        {
+          "textAr": "تقديم المستندات المطلوبة.",
+          "textEn": "Submit required documents."
+        },
+        {
+          "textAr": "دفع الرسوم المقررة.",
+          "textEn": "Pay the required fees."
+        },
+        {
+          "textAr": "استلام الكتيب في المدة المحددة.",
+          "textEn": "Collect the book within the specified period."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "بطاقة الهوية الشخصية.",
+          "textEn": "Personal ID card."
+        },
+        {
+          "textAr": "وثيقة الزواج (إذا كان المتقدم متزوجاً).",
+          "textEn": "Marriage certificate (if married)."
+        },
+        {
+          "textAr": "شهادات ميلاد الأطفال (إن وجدت).",
+          "textEn": "Children's birth certificates (if any)."
+        }
+      ],
+      "notes": [],
+      "faqs": [],
+      "related": [
+        "birth-certificate",
+        "national-id"
+      ],
+      "keywords": [
+        "كتيب عائلة",
+        "دفتر عائلة",
+        "family book",
+        "دفتر العائلة",
+        "كتيب العيلة"
+      ]
+    },
+    {
+      "id": "renew-license",
+      "categoryId": "traffic",
+      "icon": "🚘",
+      "popular": true,
+      "verified": true,
+      "titleAr": "تجديد رخصة القيادة",
+      "titleEn": "Renew Driving License",
+      "shortDescAr": "خطوات تجديد رخصة القيادة المنتهية للمركبات الآلية.",
+      "shortDescEn": "Steps to renew an expired driving license.",
+      "departmentAr": "إدارة المرور والتراخيص",
+      "departmentEn": "Traffic & Licensing Department",
+      "feesAr": "حسب فئة الرخصة",
+      "feesEn": "Depending on license category",
+      "durationAr": "نفس اليوم",
+      "durationEn": "Same day",
+      "hoursAr": "08:30 ص - 01:30 م",
+      "hoursEn": "08:30 AM - 01:30 PM",
+      "eligibilityAr": "من أتم 18 عاماً",
+      "eligibilityEn": "18 years and older",
+      "sourceAr": "إدارة المرور والتراخيص",
+      "sourceEn": "Traffic & Licensing Dept",
+      "lastReviewedAt": "2026-08-15",
+      "steps": [
+        {
+          "textAr": "إجراء الفحص الطبي في العيادات المعتمدة (عيون وفصيلة دم).",
+          "textEn": "Undergo medical checkup (eyesight & blood type) at approved clinics."
+        },
+        {
+          "textAr": "التوجه لمديرية المرور والتراخيص التابعة لمنطقتك.",
+          "textEn": "Go to your local Traffic & Licensing Directorate."
+        },
+        {
+          "textAr": "تسليم الرخصة القديمة والمستندات للموظف.",
+          "textEn": "Hand over old license and documents."
+        },
+        {
+          "textAr": "دفع المخالفات المرورية إن وجدت.",
+          "textEn": "Pay any existing traffic fines."
+        },
+        {
+          "textAr": "دفع رسوم التجديد واستلام الرخصة الجديدة.",
+          "textEn": "Pay renewal fees and receive new license."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "الرخصة القديمة.",
+          "textEn": "Old license."
+        },
+        {
+          "textAr": "شهادة الكشف الطبي.",
+          "textEn": "Medical checkup certificate."
+        },
+        {
+          "textAr": "عدد 2 صور شخصية.",
+          "textEn": "2 personal photos."
+        },
+        {
+          "textAr": "صورة من إثبات الهوية والرقم الوطني.",
+          "textEn": "Copy of ID and National ID."
+        }
+      ],
+      "notes": [],
+      "faqs": [],
+      "related": [
+        "register-vehicle",
+        "traffic-fines"
+      ],
+      "keywords": [
+        "تجديد",
+        "نجدد",
+        "رخصة",
+        "رخصتي",
+        "license",
+        "driving",
+        "رخصة القيادة",
+        "رخصتي انتهت"
+      ]
+    },
+    {
+      "id": "register-vehicle",
+      "categoryId": "traffic",
+      "icon": "🚙",
+      "popular": true,
+      "verified": true,
+      "titleAr": "تسجيل مركبة جديدة",
+      "titleEn": "New Vehicle Registration",
+      "shortDescAr": "إجراءات تسجيل مركبة جديدة أو مستوردة للمرة الأولى.",
+      "shortDescEn": "Procedures to register a new or imported vehicle for the first time.",
+      "departmentAr": "إدارة المرور والتراخيص",
+      "departmentEn": "Traffic & Licensing Dept",
+      "feesAr": "حسب نوع وحجم المركبة",
+      "feesEn": "Depending on vehicle type and size",
+      "durationAr": "1 إلى 3 أيام عمل",
+      "durationEn": "1 to 3 working days",
+      "hoursAr": "08:30 ص - 01:30 م",
+      "hoursEn": "08:30 AM - 01:30 PM",
+      "eligibilityAr": "مالك المركبة أو وكيله بتوكيل رسمي",
+      "eligibilityEn": "Vehicle owner or authorized agent",
+      "sourceAr": "إدارة المرور والتراخيص",
+      "sourceEn": "Traffic & Licensing Dept",
+      "lastReviewedAt": "2026-09-01",
+      "steps": [
+        {
+          "textAr": "الحصول على شهادة المطابقة من الوكيل المعتمد أو الجمارك.",
+          "textEn": "Get conformity certificate from the authorized agent or customs."
+        },
+        {
+          "textAr": "التوجه لمديرية المرور المختصة بمنطقتك.",
+          "textEn": "Go to your local Traffic Directorate."
+        },
+        {
+          "textAr": "تقديم المستندات وتعبئة نموذج التسجيل.",
+          "textEn": "Submit documents and fill out the registration form."
+        },
+        {
+          "textAr": "إجراء فحص المركبة من قبل المختصين.",
+          "textEn": "Have the vehicle inspected by officials."
+        },
+        {
+          "textAr": "دفع رسوم التسجيل والحصول على اللوحات واللوحة المعدنية.",
+          "textEn": "Pay registration fees and receive license plates."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "شهادة المطابقة أو سند الجمارك.",
+          "textEn": "Conformity certificate or customs document."
+        },
+        {
+          "textAr": "فاتورة الشراء أو عقد البيع (الأصل).",
+          "textEn": "Purchase invoice or sale contract (original)."
+        },
+        {
+          "textAr": "بطاقة الهوية الشخصية للمالك.",
+          "textEn": "Owner's personal ID card."
+        },
+        {
+          "textAr": "وثيقة التأمين على المركبة.",
+          "textEn": "Vehicle insurance document."
+        }
+      ],
+      "notes": [
+        {
+          "textAr": "يجب إجراء تأمين المركبة قبل التسجيل.",
+          "textEn": "Vehicle must be insured before registration."
+        }
+      ],
+      "faqs": [],
+      "related": [
+        "renew-license",
+        "transfer-ownership"
+      ],
+      "keywords": [
+        "تسجيل سيارة",
+        "تسجيل مركبة",
+        "register vehicle",
+        "سيارة جديدة",
+        "لوحة",
+        "ترخيص سيارة"
+      ]
+    },
+    {
+      "id": "transfer-ownership",
+      "categoryId": "traffic",
+      "icon": "🔑",
+      "popular": false,
+      "verified": true,
+      "titleAr": "نقل ملكية مركبة",
+      "titleEn": "Vehicle Ownership Transfer",
+      "shortDescAr": "إجراءات نقل ملكية سيارة مستعملة من البائع للمشتري.",
+      "shortDescEn": "Procedures to transfer vehicle ownership from seller to buyer.",
+      "departmentAr": "إدارة المرور والتراخيص",
+      "departmentEn": "Traffic & Licensing Dept",
+      "feesAr": "30 إلى 80 دينار حسب نوع المركبة",
+      "feesEn": "30 to 80 LYD depending on vehicle type",
+      "durationAr": "يوم عمل واحد",
+      "durationEn": "1 working day",
+      "hoursAr": "08:30 ص - 01:30 م",
+      "hoursEn": "08:30 AM - 01:30 PM",
+      "eligibilityAr": "البائع والمشتري معاً أو بتوكيل",
+      "eligibilityEn": "Both seller and buyer or with power of attorney",
+      "sourceAr": "إدارة المرور والتراخيص",
+      "sourceEn": "Traffic & Licensing Dept",
+      "lastReviewedAt": "2026-08-10",
+      "steps": [
+        {
+          "textAr": "توثيق عقد البيع لدى مكتب التوثيق (الكاتب العدل).",
+          "textEn": "Notarize the sale contract at the notary office."
+        },
+        {
+          "textAr": "التأكد من سداد جميع المخالفات المرورية للمركبة.",
+          "textEn": "Ensure all traffic fines on the vehicle are paid."
+        },
+        {
+          "textAr": "التوجه لمديرية المرور بحضور البائع والمشتري أو بتوكيل.",
+          "textEn": "Go to Traffic Directorate with seller and buyer (or with power of attorney)."
+        },
+        {
+          "textAr": "تقديم المستندات وتعبئة نموذج نقل الملكية.",
+          "textEn": "Submit documents and fill transfer form."
+        },
+        {
+          "textAr": "دفع رسوم نقل الملكية.",
+          "textEn": "Pay transfer fees."
+        },
+        {
+          "textAr": "استلام لوحة ترخيص جديدة باسم المالك الجديد.",
+          "textEn": "Receive new license plate in the new owner's name."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "عقد البيع الموثق رسمياً.",
+          "textEn": "Officially notarized sale contract."
+        },
+        {
+          "textAr": "رخصة المركبة الأصلية.",
+          "textEn": "Original vehicle license."
+        },
+        {
+          "textAr": "هوية البائع والمشتري.",
+          "textEn": "Seller and buyer IDs."
+        },
+        {
+          "textAr": "شهادة التأمين.",
+          "textEn": "Insurance certificate."
+        }
+      ],
+      "notes": [],
+      "faqs": [],
+      "related": [
+        "register-vehicle",
+        "renew-license"
+      ],
+      "keywords": [
+        "نقل ملكية",
+        "بيع سيارة",
+        "شراء سيارة",
+        "transfer ownership",
+        "بيع سياره",
+        "بعت سيارتي"
+      ]
+    },
+    {
+      "id": "register-company",
+      "categoryId": "business",
+      "icon": "🏢",
+      "popular": true,
+      "verified": false,
+      "titleAr": "تسجيل شركة مساهمة",
+      "titleEn": "Register a Joint-Stock Company",
+      "shortDescAr": "خطوات تأسيس وتسجيل شركة مساهمة في ليبيا وفق أحكام قانون النشاط التجاري.",
+      "shortDescEn": "Steps to establish and register a joint-stock company in Libya.",
+      "departmentAr": "وزارة الاقتصاد - مركز تسجيل الشركات",
+      "departmentEn": "Ministry of Economy - Company Registration Center",
+      "feesAr": "حسب رأس المال وطبيعة النشاط",
+      "feesEn": "Depending on capital and activity type",
+      "durationAr": "2 إلى 4 أسابيع",
+      "durationEn": "2 to 4 weeks",
+      "hoursAr": "09:00 ص - 02:00 م",
+      "hoursEn": "09:00 AM - 02:00 PM",
+      "eligibilityAr": "المواطنون الليبيون البالغون",
+      "eligibilityEn": "Adult Libyan citizens",
+      "sourceAr": "وزارة الاقتصاد - وزارة المالية",
+      "sourceEn": "Ministry of Economy",
+      "lastReviewedAt": "2026-09-11",
+      "steps": [
+        {
+          "textAr": "تحديد نوع الشركة والأنشطة التجارية المراد ممارستها.",
+          "textEn": "Define company type and business activities."
+        },
+        {
+          "textAr": "الاستعلام عن توافر الاسم التجاري المراد استخدامه.",
+          "textEn": "Check availability of desired trade name."
+        },
+        {
+          "textAr": "إعداد عقد التأسيس والنظام الأساسي للشركة بواسطة محامٍ.",
+          "textEn": "Prepare articles of association with a lawyer."
+        },
+        {
+          "textAr": "توثيق عقد التأسيس لدى كاتب العدل.",
+          "textEn": "Notarize articles of association."
+        },
+        {
+          "textAr": "فتح حساب مصرفي للشركة وإيداع رأس المال المطلوب.",
+          "textEn": "Open bank account and deposit required capital."
+        },
+        {
+          "textAr": "تقديم ملف التأسيس الكامل لوزارة الاقتصاد.",
+          "textEn": "Submit complete incorporation file to Ministry of Economy."
+        },
+        {
+          "textAr": "الحصول على شهادة القيد التجاري وترخيص مزاولة النشاط.",
+          "textEn": "Obtain commercial registration and business license."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "عقد التأسيس والنظام الأساسي (موثق).",
+          "textEn": "Notarized articles of association."
+        },
+        {
+          "textAr": "هويات المؤسسين (أصل + صورة).",
+          "textEn": "Founders' IDs (original + copy)."
+        },
+        {
+          "textAr": "إيصال إيداع رأس المال البنكي.",
+          "textEn": "Bank capital deposit receipt."
+        },
+        {
+          "textAr": "شهادة عدم الاشتغال بأعمال أخرى (للمؤسسين الموظفين).",
+          "textEn": "No-other-employment certificate (for employed founders)."
+        }
+      ],
+      "notes": [
+        {
+          "textAr": "يُنصح بالاستعانة بمحامٍ متخصص في قانون الشركات.",
+          "textEn": "It is advisable to consult a corporate law attorney."
+        }
+      ],
+      "faqs": [],
+      "related": [],
+      "keywords": [
+        "شركة",
+        "تسجيل شركة",
+        "company",
+        "business",
+        "مشروع",
+        "استثمار",
+        "مؤسسة",
+        "نبدا شركة"
+      ]
+    },
+    {
+      "id": "pension-registration",
+      "categoryId": "social",
+      "icon": "👴",
+      "popular": false,
+      "verified": true,
+      "titleAr": "تسجيل في التقاعد (الضمان الاجتماعي)",
+      "titleEn": "Pension Registration (Social Security)",
+      "shortDescAr": "خطوات تسجيل الموظف أو المنشأة في الصندوق الوطني للضمان الاجتماعي.",
+      "shortDescEn": "Steps to register an employee or establishment with the National Social Security Fund.",
+      "departmentAr": "الصندوق الوطني للضمان الاجتماعي",
+      "departmentEn": "National Social Security Fund",
+      "feesAr": "مجاني للتسجيل",
+      "feesEn": "Free registration",
+      "durationAr": "يوم عمل واحد",
+      "durationEn": "1 working day",
+      "hoursAr": "08:00 ص - 02:00 م",
+      "hoursEn": "08:00 AM - 02:00 PM",
+      "eligibilityAr": "جميع الموظفين في القطاع الخاص والعام",
+      "eligibilityEn": "All employees in public and private sectors",
+      "sourceAr": "الصندوق الوطني للضمان الاجتماعي",
+      "sourceEn": "National Social Security Fund",
+      "lastReviewedAt": "2026-08-25",
+      "steps": [
+        {
+          "textAr": "التوجه لأقرب فرع للصندوق الوطني للضمان الاجتماعي.",
+          "textEn": "Go to the nearest Social Security Fund branch."
+        },
+        {
+          "textAr": "تقديم طلب تسجيل وتعبئة النموذج الخاص.",
+          "textEn": "Submit registration application and fill out the form."
+        },
+        {
+          "textAr": "تقديم المستندات المطلوبة للموظف المختص.",
+          "textEn": "Submit required documents."
+        },
+        {
+          "textAr": "استلام رقم التأمين الاجتماعي (رقم الضمان).",
+          "textEn": "Receive your social security number."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "بطاقة الهوية الشخصية.",
+          "textEn": "Personal ID card."
+        },
+        {
+          "textAr": "شهادة الميلاد.",
+          "textEn": "Birth certificate."
+        },
+        {
+          "textAr": "عقد العمل أو خطاب من جهة العمل.",
+          "textEn": "Employment contract or employer letter."
+        }
+      ],
+      "notes": [],
+      "faqs": [],
+      "related": [],
+      "keywords": []
+    },
+    {
+      "id": "health-card",
+      "categoryId": "health",
+      "icon": "🏥",
+      "popular": false,
+      "verified": true,
+      "titleAr": "استخراج بطاقة صحية",
+      "titleEn": "Health Card Issuance",
+      "shortDescAr": "إجراءات الحصول على البطاقة الصحية من وزارة الصحة.",
+      "shortDescEn": "Procedures to obtain a health card from the Ministry of Health.",
+      "departmentAr": "وزارة الصحة",
+      "departmentEn": "Ministry of Health",
+      "feesAr": "5 دينار ليبي",
+      "feesEn": "5 LYD",
+      "durationAr": "3 إلى 7 أيام",
+      "durationEn": "3 to 7 days",
+      "hoursAr": "08:00 ص - 02:00 م",
+      "hoursEn": "08:00 AM - 02:00 PM",
+      "eligibilityAr": "جميع المواطنين",
+      "eligibilityEn": "All citizens",
+      "sourceAr": "وزارة الصحة",
+      "sourceEn": "Ministry of Health",
+      "lastReviewedAt": "2026-09-01",
+      "steps": [
+        {
+          "textAr": "التوجه لأقرب مركز صحي أو مستشفى معتمد.",
+          "textEn": "Go to the nearest health center or approved hospital."
+        },
+        {
+          "textAr": "طلب استمارة البطاقة الصحية وتعبئتها.",
+          "textEn": "Request health card form and fill it out."
+        },
+        {
+          "textAr": "تقديم المستندات المطلوبة.",
+          "textEn": "Submit required documents."
+        },
+        {
+          "textAr": "دفع الرسوم وتصوير المريض.",
+          "textEn": "Pay fees and take photo."
+        },
+        {
+          "textAr": "استلام البطاقة خلال أسبوع.",
+          "textEn": "Receive card within a week."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "بطاقة الهوية الوطنية.",
+          "textEn": "National ID card."
+        },
+        {
+          "textAr": "صورة شخصية.",
+          "textEn": "1 personal photo."
+        }
+      ],
+      "notes": [],
+      "faqs": [],
+      "related": [],
+      "keywords": [
+        "بطاقة صحية",
+        "health card",
+        "بطاقتي الصحية",
+        "صحي",
+        "علاج",
+        "مستشفى"
+      ]
+    },
+    {
+      "id": "property-registration",
+      "categoryId": "property",
+      "icon": "🏠",
+      "popular": false,
+      "verified": true,
+      "titleAr": "تسجيل عقار (تحرير ملكية)",
+      "titleEn": "Property Registration",
+      "shortDescAr": "خطوات تسجيل وتحرير ملكية عقار سكني أو تجاري في سجل الأراضي.",
+      "shortDescEn": "Steps to register residential or commercial property in the land registry.",
+      "departmentAr": "مصلحة تحرير الأراضي والتسجيل العقاري",
+      "departmentEn": "Land & Property Registration Authority",
+      "feesAr": "نسبة مئوية من قيمة العقار",
+      "feesEn": "Percentage of property value",
+      "durationAr": "4 إلى 8 أسابيع",
+      "durationEn": "4 to 8 weeks",
+      "hoursAr": "09:00 ص - 01:00 م",
+      "hoursEn": "09:00 AM - 01:00 PM",
+      "eligibilityAr": "مالك العقار أو وكيله المعتمد",
+      "eligibilityEn": "Property owner or authorized agent",
+      "sourceAr": "مصلحة تحرير الأراضي",
+      "sourceEn": "Land Registration Authority",
+      "lastReviewedAt": "2026-09-05",
+      "steps": [
+        {
+          "textAr": "الحصول على وثيقة التحديد والوصف من مديرية الأراضي.",
+          "textEn": "Obtain the delineation and description document from the Land Directorate."
+        },
+        {
+          "textAr": "توثيق عقد البيع أو التحويل لدى كاتب العدل.",
+          "textEn": "Notarize the sale or transfer contract."
+        },
+        {
+          "textAr": "تقديم ملف كامل لمصلحة تحرير الأراضي.",
+          "textEn": "Submit complete file to the Land Registration Authority."
+        },
+        {
+          "textAr": "انتظار مراجعة الملف والموافقة عليه.",
+          "textEn": "Wait for file review and approval."
+        },
+        {
+          "textAr": "دفع الرسوم المقررة واستلام سند الملكية.",
+          "textEn": "Pay fees and receive title deed."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "عقد الشراء الموثق.",
+          "textEn": "Notarized purchase contract."
+        },
+        {
+          "textAr": "هوية المالك.",
+          "textEn": "Owner's ID."
+        },
+        {
+          "textAr": "وثيقة التحديد والوصف.",
+          "textEn": "Delineation document."
+        },
+        {
+          "textAr": "شهادة براءة ذمة ضريبية.",
+          "textEn": "Tax clearance certificate."
+        }
+      ],
+      "notes": [
+        {
+          "textAr": "يُنصح بالتحقق من سند الملكية قبل الشراء لتفادي النزاعات.",
+          "textEn": "Always verify title deed before purchase to avoid disputes."
+        }
+      ],
+      "faqs": [],
+      "related": [],
+      "keywords": [
+        "عقار",
+        "تسجيل عقار",
+        "ملكية",
+        "property",
+        "سند ملكية",
+        "شراء عقار",
+        "ارض",
+        "أرض",
+        "بيت",
+        "منزل"
+      ]
+    }
+  ]
+}
