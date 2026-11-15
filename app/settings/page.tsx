@@ -1,6 +1,7 @@
 import SettingsPanel, { type SectionId } from "@/components/account/SettingsPanel";
 import { prisma } from "@/lib/db";
 import { t } from "@/lib/i18n";
+import { getCurrentUser } from "@/lib/auth/session";
 import { getLang } from "@/lib/i18n.server";
 
 export const dynamic = "force-dynamic";
@@ -16,7 +17,7 @@ export default async function SettingsPage({
 }: {
   searchParams: Promise<{ section?: string }>;
 }) {
-  const lang = await getLang();
+  const [lang, user] = await Promise.all([getLang(), getCurrentUser()]);
   const { section } = await searchParams;
   const initialSection = SECTIONS.includes(section as SectionId) ? (section as SectionId) : "accessibility";
   const cities = await prisma.city.findMany({ orderBy: { nameAr: "asc" }, select: { id: true, nameAr: true, nameEn: true } });
@@ -29,7 +30,9 @@ export default async function SettingsPage({
         </div>
       </div>
       <div className="container" style={{ marginBottom: 60 }}>
-        <SettingsPanel key={initialSection} lang={lang} cities={cities} initialSection={initialSection} />
+        <SettingsPanel key={initialSection} lang={lang} cities={cities} initialSection={initialSection}
+          account={user ? { name: user.name, login: user.login, cityId: user.cityId, role: user.role } : null}
+        />
       </div>
     </main>
   );

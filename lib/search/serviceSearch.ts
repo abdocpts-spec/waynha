@@ -2,6 +2,19 @@ import { prisma } from "@/lib/db";
 import { createTtlCache } from "@/lib/cache";
 import { contentWords, normalizeText, tokenize, tokenizeDetailed } from "@/lib/search/normalize";
 import type { Prisma } from "@/lib/generated/prisma/client";
+import type { Role } from "@/lib/generated/prisma/enums";
+
+/**
+ * ما يراه المستخدم: الخدمات المعتمدة (PUBLISHED) أو التي تحتاج تحديثاً (NEEDS_UPDATE، مع تنبيه).
+ * المسودات وما قيد المراجعة لا تظهر إلا للأدمن في لوحة الإدارة.
+ * المواطن يرى خدمات المواطنين والخدمات العامة، والأجنبي خدماته والعامة؛ الزائر والأدمن يرون الكل.
+ */
+export function visibleServiceWhere(role?: Role | null): Prisma.ServiceWhereInput {
+  const where: Prisma.ServiceWhereInput = { status: { in: ["PUBLISHED", "NEEDS_UPDATE"] } };
+  if (role === "CITIZEN") where.audience = { in: ["ALL", "CITIZEN"] };
+  if (role === "FOREIGNER") where.audience = { in: ["ALL", "FOREIGNER"] };
+  return where;
+}
 
 /**
  * البحث عن الخدمات في PostgreSQL (طبقة الاسترجاع في RAG).
@@ -53,8 +66,9 @@ export type ServiceMatch<S = ServiceWithDetails> = {
   complete: boolean;
 };
 
-function candidateWhere(tokens: string[]): Prisma.ServiceWhereInput {
+function candidateWhere(tokens: string[], role?: Role | null): Prisma.ServiceWhereInput {
   return {
+    ...visibleServiceWhere(role),
     OR: [
       ...tokens.map((token) => ({ searchText: { contains: token } })),
       { keywords: { some: { keyword: { in: tokens } } } },
@@ -115,11 +129,11 @@ function rank<S extends Searchable>(query: string, candidates: S[], limit: numbe
 }
 
 /** بحث كامل (مع كل التفاصيل) — لصفحات الموقع. */
-export async function searchServices(query: string, limit = 5): Promise<ServiceMatch[]> {
+export async function searchServices(query: string, limit = 5, role?: Role | null): Promise<ServiceMatch[]> {
   const tokens = tokenize(query);
   if (tokens.length === 0) return [];
   const candidates = await prisma.service.findMany({
-    where: candidateWhere(tokens),
+    where: candidateWhere(tokens, role),
     include: serviceInclude,
   });
   return rank(query, candidates, limit);
@@ -130,6 +144,13 @@ const CACHE_TTL_MS = 5 * 60 * 1000;
 const summaryCache = createTtlCache<ServiceSummary[]>(CACHE_TTL_MS);
 const detailsCache = createTtlCache<ServiceWithDetails | null>(CACHE_TTL_MS);
 const officesCache = createTtlCache<OfficeWithCity[]>(CACHE_TTL_MS);
+
+/** بعد أي تعديل من لوحة الإدارة: نمسح كاش الخدمات حتى يظهر التعديل للمساعد مباشرة. */
+export function clearServiceCaches() {
+  summaryCache.clear();
+  detailsCache.clear();
+  officesCache.clear();
+}
 
 /**
  * بحث خفيف للمساعد: يجلب حقول البحث فقط للخدمات المرشحة،
@@ -156,17 +177,18 @@ export function confidentMatch<S>(matches: ServiceMatch<S>[]): ServiceMatch<S> |
   return top;
 }
 
+/** خدمة واحدة للزوار: المسودات وما قيد المراجعة تُعامل كأنها غير موجودة. */
 export async function getService(id: string): Promise<ServiceWithDetails | null> {
-  return prisma.service.findUnique({ where: { id }, include: serviceInclude });
+  return prisma.service.findFirst({ where: { id, ...visibleServiceWhere() }, include: serviceInclude });
 }
 
 export function getServiceCached(id: string): Promise<ServiceWithDetails | null> {
   return detailsCache(id, () => getService(id));
 }
 
-export async function listServices(categoryId?: string): Promise<ServiceWithDetails[]> {
+export async function listServices(categoryId?: string, role?: Role | null): Promise<ServiceWithDetails[]> {
   return prisma.service.findMany({
-    where: categoryId ? { categoryId } : undefined,
+    where: { ...visibleServiceWhere(role), ...(categoryId ? { categoryId } : {}) },
     include: serviceInclude,
     orderBy: [{ popular: "desc" }, { titleAr: "asc" }],
   });

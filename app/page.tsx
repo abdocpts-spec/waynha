@@ -2,23 +2,29 @@ import Link from "next/link";
 import DemoDataBanner from "@/components/DemoDataBanner";
 import HeroParticles from "@/components/HeroParticles";
 import HomeSearch from "@/components/HomeSearch";
+import Lander from "@/components/Lander";
 import ServiceCard from "@/components/ServiceCard";
 import { toServicePayload } from "@/lib/ai/contextBuilder";
 import { prisma } from "@/lib/db";
-import { t } from "@/lib/i18n";
+import { t, uiLang } from "@/lib/i18n";
+import { getAudience, effectiveRole } from "@/lib/audience.server";
+import { getCurrentUser } from "@/lib/auth/session";
 import { getLang } from "@/lib/i18n.server";
-import { listServices, serviceInclude } from "@/lib/search/serviceSearch";
+import { listServices, serviceInclude, visibleServiceWhere } from "@/lib/search/serviceSearch";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const lang = await getLang();
+  const [lang, user, audience] = await Promise.all([getLang(), getCurrentUser(), getAudience()]);
+  // أول ما يراه الزائر في كل زيارة: اختيار مواطن ليبي أو أجنبي
+  if (!audience) return <Lander lang={lang} />;
+  const role = effectiveRole(audience, user);
 
   const [services, categories, officeCount] = await Promise.all([
-    listServices(),
+    listServices(undefined, role),
     prisma.category.findMany({
       orderBy: { sortOrder: "asc" },
-      include: { _count: { select: { services: true } } },
+      include: { _count: { select: { services: { where: visibleServiceWhere(role) } } } },
     }),
     prisma.office.count(),
   ]);
@@ -102,7 +108,7 @@ export default async function HomePage() {
             {popular.map((service) => (
               <ServiceCard
                 key={service.id}
-                service={toServicePayload(service, lang)}
+                service={toServicePayload(service, uiLang(lang))}
                 lang={lang}
                 showPopularBadge
               />

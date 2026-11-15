@@ -6,7 +6,7 @@
 export function createTtlCache<T>(ttlMs: number, maxEntries = 200) {
   const entries = new Map<string, { value: Promise<T>; expires: number }>();
 
-  return async function cached(key: string, load: () => Promise<T>): Promise<T> {
+  async function cached(key: string, load: () => Promise<T>): Promise<T> {
     const now = Date.now();
     const hit = entries.get(key);
     if (hit && hit.expires > now) return hit.value;
@@ -21,5 +21,8 @@ export function createTtlCache<T>(ttlMs: number, maxEntries = 200) {
       if (oldest !== undefined) entries.delete(oldest);
     }
     return value;
-  };
+  }
+
+  /** يمسح الكاش كله (مثلاً بعد تعديل الأدمن لخدمة حتى يرى المساعد التعديل فوراً). */
+  return Object.assign(cached, { clear: () => entries.clear() });
 }

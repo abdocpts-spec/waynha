@@ -2,7 +2,7 @@ import Link from "next/link";
 import DemoDataBanner from "@/components/DemoDataBanner";
 import { toOfficePayload } from "@/lib/ai/contextBuilder";
 import { directionsUrl, isOfficeOpen, osmEmbedUrl } from "@/lib/format";
-import { t } from "@/lib/i18n";
+import { t, uiLang } from "@/lib/i18n";
 import { getLang } from "@/lib/i18n.server";
 import { getService, listOffices, officesForService } from "@/lib/search/serviceSearch";
 
@@ -22,7 +22,7 @@ export default async function OfficesPage({
 
   const service = serviceId ? await getService(serviceId) : null;
   const records = service ? await officesForService(service) : await listOffices();
-  const offices = records.map((office) => toOfficePayload(office, lang));
+  const offices = records.map((office) => toOfficePayload(office, uiLang(lang)));
 
   const selected =
     offices.find((office) => String(office.id) === officeId) ?? offices[0] ?? null;

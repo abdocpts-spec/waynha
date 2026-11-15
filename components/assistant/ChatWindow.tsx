@@ -5,14 +5,14 @@ import ChatInput from "@/components/assistant/ChatInput";
 import ChatMessage from "@/components/assistant/ChatMessage";
 import QuickReplies from "@/components/assistant/QuickReplies";
 import { useAssistant } from "@/components/assistant/useAssistant";
-import { t, type Lang } from "@/lib/i18n";
+import { t, type Lang, uiLang } from "@/lib/i18n";
 
-const WELCOME: Record<Lang, string> = {
+const WELCOME: Record<"ar" | "en", string> = {
   ar: "السلام عليكم 👋\nأنا مساعد وينها.\nقولي شن الإجراء اللي تبي تعرف عليه ونحاول نوجهك.",
   en: "Hello 👋\nI'm the WAYNHA assistant.\nTell me which government procedure you need and I'll guide you.",
 };
 
-const STARTERS: Record<Lang, { label: string; message: string }[]> = {
+const STARTERS: Record<"ar" | "en", { label: string; message: string }[]> = {
   ar: [
     { label: "ضاع جوازي", message: "ضاع جوازي" },
     { label: "شن نحتاج لتجديد الرخصة؟", message: "شن نحتاج لتجديد الرخصة؟" },
@@ -52,7 +52,7 @@ export default function ChatWindow({
     if (body) body.scrollTo({ top: body.scrollHeight, behavior: "smooth" });
   }, [messages, isLoading, quickReplies]);
 
-  const replies = messages.length === 0 ? STARTERS[lang] : quickReplies;
+  const replies = messages.length === 0 ? STARTERS[uiLang(lang)] : quickReplies;
 
   return (
     <div className="assistant-shell">
@@ -72,7 +72,7 @@ export default function ChatWindow({
           <div className="chat-empty">
             <div className="chat-empty-icon" aria-hidden="true">🤖</div>
             <h2>{t(lang, "مساعد وينها", "WAYNHA Assistant")}</h2>
-            <p style={{ whiteSpace: "pre-line" }}>{WELCOME[lang]}</p>
+            <p style={{ whiteSpace: "pre-line" }}>{WELCOME[uiLang(lang)]}</p>
           </div>
         ) : (
           messages.map((message, index) => (

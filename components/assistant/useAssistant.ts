@@ -1,5 +1,6 @@
 "use client";
 
+import { uiLang } from "@/lib/i18n";
 import { useCallback, useRef, useState } from "react";
 import type { ChatStreamEvent, ChatStructuredData, ChatTurn } from "@/lib/ai/chatTypes";
 import type { Lang } from "@/lib/i18n";
@@ -13,7 +14,7 @@ export type ChatMessage = {
   status?: "streaming" | "done" | "error";
 };
 
-const FALLBACK_ERROR: Record<Lang, string> = {
+const FALLBACK_ERROR: Record<"ar" | "en", string> = {
   ar: "مساعد وينها غير متاح مؤقتاً، حاول مرة ثانية بعد شوية.",
   en: "The WAYNHA assistant is temporarily unavailable. Please try again shortly.",
 };
@@ -68,14 +69,14 @@ export function useAssistant(lang: Lang) {
         const response = await fetch("/api/ai/chat", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ message: question, conversation, language: lang }),
+          body: JSON.stringify({ message: question, conversation, language: uiLang(lang), siteLang: lang }),
         });
 
         if (!response.ok || !response.body) {
           const payload = await response.json().catch(() => null);
           const message =
             (payload as { error?: { message?: string } } | null)?.error?.message ??
-            FALLBACK_ERROR[lang];
+            FALLBACK_ERROR[uiLang(lang)];
           update({ text: message, status: "error" });
           return;
         }
@@ -125,13 +126,13 @@ export function useAssistant(lang: Lang) {
               ? {
                   ...message,
                   status: message.status === "error" ? "error" : "done",
-                  text: message.text || FALLBACK_ERROR[lang],
+                  text: message.text || FALLBACK_ERROR[uiLang(lang)],
                 }
               : message,
           ),
         );
       } catch {
-        update({ text: FALLBACK_ERROR[lang], status: "error" });
+        update({ text: FALLBACK_ERROR[uiLang(lang)], status: "error" });
       } finally {
         inFlight.current = false;
         setIsLoading(false);

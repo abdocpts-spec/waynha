@@ -322,6 +322,7 @@ export type OfficeWhereInput = {
   searchText?: Prisma.StringFilter<"Office"> | string
   city?: Prisma.XOR<Prisma.CityScalarRelationFilter, Prisma.CityWhereInput>
   categories?: Prisma.OfficeCategoryListRelationFilter
+  reports?: Prisma.ReportListRelationFilter
 }
 
 export type OfficeOrderByWithRelationInput = {
@@ -344,6 +345,7 @@ export type OfficeOrderByWithRelationInput = {
   searchText?: Prisma.SortOrder
   city?: Prisma.CityOrderByWithRelationInput
   categories?: Prisma.OfficeCategoryOrderByRelationAggregateInput
+  reports?: Prisma.ReportOrderByRelationAggregateInput
 }
 
 export type OfficeWhereUniqueInput = Prisma.AtLeast<{
@@ -369,6 +371,7 @@ export type OfficeWhereUniqueInput = Prisma.AtLeast<{
   searchText?: Prisma.StringFilter<"Office"> | string
   city?: Prisma.XOR<Prisma.CityScalarRelationFilter, Prisma.CityWhereInput>
   categories?: Prisma.OfficeCategoryListRelationFilter
+  reports?: Prisma.ReportListRelationFilter
 }, "id">
 
 export type OfficeOrderByWithAggregationInput = {
@@ -437,6 +440,7 @@ export type OfficeCreateInput = {
   searchText?: string
   city: Prisma.CityCreateNestedOneWithoutOfficesInput
   categories?: Prisma.OfficeCategoryCreateNestedManyWithoutOfficeInput
+  reports?: Prisma.ReportCreateNestedManyWithoutOfficeInput
 }
 
 export type OfficeUncheckedCreateInput = {
@@ -458,6 +462,7 @@ export type OfficeUncheckedCreateInput = {
   isDemo?: boolean
   searchText?: string
   categories?: Prisma.OfficeCategoryUncheckedCreateNestedManyWithoutOfficeInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutOfficeInput
 }
 
 export type OfficeUpdateInput = {
@@ -478,6 +483,7 @@ export type OfficeUpdateInput = {
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.CityUpdateOneRequiredWithoutOfficesNestedInput
   categories?: Prisma.OfficeCategoryUpdateManyWithoutOfficeNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutOfficeNestedInput
 }
 
 export type OfficeUncheckedUpdateInput = {
@@ -499,6 +505,7 @@ export type OfficeUncheckedUpdateInput = {
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.OfficeCategoryUncheckedUpdateManyWithoutOfficeNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutOfficeNestedInput
 }
 
 export type OfficeCreateManyInput = {
@@ -654,6 +661,11 @@ export type OfficeScalarRelationFilter = {
   isNot?: Prisma.OfficeWhereInput
 }
 
+export type OfficeNullableScalarRelationFilter = {
+  is?: Prisma.OfficeWhereInput | null
+  isNot?: Prisma.OfficeWhereInput | null
+}
+
 export type OfficeCreateNestedManyWithoutCityInput = {
   create?: Prisma.XOR<Prisma.OfficeCreateWithoutCityInput, Prisma.OfficeUncheckedCreateWithoutCityInput> | Prisma.OfficeCreateWithoutCityInput[] | Prisma.OfficeUncheckedCreateWithoutCityInput[]
   connectOrCreate?: Prisma.OfficeCreateOrConnectWithoutCityInput | Prisma.OfficeCreateOrConnectWithoutCityInput[]
@@ -727,6 +739,22 @@ export type OfficeUpdateOneRequiredWithoutCategoriesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OfficeUpdateToOneWithWhereWithoutCategoriesInput, Prisma.OfficeUpdateWithoutCategoriesInput>, Prisma.OfficeUncheckedUpdateWithoutCategoriesInput>
 }
 
+export type OfficeCreateNestedOneWithoutReportsInput = {
+  create?: Prisma.XOR<Prisma.OfficeCreateWithoutReportsInput, Prisma.OfficeUncheckedCreateWithoutReportsInput>
+  connectOrCreate?: Prisma.OfficeCreateOrConnectWithoutReportsInput
+  connect?: Prisma.OfficeWhereUniqueInput
+}
+
+export type OfficeUpdateOneWithoutReportsNestedInput = {
+  create?: Prisma.XOR<Prisma.OfficeCreateWithoutReportsInput, Prisma.OfficeUncheckedCreateWithoutReportsInput>
+  connectOrCreate?: Prisma.OfficeCreateOrConnectWithoutReportsInput
+  upsert?: Prisma.OfficeUpsertWithoutReportsInput
+  disconnect?: Prisma.OfficeWhereInput | boolean
+  delete?: Prisma.OfficeWhereInput | boolean
+  connect?: Prisma.OfficeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OfficeUpdateToOneWithWhereWithoutReportsInput, Prisma.OfficeUpdateWithoutReportsInput>, Prisma.OfficeUncheckedUpdateWithoutReportsInput>
+}
+
 export type OfficeCreateWithoutCityInput = {
   nameAr: string
   nameEn: string
@@ -744,6 +772,7 @@ export type OfficeCreateWithoutCityInput = {
   isDemo?: boolean
   searchText?: string
   categories?: Prisma.OfficeCategoryCreateNestedManyWithoutOfficeInput
+  reports?: Prisma.ReportCreateNestedManyWithoutOfficeInput
 }
 
 export type OfficeUncheckedCreateWithoutCityInput = {
@@ -764,6 +793,7 @@ export type OfficeUncheckedCreateWithoutCityInput = {
   isDemo?: boolean
   searchText?: string
   categories?: Prisma.OfficeCategoryUncheckedCreateNestedManyWithoutOfficeInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutOfficeInput
 }
 
 export type OfficeCreateOrConnectWithoutCityInput = {
@@ -832,6 +862,7 @@ export type OfficeCreateWithoutCategoriesInput = {
   isDemo?: boolean
   searchText?: string
   city: Prisma.CityCreateNestedOneWithoutOfficesInput
+  reports?: Prisma.ReportCreateNestedManyWithoutOfficeInput
 }
 
 export type OfficeUncheckedCreateWithoutCategoriesInput = {
@@ -852,6 +883,7 @@ export type OfficeUncheckedCreateWithoutCategoriesInput = {
   closeTime: string
   isDemo?: boolean
   searchText?: string
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutOfficeInput
 }
 
 export type OfficeCreateOrConnectWithoutCategoriesInput = {
@@ -887,6 +919,7 @@ export type OfficeUpdateWithoutCategoriesInput = {
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.CityUpdateOneRequiredWithoutOfficesNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutOfficeNestedInput
 }
 
 export type OfficeUncheckedUpdateWithoutCategoriesInput = {
@@ -907,6 +940,105 @@ export type OfficeUncheckedUpdateWithoutCategoriesInput = {
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutOfficeNestedInput
+}
+
+export type OfficeCreateWithoutReportsInput = {
+  nameAr: string
+  nameEn: string
+  departmentAr: string
+  departmentEn: string
+  addressAr: string
+  addressEn: string
+  phone: string
+  lat: number
+  lng: number
+  temporarilyClosed?: boolean
+  openDays?: Prisma.OfficeCreateopenDaysInput | number[]
+  openTime: string
+  closeTime: string
+  isDemo?: boolean
+  searchText?: string
+  city: Prisma.CityCreateNestedOneWithoutOfficesInput
+  categories?: Prisma.OfficeCategoryCreateNestedManyWithoutOfficeInput
+}
+
+export type OfficeUncheckedCreateWithoutReportsInput = {
+  id?: number
+  nameAr: string
+  nameEn: string
+  departmentAr: string
+  departmentEn: string
+  cityId: string
+  addressAr: string
+  addressEn: string
+  phone: string
+  lat: number
+  lng: number
+  temporarilyClosed?: boolean
+  openDays?: Prisma.OfficeCreateopenDaysInput | number[]
+  openTime: string
+  closeTime: string
+  isDemo?: boolean
+  searchText?: string
+  categories?: Prisma.OfficeCategoryUncheckedCreateNestedManyWithoutOfficeInput
+}
+
+export type OfficeCreateOrConnectWithoutReportsInput = {
+  where: Prisma.OfficeWhereUniqueInput
+  create: Prisma.XOR<Prisma.OfficeCreateWithoutReportsInput, Prisma.OfficeUncheckedCreateWithoutReportsInput>
+}
+
+export type OfficeUpsertWithoutReportsInput = {
+  update: Prisma.XOR<Prisma.OfficeUpdateWithoutReportsInput, Prisma.OfficeUncheckedUpdateWithoutReportsInput>
+  create: Prisma.XOR<Prisma.OfficeCreateWithoutReportsInput, Prisma.OfficeUncheckedCreateWithoutReportsInput>
+  where?: Prisma.OfficeWhereInput
+}
+
+export type OfficeUpdateToOneWithWhereWithoutReportsInput = {
+  where?: Prisma.OfficeWhereInput
+  data: Prisma.XOR<Prisma.OfficeUpdateWithoutReportsInput, Prisma.OfficeUncheckedUpdateWithoutReportsInput>
+}
+
+export type OfficeUpdateWithoutReportsInput = {
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  addressAr?: Prisma.StringFieldUpdateOperationsInput | string
+  addressEn?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  lat?: Prisma.FloatFieldUpdateOperationsInput | number
+  lng?: Prisma.FloatFieldUpdateOperationsInput | number
+  temporarilyClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openDays?: Prisma.OfficeUpdateopenDaysInput | number[]
+  openTime?: Prisma.StringFieldUpdateOperationsInput | string
+  closeTime?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.CityUpdateOneRequiredWithoutOfficesNestedInput
+  categories?: Prisma.OfficeCategoryUpdateManyWithoutOfficeNestedInput
+}
+
+export type OfficeUncheckedUpdateWithoutReportsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  cityId?: Prisma.StringFieldUpdateOperationsInput | string
+  addressAr?: Prisma.StringFieldUpdateOperationsInput | string
+  addressEn?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  lat?: Prisma.FloatFieldUpdateOperationsInput | number
+  lng?: Prisma.FloatFieldUpdateOperationsInput | number
+  temporarilyClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openDays?: Prisma.OfficeUpdateopenDaysInput | number[]
+  openTime?: Prisma.StringFieldUpdateOperationsInput | string
+  closeTime?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.OfficeCategoryUncheckedUpdateManyWithoutOfficeNestedInput
 }
 
 export type OfficeCreateManyCityInput = {
@@ -945,6 +1077,7 @@ export type OfficeUpdateWithoutCityInput = {
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.OfficeCategoryUpdateManyWithoutOfficeNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutOfficeNestedInput
 }
 
 export type OfficeUncheckedUpdateWithoutCityInput = {
@@ -965,6 +1098,7 @@ export type OfficeUncheckedUpdateWithoutCityInput = {
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.OfficeCategoryUncheckedUpdateManyWithoutOfficeNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutOfficeNestedInput
 }
 
 export type OfficeUncheckedUpdateManyWithoutCityInput = {
@@ -993,10 +1127,12 @@ export type OfficeUncheckedUpdateManyWithoutCityInput = {
 
 export type OfficeCountOutputType = {
   categories: number
+  reports: number
 }
 
 export type OfficeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   categories?: boolean | OfficeCountOutputTypeCountCategoriesArgs
+  reports?: boolean | OfficeCountOutputTypeCountReportsArgs
 }
 
 /**
@@ -1014,6 +1150,13 @@ export type OfficeCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
  */
 export type OfficeCountOutputTypeCountCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OfficeCategoryWhereInput
+}
+
+/**
+ * OfficeCountOutputType without action
+ */
+export type OfficeCountOutputTypeCountReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReportWhereInput
 }
 
 
@@ -1037,6 +1180,7 @@ export type OfficeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   searchText?: boolean
   city?: boolean | Prisma.CityDefaultArgs<ExtArgs>
   categories?: boolean | Prisma.Office$categoriesArgs<ExtArgs>
+  reports?: boolean | Prisma.Office$reportsArgs<ExtArgs>
   _count?: boolean | Prisma.OfficeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["office"]>
 
@@ -1106,6 +1250,7 @@ export type OfficeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type OfficeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   city?: boolean | Prisma.CityDefaultArgs<ExtArgs>
   categories?: boolean | Prisma.Office$categoriesArgs<ExtArgs>
+  reports?: boolean | Prisma.Office$reportsArgs<ExtArgs>
   _count?: boolean | Prisma.OfficeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OfficeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1120,6 +1265,7 @@ export type $OfficePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     city: Prisma.$CityPayload<ExtArgs>
     categories: Prisma.$OfficeCategoryPayload<ExtArgs>[]
+    reports: Prisma.$ReportPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1544,6 +1690,7 @@ export interface Prisma__OfficeClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   city<T extends Prisma.CityDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CityDefaultArgs<ExtArgs>>): Prisma.Prisma__CityClient<runtime.Types.Result.GetResult<Prisma.$CityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   categories<T extends Prisma.Office$categoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Office$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OfficeCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reports<T extends Prisma.Office$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Office$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2012,6 +2159,30 @@ export type Office$categoriesArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.OfficeCategoryScalarFieldEnum | Prisma.OfficeCategoryScalarFieldEnum[]
+}
+
+/**
+ * Office.reports
+ */
+export type Office$reportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Report
+   */
+  select?: Prisma.ReportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Report
+   */
+  omit?: Prisma.ReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReportInclude<ExtArgs> | null
+  where?: Prisma.ReportWhereInput
+  orderBy?: Prisma.ReportOrderByWithRelationInput | Prisma.ReportOrderByWithRelationInput[]
+  cursor?: Prisma.ReportWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReportScalarFieldEnum | Prisma.ReportScalarFieldEnum[]
 }
 
 /**

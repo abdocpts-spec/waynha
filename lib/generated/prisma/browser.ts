@@ -72,3 +72,23 @@ export type Office = Prisma.OfficeModel
  * 
  */
 export type OfficeCategory = Prisma.OfficeCategoryModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel
+/**
+ * Model Report
+ * بلاغ عن معلومة غير صحيحة يرسله أي زائر أو مستخدم
+ */
+export type Report = Prisma.ReportModel
+/**
+ * Model Translation
+ * ترجمات آلية مخزّنة لنصوص الواجهة (المفتاح: اللغة + بصمة النص الأصلي)
+ */
+export type Translation = Prisma.TranslationModel

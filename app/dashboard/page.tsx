@@ -1,7 +1,9 @@
 import DashboardView from "@/components/account/DashboardView";
 import { prisma } from "@/lib/db";
 import { formatDate } from "@/lib/format";
+import { getCurrentUser } from "@/lib/auth/session";
 import { getLang } from "@/lib/i18n.server";
+import { visibleServiceWhere } from "@/lib/search/serviceSearch";
 
 export const dynamic = "force-dynamic";
 
@@ -10,8 +12,9 @@ export const metadata = {
 };
 
 export default async function DashboardPage() {
-  const lang = await getLang();
+  const [lang, user] = await Promise.all([getLang(), getCurrentUser()]);
   const records = await prisma.service.findMany({
+    where: visibleServiceWhere(user?.role),
     select: {
       id: true,
       icon: true,
@@ -40,5 +43,5 @@ export default async function DashboardPage() {
       date: formatDate(s.lastReviewedAt!.toISOString(), lang),
     }));
 
-  return <DashboardView lang={lang} services={services} updates={updates} />;
+  return <DashboardView lang={lang} services={services} updates={updates} user={user ? { name: user.name, role: user.role } : null} />;
 }

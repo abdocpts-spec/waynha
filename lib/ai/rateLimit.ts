@@ -10,7 +10,7 @@ const MAX_REQUESTS = 15;
 
 export type RateLimitResult = { allowed: boolean; retryAfterSeconds: number };
 
-export function checkRateLimit(key: string): RateLimitResult {
+export function checkRateLimit(key: string, max: number = MAX_REQUESTS): RateLimitResult {
   const now = Date.now();
   const bucket = buckets.get(key);
 
@@ -20,7 +20,7 @@ export function checkRateLimit(key: string): RateLimitResult {
     return { allowed: true, retryAfterSeconds: 0 };
   }
 
-  if (bucket.count >= MAX_REQUESTS) {
+  if (bucket.count >= max) {
     return { allowed: false, retryAfterSeconds: Math.ceil((bucket.resetAt - now) / 1000) };
   }
 

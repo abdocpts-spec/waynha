@@ -1,47 +1,41 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import BrandMark from "@/components/layout/BrandMark";
+import { login, signup, type AuthState } from "@/lib/auth/actions";
+import { COUNTRY_CODES, DEFAULT_DIAL } from "@/lib/countryCodes";
 import { t, type Lang } from "@/lib/i18n";
-import { readProfile, saveProfile } from "@/lib/preferences";
 
 /**
- * تسجيل الدخول (نفس واجهة النموذج الأولي).
- * لا يوجد خادم حسابات بعد: الدخول ينشئ ملفاً شخصياً محلياً على هذا الجهاز
- * لحفظ الإعدادات والتفضيلات، ولا تُحفظ كلمة المرور ولا تُرسل لأي مكان.
+ * تسجيل الدخول وإنشاء الحساب (نفس واجهة النموذج الأولي، بحسابات حقيقية على الخادم).
+ * أنواع الحسابات من الموقع: مواطن أو أجنبي فقط. حساب الأدمن يُنشأ من الخادم.
  */
-export default function LoginForm({ lang }: { lang: Lang }) {
-  const router = useRouter();
-  const [contact, setContact] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+/** حقل بأيقونة مستقلة على جانبه (bare = بلا أيقونة، لنفس الشكل القديم في تسجيل الدخول). */
+function IconField({ icon, bare, children }: { icon: string; bare?: boolean; children: React.ReactNode }) {
+  if (bare) return <>{children}</>;
+  return (
+    <div className="icon-field">
+      <span className="icon-field-icon" aria-hidden="true">{icon}</span>
+      {children}
+    </div>
+  );
+}
+
+export default function LoginForm({
+  lang,
+  mode,
+  next,
+  defaultRole,
+}: {
+  lang: Lang;
+  mode: "login" | "signup";
+  next?: string;
+  defaultRole?: "CITIZEN" | "FOREIGNER";
+}) {
+  const [state, action, pending] = useActionState<AuthState, FormData>(mode === "login" ? login : signup, undefined);
+  const [role] = useState<"CITIZEN" | "FOREIGNER">(defaultRole ?? (lang === "en" ? "FOREIGNER" : "CITIZEN"));
   const [soon, setSoon] = useState("");
-
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const value = contact.trim();
-    const isPhone = /^0?9[1-5]\d{7}$/.test(value.replace(/[\s-]/g, ""));
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-    if (!isPhone && !isEmail) {
-      setError(t(lang, "اكتب رقم هاتف ليبي (09X XXX XXXX) أو بريداً إلكترونياً صحيحاً.", "Enter a Libyan phone number (09X XXX XXXX) or a valid email."));
-      return;
-    }
-    if (password.length < 6) {
-      setError(t(lang, "كلمة المرور لازم تكون 6 أحرف على الأقل.", "Password must be at least 6 characters."));
-      return;
-    }
-    const previous = readProfile();
-    saveProfile({
-      name: previous?.contact === value ? previous.name : "",
-      contact: value,
-      cityId: previous?.contact === value ? previous.cityId : "",
-    });
-    setPassword("");
-    router.push("/dashboard");
-  };
-
   const comingSoon = (what: string) =>
     setSoon(t(lang, `${what} غير متاح في النسخة الحالية.`, `${what} isn't available in this version yet.`));
 
@@ -52,112 +46,323 @@ export default function LoginForm({ lang }: { lang: Lang }) {
           <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
             <BrandMark size={56} />
           </div>
-          <h1 className="auth-title">{t(lang, "مرحباً بيك في وينها", "Welcome to WAYNHA")}</h1>
+          <h1 className="auth-title">
+            {mode === "login" ? t(lang, "مرحباً بيك في وينها", "Welcome to WAYNHA") : t(lang, "إنشاء حساب جديد", "Create an account")}
+          </h1>
           <p className="auth-subtitle">
-            {t(lang, "سجل دخولك لحفظ إجراءاتك ومتابعتها.", "Sign in to save and follow your procedures.")}
+            {mode === "login"
+              ? t(lang, "سجل دخولك لحفظ إجراءاتك ومتابعتها.", "Sign in to save and follow your procedures.")
+              : t(lang, "الحساب اختياري، ويعرض لك الخدمات اللي تخصك.", "Optional — it shows the services that apply to you.")}
           </p>
         </div>
 
-        <form onSubmit={submit} noValidate>
+        <form action={action}>
+          <input type="hidden" name="lang" value={lang} />
+          {next && <input type="hidden" name="next" value={next} />}
+
+          {/* نوع الزائر اختاره في صفحة الترحيب، فلا نكرر السؤال هنا */}
+          {mode === "signup" && <input type="hidden" name="role" value={role} />}
+
+          {mode === "signup" && (
+            <>
+              <div className="form-group">
+                <label className="form-label" htmlFor="auth-name">
+                  {t(lang, "الاسم الكامل", "Full name")}
+                </label>
+                <IconField icon="👤">
+                  <input id="auth-name" name="name" className="form-input" placeholder=" " autoComplete="name" required maxLength={80} />
+                </IconField>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label" htmlFor="auth-login">
+                  {t(lang, "رقم الهاتف", "Phone number")}
+                </label>
+                <div className="phone-row">
+                  {role === "FOREIGNER" && (
+                    <select
+                      name="phoneCode"
+                      className="form-input phone-code"
+                      defaultValue={DEFAULT_DIAL}
+                      dir="ltr"
+                      aria-label={t(lang, "مفتاح الدولة", "Country code")}
+                    >
+                      {COUNTRY_CODES.map((c) => (
+                        <option key={c.dial} value={c.dial}>
+                          +{c.dial} {t(lang, c.ar, c.en)}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <IconField icon="📞">
+                      <input
+                        id="auth-login"
+                        name="login"
+                        type="tel"
+                        inputMode="tel"
+                        className="form-input"
+                        placeholder={role === "FOREIGNER" ? "XXX XXX XXXX" : "09X XXX XXXX"}
+                        autoComplete="tel"
+                        dir="ltr"
+                        style={{ textAlign: lang === "ar" ? "right" : "left" }}
+                        required
+                        maxLength={30}
+                      />
+                    </IconField>
+                  </div>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="form-label" htmlFor="auth-email">
+                  {t(lang, "البريد الإلكتروني (اختياري)", "Email (optional)")}
+                </label>
+                <IconField icon="✉️">
+                  <input
+                    id="auth-email"
+                    name="email"
+                    type="email"
+                    className="form-input"
+                    placeholder="name@email.com"
+                    autoComplete="email"
+                    dir="ltr"
+                    style={{ textAlign: lang === "ar" ? "right" : "left" }}
+                    maxLength={120}
+                  />
+                </IconField>
+              </div>
+
+              {role === "CITIZEN" && (
+                <>
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="auth-nid">
+                      {t(lang, "الرقم الوطني", "National ID number")}
+                    </label>
+                    <IconField icon="🪪">
+                      <input
+                        id="auth-nid"
+                        name="nationalId"
+                        className="form-input"
+                        inputMode="numeric"
+                        autoComplete="off"
+                        placeholder="1XXXXXXXXXXX"
+                        dir="ltr"
+                        style={{ textAlign: lang === "ar" ? "right" : "left" }}
+                        required
+                        maxLength={20}
+                      />
+                    </IconField>
+                    <small className="form-hint">
+                      {t(
+                        lang,
+                        "12 رقماً. يُحفظ كبصمة مشفّرة ولا يظهر لأي أحد، ولا تتحقق منه وينها مع أي جهة.",
+                        "12 digits. Stored only as an encrypted fingerprint, never shown to anyone, and not checked with any authority.",
+                      )}
+                    </small>
+                  </div>
+                </>
+              )}
+
+              {role === "FOREIGNER" && (
+                <div className="form-group">
+                  <label className="form-label" htmlFor="auth-rid">
+                    {t(lang, "رقم الإقامة", "Residence permit number")}
+                  </label>
+                  <input
+                    id="auth-rid"
+                    name="residenceId"
+                    placeholder=" "
+                    className="form-input"
+                    autoComplete="off"
+                    dir="ltr"
+                    style={{ textAlign: lang === "ar" ? "right" : "left" }}
+                    required
+                    maxLength={30}
+                  />
+                  <small className="form-hint">
+                    {t(
+                      lang,
+                      "يُحفظ كبصمة مشفّرة ولا يظهر لأي أحد، ولا تتحقق منه وينها مع أي جهة.",
+                      "Stored only as an encrypted fingerprint, never shown to anyone, and not checked with any authority.",
+                    )}
+                  </small>
+                </div>
+              )}
+            </>
+          )}
+
+          {mode === "login" && (
+            <>
+              <p className="form-hint" style={{ marginTop: 0 }}>
+                {t(lang, "عبّي واحدة فقط من الخانات التالية.", "Fill in any one of the fields below.")}
+              </p>
+              <div className="form-group">
+                <label className="form-label" htmlFor="auth-phone">
+                  {t(lang, "رقم الهاتف", "Phone number")}
+                </label>
+                <div className="phone-row">
+                  {role === "FOREIGNER" && (
+                    <select
+                      name="phoneCode"
+                      className="form-input phone-code"
+                      defaultValue={DEFAULT_DIAL}
+                      dir="ltr"
+                      aria-label={t(lang, "مفتاح الدولة", "Country code")}
+                    >
+                      {COUNTRY_CODES.map((c) => (
+                        <option key={c.dial} value={c.dial}>
+                          +{c.dial} {t(lang, c.ar, c.en)}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <IconField icon="📞">
+                      <input
+                        id="auth-phone"
+                        name="phone"
+                        type="tel"
+                        inputMode="tel"
+                        className="form-input"
+                        placeholder={role === "FOREIGNER" ? "XXX XXX XXXX" : "09X XXX XXXX"}
+                        autoComplete="tel"
+                        dir="ltr"
+                        style={{ textAlign: lang === "ar" ? "right" : "left" }}
+                        maxLength={30}
+                      />
+                    </IconField>
+                  </div>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="form-label" htmlFor="auth-email">
+                  {t(lang, "البريد الإلكتروني", "Email")}
+                </label>
+                <IconField icon="✉️">
+                  <input
+                    id="auth-email"
+                    name="email"
+                    type="email"
+                    className="form-input"
+                    placeholder="name@email.com"
+                    autoComplete="email"
+                    dir="ltr"
+                    style={{ textAlign: lang === "ar" ? "right" : "left" }}
+                    maxLength={120}
+                  />
+                </IconField>
+              </div>
+              <div className="form-group">
+                <label className="form-label" htmlFor="auth-idnum">
+                  {role === "CITIZEN" ? t(lang, "الرقم الوطني", "National ID number") : t(lang, "رقم الإقامة", "Residence permit number")}
+                </label>
+                <IconField icon="🪪">
+                  <input
+                    id="auth-idnum"
+                    name="idNumber"
+                    className="form-input"
+                    inputMode={role === "CITIZEN" ? "numeric" : undefined}
+                    placeholder={role === "CITIZEN" ? "1XXXXXXXXXXX" : " "}
+                    autoComplete="off"
+                    dir="ltr"
+                    style={{ textAlign: lang === "ar" ? "right" : "left" }}
+                    maxLength={30}
+                  />
+                </IconField>
+              </div>
+            </>
+          )}
+
           <div className="form-group">
-            <label className="form-label" htmlFor="login-contact">
-              {t(lang, "رقم الهاتف أو البريد الإلكتروني", "Phone number or email")}
-            </label>
-            <input
-              id="login-contact"
-              type="text"
-              className="form-input"
-              placeholder="09X XXX XXXX"
-              autoComplete="username"
-              dir="ltr"
-              style={{ textAlign: lang === "ar" ? "right" : "left" }}
-              value={contact}
-              onChange={(e) => {
-                setContact(e.target.value);
-                setError("");
-              }}
-            />
-          </div>
-          <div className="form-group">
-            <label className="form-label" htmlFor="login-password">
+            <label className="form-label" htmlFor="auth-password">
               {t(lang, "كلمة المرور", "Password")}
             </label>
-            <input
-              id="login-password"
-              type="password"
-              className="form-input"
-              placeholder="••••••••"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError("");
-              }}
-            />
+            <IconField icon="🔒">
+              <input
+                id="auth-password"
+                name="password"
+                type="password"
+                className="form-input"
+                placeholder="••••••••"
+                autoComplete={mode === "login" ? "current-password" : "new-password"}
+                required
+                minLength={mode === "signup" ? 8 : undefined}
+                maxLength={200}
+              />
+            </IconField>
+            {mode === "signup" && (
+              <small className="form-hint">{t(lang, "8 أحرف على الأقل.", "At least 8 characters.")}</small>
+            )}
           </div>
+          {mode === "signup" && (
+            <div className="form-group">
+              <label className="form-label" htmlFor="auth-password2">
+                {t(lang, "تأكيد كلمة المرور", "Confirm password")}
+              </label>
+              <IconField icon="🔒">
+                <input
+                  id="auth-password2"
+                  name="confirmPassword"
+                  type="password"
+                  className="form-input"
+                  placeholder="••••••••"
+                  autoComplete="new-password"
+                  required
+                  minLength={8}
+                  maxLength={200}
+                />
+              </IconField>
+            </div>
+          )}
 
-          <div className="form-options">
-            <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
-              <input type="checkbox" defaultChecked /> <span>{t(lang, "تذكرني", "Remember me")}</span>
-            </label>
-            <button type="button" className="link-btn" onClick={() => comingSoon(t(lang, "استرجاع كلمة المرور", "Password reset"))}>
-              {t(lang, "نسيت كلمة المرور؟", "Forgot password?")}
-            </button>
-          </div>
-
-          {error && (
-            <p className="form-error" role="alert">
-              {error}
+          {mode === "login" && (
+            <div className="form-options">
+              <span />
+              <button type="button" className="link-btn" onClick={() => comingSoon(t(lang, "استرجاع كلمة المرور", "Password reset"))}>
+                {t(lang, "نسيت كلمة المرور؟", "Forgot password?")}
+              </button>
+            </div>
+          )}
+          {mode === "login" && soon && (
+            <p className="form-note" role="status">
+              {soon}
             </p>
           )}
 
-          <button type="submit" className="btn-primary btn-block">
-            {t(lang, "تسجيل الدخول", "Sign in")}
+          {state?.error && (
+            <p className="form-error" role="alert">
+              {state.error}
+            </p>
+          )}
+
+          <button type="submit" className="btn-primary btn-block" disabled={pending}>
+            {pending
+              ? t(lang, "لحظة…", "One moment…")
+              : mode === "login"
+                ? t(lang, "تسجيل الدخول", "Sign in")
+                : t(lang, "إنشاء الحساب", "Create account")}
           </button>
         </form>
 
-        <div className="divider">{t(lang, "أو الدخول باستخدام", "Or continue with")}</div>
-
-        <button type="button" className="social-btn" onClick={() => comingSoon(t(lang, "الدخول بحساب Google", "Google sign-in"))}>
-          <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
-            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
-            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
-          </svg>
-          {t(lang, "الدخول بحساب Google", "Continue with Google")}
-        </button>
-        <button type="button" className="social-btn" onClick={() => comingSoon(t(lang, "الدخول بحساب Apple", "Apple sign-in"))}>
-          <svg width="20" height="20" viewBox="0 0 384 512" aria-hidden="true">
-            <path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
-          </svg>
-          {t(lang, "الدخول بحساب Apple", "Continue with Apple")}
-        </button>
-
-        {soon && (
-          <p className="form-note" role="status">
-            {soon}
-          </p>
-        )}
-
         <div className="auth-footer">
-          {t(lang, "ليس لديك حساب؟", "No account?")}{" "}
-          <button type="button" className="link-btn" onClick={() => comingSoon(t(lang, "إنشاء حساب جديد", "Creating an account"))}>
-            {t(lang, "إنشاء حساب جديد", "Create a new account")}
-          </button>
+          {mode === "login" ? (
+            <>
+              {t(lang, "ليس لديك حساب؟", "No account?")}{" "}
+              <Link href="/register">{t(lang, "إنشاء حساب جديد", "Create a new account")}</Link>
+            </>
+          ) : (
+            <>
+              {t(lang, "عندك حساب؟", "Have an account?")} <Link href="/login">{t(lang, "سجّل دخولك", "Sign in")}</Link>
+            </>
+          )}
         </div>
 
         <p className="auth-privacy">
           {t(
             lang,
-            "النسخة الحالية تحفظ حسابك على هذا الجهاز فقط، ولا تحفظ كلمة المرور ولا ترسلها لأي مكان. التسجيل ليس شرطاً لاستخدام وينها.",
-            "This version keeps your account on this device only and never stores or sends your password. Signing in is optional.",
+            "التسجيل ليس شرطاً لاستخدام وينها. الرقم الوطني ورقم الإقامة وكلمة المرور تُحفظ مشفّرة، ولا نطلب رقم جواز السفر.",
+            "Signing in is optional. National ID, residence number and password are stored encrypted, and we never ask for a passport number.",
           )}
-        </p>
-        <p style={{ textAlign: "center", marginTop: 12 }}>
-          <Link href="/" className="section-link">
-            {t(lang, "← العودة للرئيسية", "← Back to home")}
-          </Link>
         </p>
       </div>
     </div>

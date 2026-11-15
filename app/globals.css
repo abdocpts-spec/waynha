@@ -282,7 +282,9 @@
 .form-group { margin-bottom: 20px; }
 .form-label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; }
 .form-input { width: 100%; padding: 14px 16px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--bg-input); color: var(--text-main); font-family: inherit; font-size: 1rem; outline: none; transition: var(--transition); }
-.form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
+/* الإضاءة تظهر عند التركيز وتبقى ثابتة في كل خانة فيها بيانات */
+.form-input:focus,
+input.form-input:not(:placeholder-shown) { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
 .form-options { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 0.9rem; gap: 12px; }
 .form-error { color: var(--danger); font-size: 0.9rem; margin: -8px 0 16px; }
 .form-note { color: var(--text-muted); font-size: 0.88rem; text-align: center; margin-top: 4px; }
@@ -382,3 +384,188 @@ a.list-item:hover { outline: 1px solid var(--border-color); }
 /* لوحة التحكم على الهاتف: القائمة الجانبية تمرّر أفقياً داخل عرض الشاشة */
 .dashboard-layout > * { min-width: 0; }
 @media (max-width: 900px) { .sidebar { overflow: hidden; } }
+
+/* ─────────── الحسابات والبلاغات ─────────── */
+.form-hint { display: block; margin-top: 6px; color: var(--text-muted); font-size: 0.82rem; }
+.role-picker { border: 0; padding: 0; display: grid; gap: 10px; }
+.role-picker legend { margin-bottom: 8px; }
+.role-option { display: flex; gap: 12px; align-items: center; text-align: start; padding: 12px 14px; border: 1.5px solid var(--border-color); border-radius: var(--radius-md); background: var(--bg-body); color: var(--text-main); font: inherit; cursor: pointer; transition: var(--transition); }
+.role-option strong { display: block; font-weight: 700; }
+.role-option small { color: var(--text-muted); font-size: 0.82rem; }
+.role-option.active { border-color: var(--primary); background: var(--primary-light); }
+.role-icon { font-size: 1.6rem; }
+.report-card { border-style: dashed; }
+button:disabled { opacity: 0.6; cursor: wait; }
+
+/* ─────────── لوحة الإدارة ─────────── */
+.admin-who { display: flex; flex-direction: column; gap: 2px; padding: 4px 14px 12px; border-bottom: 1px solid var(--border-color); margin-bottom: 6px; }
+.admin-who small { color: var(--text-muted); }
+.count-badge { margin-inline-start: auto; background: var(--danger); color: #fff; border-radius: var(--radius-full); padding: 1px 8px; font-size: 0.75rem; }
+.admin-list { display: flex; flex-direction: column; gap: 12px; }
+.admin-row { display: flex; gap: 16px; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; padding: 18px 20px; }
+.admin-row-main { flex: 1 1 320px; min-width: 0; }
+.admin-row-actions { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+.inline-form { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.admin-select { width: auto; max-width: 220px; padding: 6px 10px; }
+.report-message { margin: 6px 0; white-space: pre-wrap; color: var(--text-main); }
+.pill { display: inline-block; padding: 2px 10px; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 600; }
+.pill-gray { background: #f1efe8; color: #444441; }
+.pill-amber { background: #faeeda; color: #633806; }
+.pill-green { background: #e1f5ee; color: #085041; }
+.pill-red { background: #fcebeb; color: #791f1f; }
+.pill-blue { background: #e6f1fb; color: #0c447c; }
+[data-theme="dark"] .pill-gray { background: #444441; color: #f1efe8; }
+[data-theme="dark"] .pill-amber { background: #633806; color: #faeeda; }
+[data-theme="dark"] .pill-green { background: #085041; color: #e1f5ee; }
+[data-theme="dark"] .pill-red { background: #791f1f; color: #fcebeb; }
+[data-theme="dark"] .pill-blue { background: #0c447c; color: #e6f1fb; }
+.editor { display: flex; flex-direction: column; gap: 14px; }
+.editor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.editor-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 700px) { .editor-pair { grid-template-columns: 1fr; } .admin-row-actions { align-items: stretch; } }
+.editor-input { max-width: 100%; margin-top: 6px; font-weight: 400; }
+textarea.editor-input { min-height: 90px; resize: vertical; }
+.header-admin { padding: 7px 12px; white-space: nowrap; gap: 6px; }
+.logo-text { white-space: nowrap; }
+@media (max-width: 1200px) { .header-admin-text { display: none; } }
+
+/* خانة «ما عندي إقامة بعد» في التسجيل */
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.form-check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+.form-input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ─────────── صفحة الترحيب: بطاقتان بحجم الشاشة ─────────── */
+body:has(.lander) .header,
+body:has(.lander) .footer,
+body:has(.lander) .assistant-fab { display: none; }
+
+.lander { position: relative; min-height: 100dvh; display: flex; flex-direction: column; background: #050d1e; overflow: hidden; }
+.lander-top {
+  position: absolute; inset-inline: 0; top: 0; z-index: 5;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: start;
+  padding: 18px 24px; pointer-events: none; color: #fff;
+}
+.lander-top > * { pointer-events: auto; }
+.lander-brand { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.lander-brand h1 { font-size: 1.6rem; margin: 0; color: #fff; }
+.lander-brand p { margin: 0; font-size: 0.95rem; opacity: 0.85; }
+.lander-controls { display: flex; align-items: center; gap: 8px; justify-self: end; }
+.lander-select-wrap {
+  display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; height: 40px;
+  border-radius: 999px; background: rgba(255, 255, 255, 0.14); color: #fff; border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.lander-select { background: transparent; border: 0; color: inherit; font: inherit; cursor: pointer; outline: none; }
+.lander-select option { color: #111; }
+
+.lander-grid { flex: 1; display: flex; min-height: 100dvh; margin: 0; }
+.lander-card {
+  flex: 1; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; padding: 140px 32px 56px; border: 0; color: #fff; text-align: center; cursor: pointer; font-family: inherit;
+  filter: brightness(1) contrast(1);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.45s ease, box-shadow 0.45s ease;
+}
+.lander-card--citizen { background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.12), transparent 60%), linear-gradient(160deg, #0b2a6b, #1a56db); }
+.lander-card--foreigner { background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.12), transparent 60%), linear-gradient(160deg, #064e4a, #0d9488); }
+.lander-card-icon { display: flex; align-items: center; justify-content: center; width: 112px; height: 112px; border-radius: 28px; background: rgba(255,255,255,0.14); }
+.lander-card strong { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+.lander-card small { font-size: 1.05rem; opacity: 0.85; max-width: 340px; line-height: 1.7; }
+.lander-card-cta { margin-top: 10px; padding: 10px 26px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.5); font-weight: 700; }
+
+/* التكبير يتجه نحو خط الالتقاء فيتداخل مع البطاقة المجاورة */
+.lander-card:first-child { transform-origin: right center; }
+.lander-card:last-child { transform-origin: left center; }
+html[dir="rtl"] .lander-card:first-child { transform-origin: left center; }
+html[dir="rtl"] .lander-card:last-child { transform-origin: right center; }
+
+.lander-card:hover, .lander-card:focus-visible {
+  transform: scale(1.08); z-index: 3; filter: brightness(1.15) contrast(1.1);
+  box-shadow: 0 0 70px rgba(0, 0, 0, 0.55); outline: none;
+}
+.lander-grid:has(.lander-card:hover) .lander-card:not(:hover),
+.lander-grid:has(.lander-card:focus-visible) .lander-card:not(:focus-visible) { filter: brightness(0.78) contrast(0.9); }
+
+@media (max-width: 767px) {
+  .lander-top { position: static; background: #050d1e; padding: 14px 16px; }
+  .lander-grid { flex-direction: column; min-height: 0; }
+  .lander-card { padding: 36px 20px; }
+  .lander-card:first-child, html[dir="rtl"] .lander-card:first-child { transform-origin: center bottom; }
+  .lander-card:last-child, html[dir="rtl"] .lander-card:last-child { transform-origin: center top; }
+  .lander-card:hover, .lander-card:focus-visible { transform: scale(1.04); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lander-card { transition: filter 0.2s ease; }
+  .lander-card:hover, .lander-card:focus-visible { transform: none; }
+}
+
+/* رقم الهاتف مع مفتاح الدولة (للأجنبي) */
+.phone-row { display: flex; gap: 8px; direction: ltr; }
+.phone-row .phone-code { flex: 0 0 42%; min-width: 0; padding-inline: 10px; }
+.phone-row #auth-login { flex: 1; min-width: 0; }
+
+/* حقول بأيقونة مستقلة (إنشاء الحساب) */
+.icon-field { position: relative; }
+.icon-field-icon { position: absolute; inset-inline-start: 14px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; pointer-events: none; }
+html[dir="rtl"] .icon-field .form-input { padding-right: 46px; }
+html[dir="ltr"] .icon-field .form-input { padding-left: 46px; }
+
+/* اختيار طريقة الدخول: كل طريقة بحقل وأيقونة مستقلين */
+.method-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+.method-tab {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 6px;
+  border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--bg-card);
+  color: var(--text-muted); font-family: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+}
+.method-tab:hover { border-color: var(--primary); color: var(--primary); }
+.method-tab.active { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+
+/* قائمة اللغة (منسدلة مع بحث واقتراح من المتصفح) */
+.lang-picker { position: relative; }
+.lang-picker-btn {
+  display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main);
+  font-family: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+}
+.lang-picker-btn:hover { border-color: var(--primary); }
+.lang-picker--lander .lang-picker-btn { background: rgba(255, 255, 255, 0.14); color: #fff; border-color: rgba(255, 255, 255, 0.25); }
+.lang-picker-caret { font-size: 0.7rem; opacity: 0.7; }
+.lang-picker-panel {
+  position: absolute; inset-inline-end: 0; top: calc(100% + 8px); z-index: 60; width: 270px; padding: 10px;
+  background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-lg, 0 12px 32px rgba(0, 0, 0, 0.25));
+}
+.lang-picker-detected {
+  display: flex; align-items: center; gap: 6px; width: 100%; margin-bottom: 8px; padding: 9px 12px; border: 0;
+  border-radius: var(--radius-md); background: var(--primary-light); color: var(--primary);
+  font-family: inherit; font-weight: 700; cursor: pointer;
+}
+.lang-picker-detected small { opacity: 0.7; font-weight: 400; }
+.lang-picker-search {
+  width: 100%; margin-bottom: 6px; padding: 8px 12px; border: 1px solid var(--border-color);
+  border-radius: var(--radius-md); background: var(--bg-input); color: var(--text-main); font-family: inherit; outline: none;
+}
+.lang-picker-search:focus { border-color: var(--primary); }
+.lang-picker-list { list-style: none; margin: 0; padding: 0; max-height: 280px; overflow-y: auto; }
+.lang-picker-item {
+  display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 10px; border: 0; border-radius: var(--radius-sm);
+  background: transparent; color: inherit; font-family: inherit; font-size: 0.95rem; cursor: pointer; text-align: start;
+}
+.lang-picker-item small { margin-inline-start: auto; opacity: 0.55; font-size: 0.75rem; }
+.lang-picker-item:hover, .lang-picker-item.active { background: var(--primary-light); }
+.lang-picker-item.active { color: var(--primary); font-weight: 700; }
+.lang-picker-empty { padding: 10px; text-align: center; opacity: 0.5; }

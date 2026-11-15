@@ -34,7 +34,9 @@ export default function ChatMessage({
             <span className="sr-only">{t(lang, "جاري الكتابة", "Typing")}</span>
           </div>
         ) : (
-          <div className={`bubble${message.status === "error" ? " error" : ""}`}>{message.text}</div>
+          <div className={`bubble${message.status === "error" ? " error" : ""}`} translate="no">
+            {message.text}
+          </div>
         )}
       </div>
 

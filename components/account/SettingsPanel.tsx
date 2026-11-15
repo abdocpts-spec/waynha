@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import AccountForm, { type AccountInfo } from "@/components/account/AccountForm";
 import { LANG_COOKIE, t, type Lang } from "@/lib/i18n";
 import {
   DEFAULT_PRIMARY,
@@ -10,11 +11,8 @@ import {
   PRIMARY_COLORS,
   applyPreferences,
   readPref,
-  readProfile,
-  saveProfile,
   writePref,
   type FontSize,
-  type Profile,
 } from "@/lib/preferences";
 
 export type SectionId = "accessibility" | "appearance" | "account" | "language";
@@ -55,10 +53,12 @@ export default function SettingsPanel({
   lang,
   cities,
   initialSection,
+  account,
 }: {
   lang: Lang;
   cities: City[];
   initialSection: SectionId;
+  account: AccountInfo | null;
 }) {
   const router = useRouter();
   const [section, setSection] = useState<SectionId>(initialSection);
@@ -67,9 +67,6 @@ export default function SettingsPanel({
   const [simple, setSimple] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [primary, setPrimary] = useState<string>(DEFAULT_PRIMARY);
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [draft, setDraft] = useState<Profile>({ name: "", contact: "", cityId: "" });
-  const [saved, setSaved] = useState(false);
 
   // نقرأ القيم المحفوظة بعد التحميل (localStorage غير متاح على الخادم)،
   // ونعيد قراءتها إذا تغيّرت من تبويب آخر أو من زر المظهر في الترويسة
@@ -81,9 +78,6 @@ export default function SettingsPanel({
       setSimple(readPref(PREF_KEYS.simple) === "1");
       setTheme(readPref(PREF_KEYS.theme) === "dark" ? "dark" : "light");
       setPrimary(readPref(PREF_KEYS.primary, DEFAULT_PRIMARY).toLowerCase());
-      const p = readProfile();
-      setProfile(p);
-      if (p) setDraft(p);
     };
     load();
     window.addEventListener("storage", load);
@@ -99,22 +93,6 @@ export default function SettingsPanel({
     if (next === lang) return;
     document.cookie = `${LANG_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
     router.refresh();
-  };
-
-  const saveAccount = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!profile) return;
-    const next = { ...draft, name: draft.name.trim(), contact: profile.contact };
-    saveProfile(next);
-    setProfile(next);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
-  };
-
-  const logout = () => {
-    saveProfile(null);
-    setProfile(null);
-    setDraft({ name: "", contact: "", cityId: "" });
   };
 
   const nav: { id: SectionId; icon: string; ar: string; en: string }[] = [
@@ -268,74 +246,26 @@ export default function SettingsPanel({
         {section === "account" && (
           <section className="settings-section">
             <h2 className="section-title">{t(lang, "إعدادات الحساب", "Account settings")}</h2>
-            {!profile ? (
+            {account ? (
+              <AccountForm lang={lang} account={account} cities={cities} />
+            ) : (
               <div className="setting-group">
                 <p className="setting-desc">
                   {t(
                     lang,
-                    "ما سجلتش دخولك. التسجيل اختياري، ويحفظ اسمك ومدينتك على هذا الجهاز.",
-                    "You're not signed in. Signing in is optional and keeps your name and city on this device.",
+                    "ما سجلتش دخولك. التسجيل اختياري، ويعرض لك الخدمات اللي تخصك كمواطن أو مقيم أجنبي.",
+                    "You're not signed in. Signing in is optional and shows the services that apply to you.",
                   )}
                 </p>
-                <Link href="/login" className="btn-primary">
-                  {t(lang, "تسجيل الدخول", "Sign in")}
-                </Link>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                  <Link href="/login" className="btn-primary">
+                    {t(lang, "تسجيل الدخول", "Sign in")}
+                  </Link>
+                  <Link href="/register" className="btn-outline">
+                    {t(lang, "إنشاء حساب", "Create account")}
+                  </Link>
+                </div>
               </div>
-            ) : (
-              <form onSubmit={saveAccount}>
-                <div className="setting-group">
-                  <label className="setting-field-label" htmlFor="acc-name">
-                    {t(lang, "الاسم الكامل", "Full name")}
-                  </label>
-                  <input
-                    id="acc-name"
-                    className="setting-input"
-                    value={draft.name}
-                    placeholder={t(lang, "اكتب اسمك", "Your name")}
-                    onChange={(e) => setDraft({ ...draft, name: e.target.value })}
-                  />
-                </div>
-                <div className="setting-group">
-                  <label className="setting-field-label" htmlFor="acc-contact">
-                    {t(lang, "رقم الهاتف أو البريد", "Phone or email")}
-                  </label>
-                  <input id="acc-contact" className="setting-input" value={profile.contact} dir="ltr" readOnly />
-                </div>
-                <div className="setting-group">
-                  <label className="setting-field-label" htmlFor="acc-city">
-                    {t(lang, "المدينة الافتراضية (لعرض أقرب الجهات)", "Default city (to show nearby offices)")}
-                  </label>
-                  <select
-                    id="acc-city"
-                    className="setting-input"
-                    value={draft.cityId}
-                    onChange={(e) => setDraft({ ...draft, cityId: e.target.value })}
-                  >
-                    <option value="">{t(lang, "— اختر مدينة —", "— Choose a city —")}</option>
-                    {cities.map((city) => (
-                      <option key={city.id} value={city.id}>
-                        {lang === "ar" ? city.nameAr : city.nameEn}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
-                  <button type="submit" className="btn-primary">
-                    {t(lang, "حفظ التغييرات", "Save changes")}
-                  </button>
-                  <button type="button" className="btn-outline btn-danger-outline" onClick={logout}>
-                    {t(lang, "تسجيل الخروج", "Sign out")}
-                  </button>
-                  {saved && (
-                    <span role="status" style={{ color: "var(--success)", fontWeight: 600 }}>
-                      {t(lang, "تم الحفظ ✓", "Saved ✓")}
-                    </span>
-                  )}
-                </div>
-                <p className="setting-desc" style={{ marginTop: 16 }}>
-                  {t(lang, "بيانات الحساب محفوظة على هذا الجهاز فقط.", "Account data is stored on this device only.")}
-                </p>
-              </form>
             )}
           </section>
         )}

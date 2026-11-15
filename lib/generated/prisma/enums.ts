@@ -9,7 +9,50 @@
 * 🟢 You can import this file directly.
 */
 
+export const Role = {
+  CITIZEN: 'CITIZEN',
+  FOREIGNER: 'FOREIGNER',
+  ADMIN: 'ADMIN'
+} as const
+
+export type Role = (typeof Role)[keyof typeof Role]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const Audience = {
+  ALL: 'ALL',
+  CITIZEN: 'CITIZEN',
+  FOREIGNER: 'FOREIGNER'
+} as const
+
+export type Audience = (typeof Audience)[keyof typeof Audience]
+
+
+export const ContentStatus = {
+  DRAFT: 'DRAFT',
+  IN_REVIEW: 'IN_REVIEW',
+  PUBLISHED: 'PUBLISHED',
+  NEEDS_UPDATE: 'NEEDS_UPDATE'
+} as const
+
+export type ContentStatus = (typeof ContentStatus)[keyof typeof ContentStatus]
+
+
+export const ReportKind = {
+  PHONE: 'PHONE',
+  LOCATION: 'LOCATION',
+  OUTDATED: 'OUTDATED',
+  MISSING: 'MISSING',
+  OTHER: 'OTHER'
+} as const
+
+export type ReportKind = (typeof ReportKind)[keyof typeof ReportKind]
+
+
+export const ReportStatus = {
+  NEW: 'NEW',
+  IN_REVIEW: 'IN_REVIEW',
+  RESOLVED: 'RESOLVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type ReportStatus = (typeof ReportStatus)[keyof typeof ReportStatus]

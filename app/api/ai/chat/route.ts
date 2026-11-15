@@ -14,6 +14,7 @@ import { buildGeneralPrompt, buildUserPrompt, type Lang } from "@/lib/ai/context
 import { defaultQuickReplies, retrieve } from "@/lib/ai/retrieve";
 import { checkRateLimit, clientKey } from "@/lib/ai/rateLimit";
 import type { ChatStreamEvent, ChatStructuredData } from "@/lib/ai/chatTypes";
+import { LANGUAGES } from "@/lib/i18n";
 import { detectLanguage } from "@/lib/search/normalize";
 
 export const runtime = "nodejs";
@@ -32,6 +33,8 @@ const RequestSchema = z.object({
     .optional()
     .default([]),
   language: z.enum(["ar", "en"]).optional(),
+  /** لغة الموقع الحالية (أي لغة مدعومة): يرد المساعد بها */
+  siteLang: z.string().max(5).optional(),
   /** false يرجع JSON كامل بدل البث */
   stream: z.boolean().optional().default(true),
 });
@@ -101,6 +104,12 @@ export async function POST(request: Request) {
 
   const { message, conversation, stream: wantsStream } = parsed.data;
   const lang: Lang = parsed.data.language ?? detectLanguage(message);
+  // لغات الموقع غير العربية/الإنجليزية: البيانات تُجلب بالإنجليزية والرد يُكتب بلغة الموقع
+  const site = LANGUAGES.find((l) => l.code === parsed.data.siteLang);
+  const replyLanguage = site && site.code !== "ar" && site.code !== "en" ? site.english : null;
+  const systemInstruction = replyLanguage
+    ? `${SYSTEM_PROMPT}\n\n# لغة الرد (إلزامي)\n- اكتب الرد كاملاً بلغة ${replyLanguage} مهما كانت لغة السؤال، بنفس الأسلوب البسيط والواضح، وبالمصطلحات الرسمية الشائعة في ${replyLanguage} للإجراءات الحكومية. لا تخلط لغات أخرى إلا لأسماء الأعلام والجهات إن لزم.`
+    : SYSTEM_PROMPT;
 
   // لا نسجّل نص المستخدم نفسه — فقط طوله
   devLog(`[assistant] user message received (${message.length} chars, ${conversation.length} previous turns)`);
@@ -161,7 +170,7 @@ export async function POST(request: Request) {
         { role: "user" as const, parts: [{ text: userPrompt }] },
       ],
       config: {
-        systemInstruction: SYSTEM_PROMPT,
+        systemInstruction,
         temperature: 0.3,
         maxOutputTokens: MAX_OUTPUT_TOKENS,
       },

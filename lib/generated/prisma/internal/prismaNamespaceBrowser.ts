@@ -61,7 +61,11 @@ export const ModelName = {
   ServiceKeyword: 'ServiceKeyword',
   ServiceRelation: 'ServiceRelation',
   Office: 'Office',
-  OfficeCategory: 'OfficeCategory'
+  OfficeCategory: 'OfficeCategory',
+  User: 'User',
+  Session: 'Session',
+  Report: 'Report',
+  Translation: 'Translation'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -125,6 +129,9 @@ export const ServiceScalarFieldEnum = {
   sourceAr: 'sourceAr',
   sourceEn: 'sourceEn',
   lastReviewedAt: 'lastReviewedAt',
+  audience: 'audience',
+  status: 'status',
+  reviewNote: 'reviewNote',
   searchText: 'searchText',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -226,6 +233,61 @@ export const OfficeCategoryScalarFieldEnum = {
 } as const
 
 export type OfficeCategoryScalarFieldEnum = (typeof OfficeCategoryScalarFieldEnum)[keyof typeof OfficeCategoryScalarFieldEnum]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  login: 'login',
+  email: 'email',
+  nationalIdHash: 'nationalIdHash',
+  residenceIdHash: 'residenceIdHash',
+  name: 'name',
+  role: 'role',
+  passwordHash: 'passwordHash',
+  cityId: 'cityId',
+  active: 'active',
+  createdAt: 'createdAt',
+  lastLoginAt: 'lastLoginAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const SessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const ReportScalarFieldEnum = {
+  id: 'id',
+  serviceId: 'serviceId',
+  officeId: 'officeId',
+  kind: 'kind',
+  message: 'message',
+  status: 'status',
+  adminNote: 'adminNote',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  resolvedAt: 'resolvedAt'
+} as const
+
+export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
+
+
+export const TranslationScalarFieldEnum = {
+  lang: 'lang',
+  hash: 'hash',
+  source: 'source',
+  text: 'text',
+  createdAt: 'createdAt'
+} as const
+
+export type TranslationScalarFieldEnum = (typeof TranslationScalarFieldEnum)[keyof typeof TranslationScalarFieldEnum]
 
 
 export const SortOrder = {

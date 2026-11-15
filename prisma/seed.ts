@@ -33,6 +33,7 @@ type SeedData = {
     durationAr: string; durationEn: string; hoursAr: string; hoursEn: string;
     eligibilityAr: string; eligibilityEn: string; sourceAr: string; sourceEn: string;
     lastReviewedAt: string | null;
+    audience?: "ALL" | "CITIZEN" | "FOREIGNER";
     steps: { textAr: string; textEn: string }[];
     documents: { textAr: string; textEn: string }[];
     notes: { textAr: string; textEn: string }[];
@@ -139,6 +140,8 @@ async function main() {
         sourceAr: service.sourceAr,
         sourceEn: service.sourceEn,
         lastReviewedAt: service.lastReviewedAt ? new Date(service.lastReviewedAt) : null,
+        audience: service.audience ?? "ALL",
+        status: "PUBLISHED",
         searchText,
         steps: {
           create: service.steps.map((step, index) => ({ position: index, ...step })),

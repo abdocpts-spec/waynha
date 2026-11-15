@@ -3,8 +3,7 @@
  * تُطبَّق على <html> كأصناف (classes) قبل أول رسم عبر PREFS_SCRIPT في layout،
  * ثم تحدّثها صفحة الإعدادات مباشرة عبر applyPreferences().
  *
- * لا يوجد حساب على الخادم: «الحساب» هنا ملف شخصي محلي على هذا الجهاز فقط،
- * ولا تُحفظ كلمة المرور إطلاقاً.
+ * الحساب الحقيقي (الاسم والنوع) في قاعدة البيانات (lib/auth)؛ هنا تفضيلات العرض فقط.
  */
 
 export const PREF_KEYS = {
@@ -13,12 +12,9 @@ export const PREF_KEYS = {
   contrast: "waynha-contrast",
   primary: "waynha-primary",
   simple: "waynha-simple",
-  profile: "waynha-user",
 } as const;
 
 export type FontSize = "" | "large-text" | "xlarge-text";
-
-export type Profile = { name: string; contact: string; cityId: string };
 
 export const PRIMARY_COLORS = ["#1a56db", "#0d9488", "#059669", "#7c3aed"] as const;
 export const DEFAULT_PRIMARY = PRIMARY_COLORS[0];
@@ -65,29 +61,6 @@ export function applyPreferences() {
  */
 export const PREFS_SCRIPT = `try{var s=localStorage,r=document.documentElement;r.setAttribute('data-theme',s.getItem('waynha-theme')==='dark'?'dark':'light');var f=s.getItem('waynha-font');if(f==='large-text'||f==='xlarge-text')r.classList.add(f);var c=s.getItem('waynha-contrast')==='1';if(c)r.classList.add('high-contrast');if(s.getItem('waynha-simple')==='1')r.classList.add('simple-mode');var p=s.getItem('waynha-primary');if(!c&&p&&/^#[0-9a-f]{6}$/i.test(p)&&p.toLowerCase()!=='${DEFAULT_PRIMARY}')r.style.setProperty('--primary',p)}catch(e){}`;
 
-export function readProfile(): Profile | null {
-  try {
-    const raw = readPref(PREF_KEYS.profile);
-    if (!raw) return null;
-    const p = JSON.parse(raw) as Partial<Profile>;
-    if (typeof p.contact !== "string") return null;
-    return { name: String(p.name ?? ""), contact: p.contact, cityId: String(p.cityId ?? "") };
-  } catch {
-    return null;
-  }
-}
-
-export function saveProfile(profile: Profile | null) {
-  writePref(PREF_KEYS.profile, profile ? JSON.stringify(profile) : null);
-}
-
-/** الحرف الأول للاسم (أو لبيانات الدخول) لعرضه في دائرة الحساب. */
-export function initials(profile: Profile): string {
-  const source = profile.name.trim() || profile.contact.trim();
-  const parts = source.split(/\s+/).filter(Boolean);
-  const letters = parts.length > 1 ? parts[0][0] + parts[1][0] : source.slice(0, 2);
-  return letters.toUpperCase();
-}
 
 // ─────────── آخر عمليات البحث والإجراءات المحفوظة (نفس مفاتيح النموذج الأولي) ───────────
 

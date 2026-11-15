@@ -4,8 +4,11 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import AssistantLauncher from "@/components/assistant/AssistantLauncher";
 import { InlineScript } from "@/components/layout/InlineScript";
+import AutoTranslate from "@/components/layout/AutoTranslate";
 import PrefsSync from "@/components/layout/PrefsSync";
 import { dir } from "@/lib/i18n";
+import { getAudience } from "@/lib/audience.server";
+import { getCurrentUser } from "@/lib/auth/session";
 import { getLang } from "@/lib/i18n.server";
 import { PREFS_SCRIPT } from "@/lib/preferences";
 
@@ -27,7 +30,7 @@ export const viewport: Viewport = {
 const SW_CLEANUP_SCRIPT = `try{navigator.serviceWorker&&navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(x){x.unregister()})})}catch(e){}`;
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const lang = await getLang();
+  const [lang, user, audience] = await Promise.all([getLang(), getCurrentUser(), getAudience()]);
 
   return (
     <html lang={lang} dir={dir(lang)} data-theme="light" suppressHydrationWarning>
@@ -38,7 +41,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         <PrefsSync />
-        <Header lang={lang} />
+        <AutoTranslate lang={lang} />
+        <Header lang={lang} user={user ? { name: user.name, role: user.role } : null} audience={audience} />
         {children}
         <Footer lang={lang} />
         <AssistantLauncher lang={lang} />

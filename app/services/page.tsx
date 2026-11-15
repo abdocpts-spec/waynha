@@ -4,9 +4,11 @@ import RecordSearch from "@/components/account/RecordSearch";
 import ServiceCard from "@/components/ServiceCard";
 import { toServicePayload } from "@/lib/ai/contextBuilder";
 import { prisma } from "@/lib/db";
-import { t } from "@/lib/i18n";
+import { t, uiLang } from "@/lib/i18n";
+import { getAudience, effectiveRole } from "@/lib/audience.server";
+import { getCurrentUser } from "@/lib/auth/session";
 import { getLang } from "@/lib/i18n.server";
-import { listServices, searchServices } from "@/lib/search/serviceSearch";
+import { listServices, searchServices, visibleServiceWhere } from "@/lib/search/serviceSearch";
 
 export const dynamic = "force-dynamic";
 
@@ -19,17 +21,18 @@ export default async function ServicesPage({
 }: {
   searchParams: Promise<{ q?: string; category?: string }>;
 }) {
-  const lang = await getLang();
+  const [lang, user, audience] = await Promise.all([getLang(), getCurrentUser(), getAudience()]);
+  const role = effectiveRole(audience, user);
   const { q, category } = await searchParams;
 
   const categories = await prisma.category.findMany({
     orderBy: { sortOrder: "asc" },
-    include: { _count: { select: { services: true } } },
+    include: { _count: { select: { services: { where: visibleServiceWhere(role) } } } },
   });
 
   const services = q
-    ? (await searchServices(q, 20)).map((match) => match.service)
-    : await listServices(category);
+    ? (await searchServices(q, 20, role)).map((match) => match.service)
+    : await listServices(category, role);
 
   const activeCategory = categories.find((item) => item.id === category);
 
@@ -78,7 +81,7 @@ export default async function ServicesPage({
         <div className="grid-cards">
           {services.length > 0 ? (
             services.map((service) => (
-              <ServiceCard key={service.id} service={toServicePayload(service, lang)} lang={lang} />
+              <ServiceCard key={service.id} service={toServicePayload(service, uiLang(lang))} lang={lang} />
             ))
           ) : (
             <div className="empty-state">

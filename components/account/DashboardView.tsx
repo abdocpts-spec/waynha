@@ -1,17 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { logout } from "@/lib/auth/actions";
 import { t, type Lang } from "@/lib/i18n";
 import {
   clearRecentSearches,
-  readProfile,
   readRecentSearches,
   readSavedServices,
-  saveProfile,
   toggleSavedService,
-  type Profile,
   type RecentSearch,
 } from "@/lib/preferences";
 
@@ -26,13 +23,13 @@ export default function DashboardView({
   lang,
   services,
   updates,
+  user,
 }: {
   lang: Lang;
   services: ServiceItem[];
   updates: Update[];
+  user: { name: string; role: "CITIZEN" | "FOREIGNER" | "ADMIN" } | null;
 }) {
-  const router = useRouter();
-  const [profile, setProfile] = useState<Profile | null>(null);
   const [recent, setRecent] = useState<RecentSearch[]>([]);
   const [saved, setSaved] = useState<string[]>([]);
   const [today, setToday] = useState("");
@@ -41,7 +38,6 @@ export default function DashboardView({
 
   useEffect(() => {
     const load = () => {
-      setProfile(readProfile());
       setRecent(readRecentSearches().slice(0, 5));
       setSaved(readSavedServices());
       setNow(Date.now());
@@ -68,7 +64,7 @@ export default function DashboardView({
     .map((id) => services.find((s) => s.id === id))
     .filter((s): s is ServiceItem => Boolean(s));
 
-  const firstName = profile?.name.trim().split(/\s+/)[0];
+  const firstName = user?.name.trim().split(/\s+/)[0];
   const ago = (at: number) => {
     const minutes = Math.round((now - at) / 60000);
     if (minutes < 1) return t(lang, "الآن", "just now");
@@ -79,10 +75,6 @@ export default function DashboardView({
     return t(lang, `قبل ${days} يوم`, `${days} d ago`);
   };
 
-  const logout = () => {
-    saveProfile(null);
-    router.push("/");
-  };
 
   const sidebar = [
     { href: "/dashboard", icon: "📊", ar: "لوحة التحكم", en: "Dashboard", active: true },
@@ -114,10 +106,12 @@ export default function DashboardView({
               </Link>
             ),
           )}
-          {profile ? (
-            <button type="button" className="sidebar-item sidebar-logout" onClick={logout}>
-              <span aria-hidden="true">🚪</span> {t(lang, "تسجيل الخروج", "Sign out")}
-            </button>
+          {user ? (
+            <form action={logout}>
+              <button type="submit" className="sidebar-item sidebar-logout">
+                <span aria-hidden="true">🚪</span> {t(lang, "تسجيل الخروج", "Sign out")}
+              </button>
+            </form>
           ) : (
             <Link href="/login" className="sidebar-item sidebar-logout" style={{ color: "var(--primary)" }}>
               <span aria-hidden="true">🔑</span> {t(lang, "تسجيل الدخول", "Sign in")}
@@ -144,7 +138,7 @@ export default function DashboardView({
             {soon}
           </p>
         )}
-        {!profile && (
+        {!user && (
           <p className="auth-privacy" style={{ textAlign: "start", marginTop: 0, marginBottom: 24 }}>
             {t(
               lang,

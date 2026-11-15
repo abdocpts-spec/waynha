@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import SaveServiceButton from "@/components/account/SaveServiceButton";
+import ReportForm from "@/components/ReportForm";
 import { toOfficePayload, toServicePayload } from "@/lib/ai/contextBuilder";
 import { directionsUrl, formatDate, isOfficeOpen, osmEmbedUrl } from "@/lib/format";
-import { t } from "@/lib/i18n";
+import { t, uiLang } from "@/lib/i18n";
 import { getLang } from "@/lib/i18n.server";
 import { getService, officesForService } from "@/lib/search/serviceSearch";
 
@@ -26,8 +27,8 @@ export default async function ServicePage(props: PageProps<"/services/[id]">) {
   const record = await getService(id);
   if (!record) notFound();
 
-  const service = toServicePayload(record, lang);
-  const offices = (await officesForService(record)).map((office) => toOfficePayload(office, lang));
+  const service = toServicePayload(record, uiLang(lang));
+  const offices = (await officesForService(record)).map((office) => toOfficePayload(office, uiLang(lang)));
   const nearest = offices[0];
 
   return (
@@ -41,6 +42,11 @@ export default async function ServicePage(props: PageProps<"/services/[id]">) {
                 ? `✅ ${t(lang, "معلومة موثقة", "Verified information")}`
                 : `⏳ ${t(lang, "قيد المراجعة", "Under review")}`}
           </div>
+          {record.status === "NEEDS_UPDATE" && (
+            <div className="verified-badge" style={{ marginInlineStart: 8, background: "rgba(245,158,11,0.25)" }}>
+              ⏳ {t(lang, "قد تكون بعض المعلومات قديمة — فريق وينها يراجعها الآن", "Some details may be outdated — the WAYNHA team is reviewing them")}
+            </div>
+          )}
           <h1 className="service-title">
             {service.icon} {service.title}
           </h1>
@@ -114,6 +120,8 @@ export default async function ServicePage(props: PageProps<"/services/[id]">) {
                 ))}
               </div>
             )}
+
+            <ReportForm serviceId={record.id} lang={lang} />
           </div>
 
           <div>

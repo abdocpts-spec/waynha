@@ -423,7 +423,8 @@
         "جواز سفري",
         "بدل فاقد",
         "فقدان جواز"
-      ]
+      ],
+      "audience": "CITIZEN"
     },
     {
       "id": "renew-passport",
@@ -510,7 +511,8 @@
         "جوازي انتهى",
         "جوازي خلص",
         "passport expired"
-      ]
+      ],
+      "audience": "CITIZEN"
     },
     {
       "id": "birth-certificate",
@@ -573,7 +575,8 @@
         "شهادة ميلاد",
         "شهادتي",
         "وثيقة ميلاد"
-      ]
+      ],
+      "audience": "CITIZEN"
     },
     {
       "id": "national-id",
@@ -658,7 +661,8 @@
         "هويتي",
         "هويتي انتهت",
         "هوية وطنية"
-      ]
+      ],
+      "audience": "CITIZEN"
     },
     {
       "id": "family-book",
@@ -731,7 +735,8 @@
         "family book",
         "دفتر العائلة",
         "كتيب العيلة"
-      ]
+      ],
+      "audience": "CITIZEN"
     },
     {
       "id": "renew-license",
@@ -811,7 +816,8 @@
         "driving",
         "رخصة القيادة",
         "رخصتي انتهت"
-      ]
+      ],
+      "audience": "ALL"
     },
     {
       "id": "register-vehicle",
@@ -894,7 +900,8 @@
         "سيارة جديدة",
         "لوحة",
         "ترخيص سيارة"
-      ]
+      ],
+      "audience": "ALL"
     },
     {
       "id": "transfer-ownership",
@@ -976,7 +983,8 @@
         "transfer ownership",
         "بيع سياره",
         "بعت سيارتي"
-      ]
+      ],
+      "audience": "ALL"
     },
     {
       "id": "register-company",
@@ -1066,7 +1074,8 @@
         "استثمار",
         "مؤسسة",
         "نبدا شركة"
-      ]
+      ],
+      "audience": "ALL"
     },
     {
       "id": "pension-registration",
@@ -1126,7 +1135,8 @@
       "notes": [],
       "faqs": [],
       "related": [],
-      "keywords": []
+      "keywords": [],
+      "audience": "CITIZEN"
     },
     {
       "id": "health-card",
@@ -1193,7 +1203,8 @@
         "صحي",
         "علاج",
         "مستشفى"
-      ]
+      ],
+      "audience": "ALL"
     },
     {
       "id": "property-registration",
@@ -1277,6 +1288,152 @@
         "أرض",
         "بيت",
         "منزل"
+      ],
+      "audience": "ALL"
+    },
+    {
+      "popular": false,
+      "verified": false,
+      "lastReviewedAt": null,
+      "audience": "FOREIGNER",
+      "notes": [
+        {
+          "textAr": "بيانات تجريبية للعرض: تأكد من المتطلبات الحالية لدى الجهة المختصة قبل التوجه.",
+          "textEn": "Demo data: confirm current requirements with the responsible authority before you go."
+        }
+      ],
+      "faqs": [],
+      "related": [],
+      "id": "residence-permit",
+      "categoryId": "residency",
+      "icon": "🪪",
+      "titleAr": "استخراج أو تجديد إذن الإقامة للأجانب",
+      "titleEn": "Residence permit for foreigners (new or renewal)",
+      "shortDescAr": "الخطوات العامة لاستخراج أو تجديد الإقامة للمقيمين الأجانب في ليبيا.",
+      "shortDescEn": "General steps to obtain or renew a residence permit for foreign residents in Libya.",
+      "departmentAr": "مصلحة الجوازات والجنسية وشؤون الأجانب",
+      "departmentEn": "Passports, Citizenship and Foreign Affairs Authority",
+      "feesAr": "تُحدد من الجهة المختصة (غير متوفرة حالياً في قاعدة بيانات وينها)",
+      "feesEn": "Set by the responsible authority (not yet in the WAYNHA database)",
+      "durationAr": "تُحدد من الجهة المختصة (غير متوفرة حالياً في قاعدة بيانات وينها)",
+      "durationEn": "Set by the responsible authority (not yet in the WAYNHA database)",
+      "hoursAr": "08:30 ص - 02:00 م",
+      "hoursEn": "08:30 AM - 02:00 PM",
+      "eligibilityAr": "المقيمون الأجانب الحاملون لجواز سفر ساري.",
+      "eligibilityEn": "Foreign residents holding a valid passport.",
+      "sourceAr": "مصلحة الجوازات والجنسية",
+      "sourceEn": "Passports & Citizenship Authority",
+      "steps": [
+        {
+          "textAr": "تجهيز جواز السفر ساري المفعول وصورة منه.",
+          "textEn": "Prepare a valid passport and a copy of it."
+        },
+        {
+          "textAr": "التوجه إلى قسم شؤون الأجانب في فرع الجوازات التابع لمكان الإقامة.",
+          "textEn": "Go to the foreigners section at the passports branch for your area."
+        },
+        {
+          "textAr": "تعبئة نموذج طلب الإقامة وتقديم المستندات للموظف المختص.",
+          "textEn": "Fill in the residence application form and submit the documents."
+        },
+        {
+          "textAr": "دفع الرسوم المقررة والاحتفاظ بالإيصال، ثم متابعة موعد الاستلام.",
+          "textEn": "Pay the fees, keep the receipt, and follow up on the collection date."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "جواز سفر ساري المفعول (الأصل + صورة).",
+          "textEn": "Valid passport (original + copy)."
+        },
+        {
+          "textAr": "صور شخصية حديثة.",
+          "textEn": "Recent personal photos."
+        },
+        {
+          "textAr": "ما يثبت سبب الإقامة (عقد عمل أو غيره حسب الحالة).",
+          "textEn": "Proof of the reason for residence (work contract or other, as applicable)."
+        }
+      ],
+      "keywords": [
+        "اقامة",
+        "إقامة",
+        "تجديد الاقامة",
+        "نبي اقامة",
+        "residence",
+        "residency",
+        "residence permit",
+        "iqama"
+      ]
+    },
+    {
+      "popular": false,
+      "verified": false,
+      "lastReviewedAt": null,
+      "audience": "FOREIGNER",
+      "notes": [
+        {
+          "textAr": "بيانات تجريبية للعرض: تأكد من المتطلبات الحالية لدى الجهة المختصة قبل التوجه.",
+          "textEn": "Demo data: confirm current requirements with the responsible authority before you go."
+        }
+      ],
+      "faqs": [],
+      "related": [],
+      "id": "work-permit",
+      "categoryId": "work",
+      "icon": "💼",
+      "titleAr": "إذن العمل للعمالة الأجنبية",
+      "titleEn": "Work permit for foreign workers",
+      "shortDescAr": "الخطوات العامة للحصول على إذن عمل للأجانب عن طريق جهة العمل.",
+      "shortDescEn": "General steps for a foreign worker’s work permit through the employer.",
+      "departmentAr": "الجهة المختصة بشؤون العمل",
+      "departmentEn": "Labour affairs authority",
+      "feesAr": "تُحدد من الجهة المختصة (غير متوفرة حالياً في قاعدة بيانات وينها)",
+      "feesEn": "Set by the responsible authority (not yet in the WAYNHA database)",
+      "durationAr": "تُحدد من الجهة المختصة (غير متوفرة حالياً في قاعدة بيانات وينها)",
+      "durationEn": "Set by the responsible authority (not yet in the WAYNHA database)",
+      "hoursAr": "08:30 ص - 02:00 م",
+      "hoursEn": "08:30 AM - 02:00 PM",
+      "eligibilityAr": "العمالة الأجنبية بعقد عمل مع جهة في ليبيا.",
+      "eligibilityEn": "Foreign workers with an employment contract in Libya.",
+      "sourceAr": "الجهة المختصة بشؤون العمل",
+      "sourceEn": "Labour affairs authority",
+      "steps": [
+        {
+          "textAr": "جهة العمل تجهّز عقد العمل والمستندات المطلوبة.",
+          "textEn": "The employer prepares the contract and required documents."
+        },
+        {
+          "textAr": "تقديم الطلب لدى الجهة المختصة بشؤون العمل.",
+          "textEn": "Submit the application to the labour affairs authority."
+        },
+        {
+          "textAr": "متابعة الطلب واستلام الإذن، ثم إكمال إجراءات الإقامة.",
+          "textEn": "Follow up, collect the permit, then complete the residence procedure."
+        }
+      ],
+      "documents": [
+        {
+          "textAr": "جواز سفر ساري المفعول (صورة).",
+          "textEn": "Valid passport (copy)."
+        },
+        {
+          "textAr": "عقد العمل.",
+          "textEn": "Employment contract."
+        },
+        {
+          "textAr": "صور شخصية حديثة.",
+          "textEn": "Recent personal photos."
+        }
+      ],
+      "keywords": [
+        "اذن عمل",
+        "إذن عمل",
+        "تصريح عمل",
+        "نبي نخدم",
+        "work permit",
+        "work visa",
+        "labour permit"
       ]
     }
   ]

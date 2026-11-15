@@ -61,6 +61,13 @@ model Service {
 
   lastReviewedAt DateTime?
 
+  /// لمن هذه الخدمة: الكل، المواطن، أو الأجنبي
+  audience Audience      @default(ALL)
+  /// مرحلة اعتماد المعلومة (يديرها الأدمن): الزوار يرون PUBLISHED و NEEDS_UPDATE فقط
+  status   ContentStatus @default(PUBLISHED)
+  /// ملاحظة الأدمن عند المراجعة (داخلية)
+  reviewNote String?
+
   /// نص البحث بعد التطبيع (عربي + إنجليزي) — يُستخدم في بحث SQL
   searchText String
 
@@ -77,9 +84,11 @@ model Service {
   keywords    ServiceKeyword[]
   relatedTo   ServiceRelation[]  @relation("RelationFrom")
   relatedFrom ServiceRelation[]  @relation("RelationTo")
+  reports     Report[]
 
   @@index([categoryId])
   @@index([popular])
+  @@index([status])
   @@map("services")
 }
 
@@ -188,6 +197,7 @@ model Office {
 
   city       City             @relation(fields: [cityId], references: [id], onDelete: Cascade)
   categories OfficeCategory[]
+  reports    Report[]
 
   @@index([cityId])
   @@map("offices")
@@ -202,4 +212,112 @@ model OfficeCategory {
 
   @@id([officeId, categoryId])
   @@map("office_categories")
+}
+
+// ─────────── المستخدمون والجلسات والبلاغات ───────────
+
+enum Role {
+  CITIZEN
+  FOREIGNER
+  ADMIN
+}
+
+enum Audience {
+  ALL
+  CITIZEN
+  FOREIGNER
+}
+
+/// مراحل اعتماد المعلومة (وينها لا تعتمد معاملات المواطن؛ تعتمد صحة المعلومة فقط)
+enum ContentStatus {
+  DRAFT
+  IN_REVIEW
+  PUBLISHED
+  NEEDS_UPDATE
+}
+
+enum ReportKind {
+  PHONE
+  LOCATION
+  OUTDATED
+  MISSING
+  OTHER
+}
+
+enum ReportStatus {
+  NEW
+  IN_REVIEW
+  RESOLVED
+  REJECTED
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  /// بريد إلكتروني أو رقم هاتف (بعد التطبيع: حروف صغيرة بدون مسافات)
+  login        String   @unique
+  /// بريد إلكتروني اختياري مستقل (حقل منفصل عن الهاتف)
+  email        String?  @unique
+  /// للمواطن فقط: بصمة HMAC-SHA256 للرقم الوطني (لا يُخزَّن الرقم نفسه ولا يمكن استرجاعه)
+  nationalIdHash String? @unique
+  /// للأجنبي: بصمة HMAC-SHA256 لرقم الإقامة (اختياري لمن لم يحصل على إقامة بعد)
+  residenceIdHash String? @unique
+  name         String
+  role         Role     @default(CITIZEN)
+  /// scrypt: salt:hash (لا تُخزَّن كلمة المرور نفسها أبداً)
+  passwordHash String
+  cityId       String?
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  lastLoginAt  DateTime?
+
+  sessions Session[]
+  reports  Report[]
+
+  @@map("users")
+}
+
+model Session {
+  /// SHA-256 لرمز الجلسة؛ الرمز نفسه في كوكي httpOnly فقط
+  id        String   @id
+  userId    Int
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+/// بلاغ عن معلومة غير صحيحة يرسله أي زائر أو مستخدم
+model Report {
+  id         Int          @id @default(autoincrement())
+  serviceId  String?
+  officeId   Int?
+  kind       ReportKind
+  message    String
+  status     ReportStatus @default(NEW)
+  adminNote  String?
+  userId     Int?
+  createdAt  DateTime     @default(now())
+  resolvedAt DateTime?
+
+  service Service? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  office  Office?  @relation(fields: [officeId], references: [id], onDelete: SetNull)
+  user    User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@map("reports")
+}
+
+/// ترجمات آلية مخزّنة لنصوص الواجهة (المفتاح: اللغة + بصمة النص الأصلي)
+model Translation {
+  lang      String
+  hash      String
+  source    String
+  text      String
+  createdAt DateTime @default(now())
+
+  @@id([lang, hash])
+  @@map("translations")
 }

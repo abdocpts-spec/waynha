@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { t, type Lang } from "@/lib/i18n";
+import { t, type Lang, uiLang } from "@/lib/i18n";
 import { addRecentSearch } from "@/lib/preferences";
 
-const EXAMPLES: Record<Lang, { label: string; query: string }[]> = {
+const EXAMPLES: Record<"ar" | "en", { label: string; query: string }[]> = {
   ar: [
     { label: "📕 ضاع جوازي", query: "ضاع جوازي شن ندير؟" },
     { label: "🛂 تجديد جواز السفر", query: "نبي نجدد جواز السفر" },
@@ -62,7 +62,7 @@ export default function HomeSearch({ lang }: { lang: Lang }) {
       </div>
 
       <div className="query-examples">
-        {EXAMPLES[lang].map((example) => (
+        {EXAMPLES[uiLang(lang)].map((example) => (
           <span
             key={example.label}
             className="query-tag"
