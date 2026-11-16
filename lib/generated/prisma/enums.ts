@@ -56,3 +56,13 @@ export const ReportStatus = {
 } as const
 
 export type ReportStatus = (typeof ReportStatus)[keyof typeof ReportStatus]
+
+
+export const ReviewStatus = {
+  NONE: 'NONE',
+  PENDING: 'PENDING',
+  NEEDS_CHANGES: 'NEEDS_CHANGES',
+  APPROVED: 'APPROVED'
+} as const
+
+export type ReviewStatus = (typeof ReviewStatus)[keyof typeof ReviewStatus]

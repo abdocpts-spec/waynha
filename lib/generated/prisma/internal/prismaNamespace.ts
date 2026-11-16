@@ -411,7 +411,9 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Report: 'Report',
-  Translation: 'Translation'
+  Translation: 'Translation',
+  ProcedureProgress: 'ProcedureProgress',
+  ProcedureFile: 'ProcedureFile'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -427,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "city" | "service" | "serviceStep" | "serviceDocument" | "serviceNote" | "serviceFaq" | "serviceKeyword" | "serviceRelation" | "office" | "officeCategory" | "user" | "session" | "report" | "translation"
+    modelProps: "category" | "city" | "service" | "serviceStep" | "serviceDocument" | "serviceNote" | "serviceFaq" | "serviceKeyword" | "serviceRelation" | "office" | "officeCategory" | "user" | "session" | "report" | "translation" | "procedureProgress" | "procedureFile"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1541,6 +1543,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProcedureProgress: {
+      payload: Prisma.$ProcedureProgressPayload<ExtArgs>
+      fields: Prisma.ProcedureProgressFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProcedureProgressFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureProgressPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProcedureProgressFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureProgressPayload>
+        }
+        findFirst: {
+          args: Prisma.ProcedureProgressFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureProgressPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProcedureProgressFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureProgressPayload>
+        }
+        findMany: {
+          args: Prisma.ProcedureProgressFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureProgressPayload>[]
+        }
+        create: {
+          args: Prisma.ProcedureProgressCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureProgressPayload>
+        }
+        createMany: {
+          args: Prisma.ProcedureProgressCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProcedureProgressCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureProgressPayload>[]
+        }
+        delete: {
+          args: Prisma.ProcedureProgressDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureProgressPayload>
+        }
+        update: {
+          args: Prisma.ProcedureProgressUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureProgressPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProcedureProgressDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProcedureProgressUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProcedureProgressUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureProgressPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProcedureProgressUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureProgressPayload>
+        }
+        aggregate: {
+          args: Prisma.ProcedureProgressAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProcedureProgress>
+        }
+        groupBy: {
+          args: Prisma.ProcedureProgressGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProcedureProgressGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProcedureProgressCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProcedureProgressCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProcedureFile: {
+      payload: Prisma.$ProcedureFilePayload<ExtArgs>
+      fields: Prisma.ProcedureFileFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProcedureFileFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureFilePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProcedureFileFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureFilePayload>
+        }
+        findFirst: {
+          args: Prisma.ProcedureFileFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureFilePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProcedureFileFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureFilePayload>
+        }
+        findMany: {
+          args: Prisma.ProcedureFileFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureFilePayload>[]
+        }
+        create: {
+          args: Prisma.ProcedureFileCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureFilePayload>
+        }
+        createMany: {
+          args: Prisma.ProcedureFileCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProcedureFileCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureFilePayload>[]
+        }
+        delete: {
+          args: Prisma.ProcedureFileDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureFilePayload>
+        }
+        update: {
+          args: Prisma.ProcedureFileUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureFilePayload>
+        }
+        deleteMany: {
+          args: Prisma.ProcedureFileDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProcedureFileUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProcedureFileUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureFilePayload>[]
+        }
+        upsert: {
+          args: Prisma.ProcedureFileUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProcedureFilePayload>
+        }
+        aggregate: {
+          args: Prisma.ProcedureFileAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProcedureFile>
+        }
+        groupBy: {
+          args: Prisma.ProcedureFileGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProcedureFileGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProcedureFileCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProcedureFileCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1786,12 +1936,51 @@ export const TranslationScalarFieldEnum = {
 export type TranslationScalarFieldEnum = (typeof TranslationScalarFieldEnum)[keyof typeof TranslationScalarFieldEnum]
 
 
+export const ProcedureProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  serviceId: 'serviceId',
+  stage: 'stage',
+  reviewStatus: 'reviewStatus',
+  reviewNote: 'reviewNote',
+  submittedAt: 'submittedAt',
+  reviewedAt: 'reviewedAt',
+  stageDates: 'stageDates',
+  reminderAt: 'reminderAt',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProcedureProgressScalarFieldEnum = (typeof ProcedureProgressScalarFieldEnum)[keyof typeof ProcedureProgressScalarFieldEnum]
+
+
+export const ProcedureFileScalarFieldEnum = {
+  id: 'id',
+  progressId: 'progressId',
+  name: 'name',
+  storedName: 'storedName',
+  mime: 'mime',
+  size: 'size',
+  createdAt: 'createdAt'
+} as const
+
+export type ProcedureFileScalarFieldEnum = (typeof ProcedureFileScalarFieldEnum)[keyof typeof ProcedureFileScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1808,6 +1997,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -1946,6 +2144,34 @@ export type EnumReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'ReportStatus[]'
  */
 export type ListEnumReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReportStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ReviewStatus'
+ */
+export type EnumReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ReviewStatus[]'
+ */
+export type ListEnumReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 /**
@@ -2114,6 +2340,8 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   report?: Prisma.ReportOmit
   translation?: Prisma.TranslationOmit
+  procedureProgress?: Prisma.ProcedureProgressOmit
+  procedureFile?: Prisma.ProcedureFileOmit
 }
 
 /* Types for Logging */

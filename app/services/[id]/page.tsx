@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import SaveServiceButton from "@/components/account/SaveServiceButton";
+import ProcedureTracker, { StartProcedureButton } from "@/components/ProcedureTracker";
 import ReportForm from "@/components/ReportForm";
 import { toOfficePayload, toServicePayload } from "@/lib/ai/contextBuilder";
 import { directionsUrl, formatDate, isOfficeOpen, osmEmbedUrl } from "@/lib/format";
 import { t, uiLang } from "@/lib/i18n";
 import { getLang } from "@/lib/i18n.server";
+import { prisma } from "@/lib/db";
+import { getCurrentUser } from "@/lib/auth/session";
 import { getService, officesForService } from "@/lib/search/serviceSearch";
 
 export const dynamic = "force-dynamic";
@@ -22,10 +25,16 @@ export async function generateMetadata(props: PageProps<"/services/[id]">): Prom
 
 export default async function ServicePage(props: PageProps<"/services/[id]">) {
   const { id } = await props.params;
-  const lang = await getLang();
+  const [lang, user] = await Promise.all([getLang(), getCurrentUser()]);
 
   const record = await getService(id);
   if (!record) notFound();
+
+  const progress = user
+    ? await prisma.procedureProgress.findUnique({ where: { userId_serviceId: { userId: user.id, serviceId: record.id } },
+        include: { files: { orderBy: { id: "asc" }, select: { id: true, name: true, size: true } } },
+      })
+    : null;
 
   const service = toServicePayload(record, uiLang(lang));
   const offices = (await officesForService(record)).map((office) => toOfficePayload(office, uiLang(lang)));
@@ -60,6 +69,25 @@ export default async function ServicePage(props: PageProps<"/services/[id]">) {
               💬 {t(lang, "اسأل وينها عن هذا الإجراء", "Ask WAYNHA about this")}
             </Link>
             <SaveServiceButton id={record.id} lang={lang} />
+            {!user ? (
+              <Link
+                href={`/login?next=${encodeURIComponent(`/services/${record.id}`)}`}
+                className="btn-primary"
+                style={{ background: "rgba(255,255,255,0.18)", border: "1px solid rgba(255,255,255,0.35)" }}
+              >
+                🚀 {t(lang, "سجّل دخولك لمتابعة هذا الإجراء", "Sign in to track this procedure")}
+              </Link>
+            ) : progress ? (
+              <a
+                href="#tracker"
+                className="btn-primary"
+                style={{ background: "rgba(255,255,255,0.18)", border: "1px solid rgba(255,255,255,0.35)" }}
+              >
+                📍 {t(lang, "قيد المتابعة", "Tracking")}
+              </a>
+            ) : (
+              <StartProcedureButton serviceId={record.id} lang={lang} />
+            )}
           </div>
           <div style={{ fontSize: "0.88rem", opacity: 0.85, marginTop: 16 }}>
             {t(lang, "آخر مراجعة:", "Last reviewed:")} {formatDate(service.lastReviewedAt, lang)} ·{" "}
@@ -71,6 +99,26 @@ export default async function ServicePage(props: PageProps<"/services/[id]">) {
       <div className="container" style={{ paddingBottom: 60 }}>
         <div className="layout-grid">
           <div>
+            {progress && (
+              <ProcedureTracker
+                lang={lang}
+                serviceId={record.id}
+                data={{
+                  stage: progress.stage,
+                  stageDates:
+                    progress.stageDates && typeof progress.stageDates === "object" && !Array.isArray(progress.stageDates)
+                      ? (progress.stageDates as Record<string, string>)
+                      : {},
+                  reminder: progress.reminderAt ? progress.reminderAt.toISOString().slice(0, 10) : "",
+                  note: progress.note ?? "",
+                  review: progress.reviewStatus,
+                  reviewNote: progress.reviewNote ?? "",
+                  files: progress.files,
+                  requiredDocs: service.documents,
+                }}
+              />
+            )}
+
             <div className="content-card">
               <h2 className="content-title">📋 {t(lang, "الخطوات", "Steps")}</h2>
               {service.steps.map((step, index) => (

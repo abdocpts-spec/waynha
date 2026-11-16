@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { logout } from "@/lib/auth/actions";
+import { LAST_STAGE, STAGES } from "@/lib/progress/stages";
 import { t, type Lang } from "@/lib/i18n";
 import {
   clearRecentSearches,
@@ -14,6 +15,7 @@ import {
 
 type ServiceItem = { id: string; icon: string; title: string; category: string };
 type Update = { id: string; title: string; date: string };
+type Procedure = { id: string; icon: string; title: string; stage: number; review: "NONE" | "PENDING" | "NEEDS_CHANGES" | "APPROVED"; reminder: string };
 
 /**
  * لوحة التحكم (نفس تصميم النموذج الأولي): آخر عمليات البحث، والإجراءات المحفوظة،
@@ -23,11 +25,13 @@ export default function DashboardView({
   lang,
   services,
   updates,
+  procedures,
   user,
 }: {
   lang: Lang;
   services: ServiceItem[];
   updates: Update[];
+  procedures: Procedure[];
   user: { name: string; role: "CITIZEN" | "FOREIGNER" | "ADMIN" } | null;
 }) {
   const [recent, setRecent] = useState<RecentSearch[]>([]);
@@ -146,6 +150,48 @@ export default function DashboardView({
               "You're not signed in. Saved items and recent searches work without an account and stay on this device.",
             )}
           </p>
+        )}
+
+        {user && (
+          <div className="dash-card" id="procedures" style={{ marginBottom: 20 }}>
+            <div className="dash-card-header">
+              <h2 className="dash-card-title">📋 {t(lang, "إجراءاتي", "My procedures")}</h2>
+              <span className="list-item-sub">{procedures.length}</span>
+            </div>
+            <div className="list-group">
+              {procedures.length ? (
+                procedures.map((p) => (
+                  <Link key={p.id} href={`/services/${p.id}#tracker`} className="proc-item">
+                    <div className="proc-row">
+                      <span className="list-item-title">
+                        {p.icon} {p.title}
+                      </span>
+                      <span style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                        {p.review === "NEEDS_CHANGES" && <span className="tracker-tag danger">⚠️ {t(lang, "يحتاج تعديل", "Needs changes")}</span>}
+                        {p.review === "PENDING" && <span className="tracker-tag warn">⏳ {t(lang, "قيد المراجعة", "Under review")}</span>}
+                        <span className={`tracker-tag${p.stage === LAST_STAGE ? " done" : ""}`}>
+                          {t(lang, STAGES[p.stage - 1].ar, STAGES[p.stage - 1].en)}
+                        </span>
+                      </span>
+                    </div>
+                    <div className="proc-seg" aria-hidden="true">
+                      {STAGES.map((s) => (
+                        <i key={s.n} className={p.stage === LAST_STAGE || s.n < p.stage ? "on" : s.n === p.stage ? "now" : ""} />
+                      ))}
+                    </div>
+                    <div className="list-item-sub">
+                      {t(lang, `المرحلة ${p.stage} من ${LAST_STAGE}`, `Stage ${p.stage} of ${LAST_STAGE}`)}
+                      {p.reminder ? ` · 🔔 ${p.reminder}` : ""}
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="list-empty">
+                  {t(lang, "ابدأ أي إجراء من صفحته بزر «ابدأ هذا الإجراء» لتتابعه هنا.", "Start any procedure from its page to follow it here.")}
+                </div>
+              )}
+            </div>
+          </div>
         )}
 
         <div className="dash-grid">

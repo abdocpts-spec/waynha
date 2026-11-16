@@ -383,6 +383,7 @@ export type ServiceWhereInput = {
   relatedTo?: Prisma.ServiceRelationListRelationFilter
   relatedFrom?: Prisma.ServiceRelationListRelationFilter
   reports?: Prisma.ReportListRelationFilter
+  progress?: Prisma.ProcedureProgressListRelationFilter
 }
 
 export type ServiceOrderByWithRelationInput = {
@@ -424,6 +425,7 @@ export type ServiceOrderByWithRelationInput = {
   relatedTo?: Prisma.ServiceRelationOrderByRelationAggregateInput
   relatedFrom?: Prisma.ServiceRelationOrderByRelationAggregateInput
   reports?: Prisma.ReportOrderByRelationAggregateInput
+  progress?: Prisma.ProcedureProgressOrderByRelationAggregateInput
 }
 
 export type ServiceWhereUniqueInput = Prisma.AtLeast<{
@@ -468,6 +470,7 @@ export type ServiceWhereUniqueInput = Prisma.AtLeast<{
   relatedTo?: Prisma.ServiceRelationListRelationFilter
   relatedFrom?: Prisma.ServiceRelationListRelationFilter
   reports?: Prisma.ReportListRelationFilter
+  progress?: Prisma.ProcedureProgressListRelationFilter
 }, "id">
 
 export type ServiceOrderByWithAggregationInput = {
@@ -578,6 +581,7 @@ export type ServiceCreateInput = {
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateInput = {
@@ -618,6 +622,7 @@ export type ServiceUncheckedCreateInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUpdateInput = {
@@ -658,6 +663,7 @@ export type ServiceUpdateInput = {
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateInput = {
@@ -698,6 +704,7 @@ export type ServiceUncheckedUpdateInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateManyInput = {
@@ -1091,6 +1098,20 @@ export type ServiceUpdateOneWithoutReportsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutReportsInput, Prisma.ServiceUpdateWithoutReportsInput>, Prisma.ServiceUncheckedUpdateWithoutReportsInput>
 }
 
+export type ServiceCreateNestedOneWithoutProgressInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutProgressInput, Prisma.ServiceUncheckedCreateWithoutProgressInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutProgressInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUpdateOneRequiredWithoutProgressNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutProgressInput, Prisma.ServiceUncheckedCreateWithoutProgressInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutProgressInput
+  upsert?: Prisma.ServiceUpsertWithoutProgressInput
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutProgressInput, Prisma.ServiceUpdateWithoutProgressInput>, Prisma.ServiceUncheckedUpdateWithoutProgressInput>
+}
+
 export type ServiceCreateWithoutCategoryInput = {
   id: string
   icon?: string
@@ -1128,6 +1149,7 @@ export type ServiceCreateWithoutCategoryInput = {
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutCategoryInput = {
@@ -1167,6 +1189,7 @@ export type ServiceUncheckedCreateWithoutCategoryInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutCategoryInput = {
@@ -1267,6 +1290,7 @@ export type ServiceCreateWithoutStepsInput = {
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutStepsInput = {
@@ -1306,6 +1330,7 @@ export type ServiceUncheckedCreateWithoutStepsInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutStepsInput = {
@@ -1361,6 +1386,7 @@ export type ServiceUpdateWithoutStepsInput = {
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutStepsInput = {
@@ -1400,6 +1426,7 @@ export type ServiceUncheckedUpdateWithoutStepsInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutDocumentsInput = {
@@ -1439,6 +1466,7 @@ export type ServiceCreateWithoutDocumentsInput = {
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutDocumentsInput = {
@@ -1478,6 +1506,7 @@ export type ServiceUncheckedCreateWithoutDocumentsInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutDocumentsInput = {
@@ -1533,6 +1562,7 @@ export type ServiceUpdateWithoutDocumentsInput = {
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutDocumentsInput = {
@@ -1572,6 +1602,7 @@ export type ServiceUncheckedUpdateWithoutDocumentsInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutNotesInput = {
@@ -1611,6 +1642,7 @@ export type ServiceCreateWithoutNotesInput = {
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutNotesInput = {
@@ -1650,6 +1682,7 @@ export type ServiceUncheckedCreateWithoutNotesInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutNotesInput = {
@@ -1705,6 +1738,7 @@ export type ServiceUpdateWithoutNotesInput = {
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutNotesInput = {
@@ -1744,6 +1778,7 @@ export type ServiceUncheckedUpdateWithoutNotesInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutFaqsInput = {
@@ -1783,6 +1818,7 @@ export type ServiceCreateWithoutFaqsInput = {
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutFaqsInput = {
@@ -1822,6 +1858,7 @@ export type ServiceUncheckedCreateWithoutFaqsInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutFaqsInput = {
@@ -1877,6 +1914,7 @@ export type ServiceUpdateWithoutFaqsInput = {
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutFaqsInput = {
@@ -1916,6 +1954,7 @@ export type ServiceUncheckedUpdateWithoutFaqsInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutKeywordsInput = {
@@ -1955,6 +1994,7 @@ export type ServiceCreateWithoutKeywordsInput = {
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutKeywordsInput = {
@@ -1994,6 +2034,7 @@ export type ServiceUncheckedCreateWithoutKeywordsInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutKeywordsInput = {
@@ -2049,6 +2090,7 @@ export type ServiceUpdateWithoutKeywordsInput = {
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutKeywordsInput = {
@@ -2088,6 +2130,7 @@ export type ServiceUncheckedUpdateWithoutKeywordsInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutRelatedToInput = {
@@ -2127,6 +2170,7 @@ export type ServiceCreateWithoutRelatedToInput = {
   keywords?: Prisma.ServiceKeywordCreateNestedManyWithoutServiceInput
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutRelatedToInput = {
@@ -2166,6 +2210,7 @@ export type ServiceUncheckedCreateWithoutRelatedToInput = {
   keywords?: Prisma.ServiceKeywordUncheckedCreateNestedManyWithoutServiceInput
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutRelatedToInput = {
@@ -2210,6 +2255,7 @@ export type ServiceCreateWithoutRelatedFromInput = {
   keywords?: Prisma.ServiceKeywordCreateNestedManyWithoutServiceInput
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutRelatedFromInput = {
@@ -2249,6 +2295,7 @@ export type ServiceUncheckedCreateWithoutRelatedFromInput = {
   keywords?: Prisma.ServiceKeywordUncheckedCreateNestedManyWithoutServiceInput
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutRelatedFromInput = {
@@ -2304,6 +2351,7 @@ export type ServiceUpdateWithoutRelatedToInput = {
   keywords?: Prisma.ServiceKeywordUpdateManyWithoutServiceNestedInput
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutRelatedToInput = {
@@ -2343,6 +2391,7 @@ export type ServiceUncheckedUpdateWithoutRelatedToInput = {
   keywords?: Prisma.ServiceKeywordUncheckedUpdateManyWithoutServiceNestedInput
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUpsertWithoutRelatedFromInput = {
@@ -2393,6 +2442,7 @@ export type ServiceUpdateWithoutRelatedFromInput = {
   keywords?: Prisma.ServiceKeywordUpdateManyWithoutServiceNestedInput
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutRelatedFromInput = {
@@ -2432,6 +2482,7 @@ export type ServiceUncheckedUpdateWithoutRelatedFromInput = {
   keywords?: Prisma.ServiceKeywordUncheckedUpdateManyWithoutServiceNestedInput
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutReportsInput = {
@@ -2471,6 +2522,7 @@ export type ServiceCreateWithoutReportsInput = {
   keywords?: Prisma.ServiceKeywordCreateNestedManyWithoutServiceInput
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutReportsInput = {
@@ -2510,6 +2562,7 @@ export type ServiceUncheckedCreateWithoutReportsInput = {
   keywords?: Prisma.ServiceKeywordUncheckedCreateNestedManyWithoutServiceInput
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutReportsInput = {
@@ -2565,6 +2618,7 @@ export type ServiceUpdateWithoutReportsInput = {
   keywords?: Prisma.ServiceKeywordUpdateManyWithoutServiceNestedInput
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutReportsInput = {
@@ -2604,6 +2658,183 @@ export type ServiceUncheckedUpdateWithoutReportsInput = {
   keywords?: Prisma.ServiceKeywordUncheckedUpdateManyWithoutServiceNestedInput
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutProgressInput = {
+  id: string
+  icon?: string
+  popular?: boolean
+  verified?: boolean
+  isDemo?: boolean
+  titleAr: string
+  titleEn: string
+  shortDescAr: string
+  shortDescEn: string
+  departmentAr: string
+  departmentEn: string
+  feesAr: string
+  feesEn: string
+  durationAr: string
+  durationEn: string
+  hoursAr: string
+  hoursEn: string
+  eligibilityAr: string
+  eligibilityEn: string
+  sourceAr: string
+  sourceEn: string
+  lastReviewedAt?: Date | string | null
+  audience?: $Enums.Audience
+  status?: $Enums.ContentStatus
+  reviewNote?: string | null
+  searchText: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  category: Prisma.CategoryCreateNestedOneWithoutServicesInput
+  steps?: Prisma.ServiceStepCreateNestedManyWithoutServiceInput
+  documents?: Prisma.ServiceDocumentCreateNestedManyWithoutServiceInput
+  notes?: Prisma.ServiceNoteCreateNestedManyWithoutServiceInput
+  faqs?: Prisma.ServiceFaqCreateNestedManyWithoutServiceInput
+  keywords?: Prisma.ServiceKeywordCreateNestedManyWithoutServiceInput
+  relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
+  relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
+  reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutProgressInput = {
+  id: string
+  categoryId: string
+  icon?: string
+  popular?: boolean
+  verified?: boolean
+  isDemo?: boolean
+  titleAr: string
+  titleEn: string
+  shortDescAr: string
+  shortDescEn: string
+  departmentAr: string
+  departmentEn: string
+  feesAr: string
+  feesEn: string
+  durationAr: string
+  durationEn: string
+  hoursAr: string
+  hoursEn: string
+  eligibilityAr: string
+  eligibilityEn: string
+  sourceAr: string
+  sourceEn: string
+  lastReviewedAt?: Date | string | null
+  audience?: $Enums.Audience
+  status?: $Enums.ContentStatus
+  reviewNote?: string | null
+  searchText: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  steps?: Prisma.ServiceStepUncheckedCreateNestedManyWithoutServiceInput
+  documents?: Prisma.ServiceDocumentUncheckedCreateNestedManyWithoutServiceInput
+  notes?: Prisma.ServiceNoteUncheckedCreateNestedManyWithoutServiceInput
+  faqs?: Prisma.ServiceFaqUncheckedCreateNestedManyWithoutServiceInput
+  keywords?: Prisma.ServiceKeywordUncheckedCreateNestedManyWithoutServiceInput
+  relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
+  relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutProgressInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutProgressInput, Prisma.ServiceUncheckedCreateWithoutProgressInput>
+}
+
+export type ServiceUpsertWithoutProgressInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutProgressInput, Prisma.ServiceUncheckedUpdateWithoutProgressInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutProgressInput, Prisma.ServiceUncheckedCreateWithoutProgressInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutProgressInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutProgressInput, Prisma.ServiceUncheckedUpdateWithoutProgressInput>
+}
+
+export type ServiceUpdateWithoutProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  popular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleAr?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescAr?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  feesAr?: Prisma.StringFieldUpdateOperationsInput | string
+  feesEn?: Prisma.StringFieldUpdateOperationsInput | string
+  durationAr?: Prisma.StringFieldUpdateOperationsInput | string
+  durationEn?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursAr?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursEn?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityAr?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityEn?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.CategoryUpdateOneRequiredWithoutServicesNestedInput
+  steps?: Prisma.ServiceStepUpdateManyWithoutServiceNestedInput
+  documents?: Prisma.ServiceDocumentUpdateManyWithoutServiceNestedInput
+  notes?: Prisma.ServiceNoteUpdateManyWithoutServiceNestedInput
+  faqs?: Prisma.ServiceFaqUpdateManyWithoutServiceNestedInput
+  keywords?: Prisma.ServiceKeywordUpdateManyWithoutServiceNestedInput
+  relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
+  relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  popular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleAr?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescAr?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  feesAr?: Prisma.StringFieldUpdateOperationsInput | string
+  feesEn?: Prisma.StringFieldUpdateOperationsInput | string
+  durationAr?: Prisma.StringFieldUpdateOperationsInput | string
+  durationEn?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursAr?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursEn?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityAr?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityEn?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  steps?: Prisma.ServiceStepUncheckedUpdateManyWithoutServiceNestedInput
+  documents?: Prisma.ServiceDocumentUncheckedUpdateManyWithoutServiceNestedInput
+  notes?: Prisma.ServiceNoteUncheckedUpdateManyWithoutServiceNestedInput
+  faqs?: Prisma.ServiceFaqUncheckedUpdateManyWithoutServiceNestedInput
+  keywords?: Prisma.ServiceKeywordUncheckedUpdateManyWithoutServiceNestedInput
+  relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
+  relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateManyCategoryInput = {
@@ -2674,6 +2905,7 @@ export type ServiceUpdateWithoutCategoryInput = {
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutCategoryInput = {
@@ -2713,6 +2945,7 @@ export type ServiceUncheckedUpdateWithoutCategoryInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateManyWithoutCategoryInput = {
@@ -2760,6 +2993,7 @@ export type ServiceCountOutputType = {
   relatedTo: number
   relatedFrom: number
   reports: number
+  progress: number
 }
 
 export type ServiceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2771,6 +3005,7 @@ export type ServiceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   relatedTo?: boolean | ServiceCountOutputTypeCountRelatedToArgs
   relatedFrom?: boolean | ServiceCountOutputTypeCountRelatedFromArgs
   reports?: boolean | ServiceCountOutputTypeCountReportsArgs
+  progress?: boolean | ServiceCountOutputTypeCountProgressArgs
 }
 
 /**
@@ -2839,6 +3074,13 @@ export type ServiceCountOutputTypeCountReportsArgs<ExtArgs extends runtime.Types
   where?: Prisma.ReportWhereInput
 }
 
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProcedureProgressWhereInput
+}
+
 
 export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2879,6 +3121,7 @@ export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   relatedTo?: boolean | Prisma.Service$relatedToArgs<ExtArgs>
   relatedFrom?: boolean | Prisma.Service$relatedFromArgs<ExtArgs>
   reports?: boolean | Prisma.Service$reportsArgs<ExtArgs>
+  progress?: boolean | Prisma.Service$progressArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["service"]>
 
@@ -2991,6 +3234,7 @@ export type ServiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   relatedTo?: boolean | Prisma.Service$relatedToArgs<ExtArgs>
   relatedFrom?: boolean | Prisma.Service$relatedFromArgs<ExtArgs>
   reports?: boolean | Prisma.Service$reportsArgs<ExtArgs>
+  progress?: boolean | Prisma.Service$progressArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ServiceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3012,6 +3256,7 @@ export type $ServicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     relatedTo: Prisma.$ServiceRelationPayload<ExtArgs>[]
     relatedFrom: Prisma.$ServiceRelationPayload<ExtArgs>[]
     reports: Prisma.$ReportPayload<ExtArgs>[]
+    progress: Prisma.$ProcedureProgressPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3461,6 +3706,7 @@ export interface Prisma__ServiceClient<T, Null = never, ExtArgs extends runtime.
   relatedTo<T extends Prisma.Service$relatedToArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$relatedToArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   relatedFrom<T extends Prisma.Service$relatedFromArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$relatedFromArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reports<T extends Prisma.Service$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  progress<T extends Prisma.Service$progressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$progressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProcedureProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4109,6 +4355,30 @@ export type Service$reportsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.ReportScalarFieldEnum | Prisma.ReportScalarFieldEnum[]
+}
+
+/**
+ * Service.progress
+ */
+export type Service$progressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProcedureProgress
+   */
+  select?: Prisma.ProcedureProgressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProcedureProgress
+   */
+  omit?: Prisma.ProcedureProgressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProcedureProgressInclude<ExtArgs> | null
+  where?: Prisma.ProcedureProgressWhereInput
+  orderBy?: Prisma.ProcedureProgressOrderByWithRelationInput | Prisma.ProcedureProgressOrderByWithRelationInput[]
+  cursor?: Prisma.ProcedureProgressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProcedureProgressScalarFieldEnum | Prisma.ProcedureProgressScalarFieldEnum[]
 }
 
 /**

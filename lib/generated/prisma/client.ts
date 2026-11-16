@@ -116,3 +116,13 @@ export type Report = Prisma.ReportModel
  * ترجمات آلية مخزّنة لنصوص الواجهة (المفتاح: اللغة + بصمة النص الأصلي)
  */
 export type Translation = Prisma.TranslationModel
+/**
+ * Model ProcedureProgress
+ * متابعة المستخدم لإجراء: المرحلة يحدّدها بنفسه وليست حالة رسمية من أي جهة
+ */
+export type ProcedureProgress = Prisma.ProcedureProgressModel
+/**
+ * Model ProcedureFile
+ * ملف مستند رفعه الزبون. المحتوى على القرص خارج public (lib/progress/files.ts) والاسم عشوائي
+ */
+export type ProcedureFile = Prisma.ProcedureFileModel

@@ -85,6 +85,7 @@ model Service {
   relatedTo   ServiceRelation[]  @relation("RelationFrom")
   relatedFrom ServiceRelation[]  @relation("RelationTo")
   reports     Report[]
+  progress    ProcedureProgress[]
 
   @@index([categoryId])
   @@index([popular])
@@ -272,6 +273,7 @@ model User {
 
   sessions Session[]
   reports  Report[]
+  progress ProcedureProgress[]
 
   @@map("users")
 }
@@ -320,4 +322,56 @@ model Translation {
 
   @@id([lang, hash])
   @@map("translations")
+}
+
+/// متابعة المستخدم لإجراء: المرحلة يحدّدها بنفسه وليست حالة رسمية من أي جهة
+model ProcedureProgress {
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  serviceId  String
+  /// المرحلة الحالية من 1 إلى 5 (انظر lib/progress/stages.ts)
+  stage      Int       @default(1)
+  /// مراجعة فريق وينها لمستندات مرحلة «أجمع المستندات» (ليست قبولاً رسمياً من الجهة)
+  reviewStatus ReviewStatus @default(NONE)
+  /// ملاحظة الأدمن عند طلب التعديل
+  reviewNote   String?
+  submittedAt  DateTime?
+  reviewedAt   DateTime?
+  /// تاريخ بلوغ كل مرحلة (ISO) بمفتاح رقم المرحلة
+  stageDates Json      @default("{}")
+  reminderAt DateTime?
+  note       String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  files   ProcedureFile[]
+
+  @@unique([userId, serviceId])
+  @@map("procedure_progress")
+}
+
+enum ReviewStatus {
+  NONE
+  PENDING
+  NEEDS_CHANGES
+  APPROVED
+}
+
+/// ملف مستند رفعه الزبون. المحتوى على القرص خارج public (lib/progress/files.ts) والاسم عشوائي
+model ProcedureFile {
+  id         Int      @id @default(autoincrement())
+  progressId Int
+  /// الاسم الأصلي للعرض فقط
+  name       String
+  storedName String   @unique
+  mime       String
+  size       Int
+  createdAt  DateTime @default(now())
+
+  progress ProcedureProgress @relation(fields: [progressId], references: [id], onDelete: Cascade)
+
+  @@index([progressId])
+  @@map("procedure_files")
 }

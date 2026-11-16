@@ -8,6 +8,7 @@ import AutoTranslate from "@/components/layout/AutoTranslate";
 import PrefsSync from "@/components/layout/PrefsSync";
 import { dir } from "@/lib/i18n";
 import { getAudience } from "@/lib/audience.server";
+import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getLang } from "@/lib/i18n.server";
 import { PREFS_SCRIPT } from "@/lib/preferences";
@@ -31,6 +32,8 @@ const SW_CLEANUP_SCRIPT = `try{navigator.serviceWorker&&navigator.serviceWorker.
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [lang, user, audience] = await Promise.all([getLang(), getCurrentUser(), getAudience()]);
+  // إجراءات طلب الأدمن تعديل مستنداتها: نقطة تنبيه على أيقونة الحساب
+  const attention = user ? await prisma.procedureProgress.count({ where: { userId: user.id, reviewStatus: "NEEDS_CHANGES" } }) : 0;
 
   return (
     <html lang={lang} dir={dir(lang)} data-theme="light" suppressHydrationWarning>
@@ -42,7 +45,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <PrefsSync />
         <AutoTranslate lang={lang} />
-        <Header lang={lang} user={user ? { name: user.name, role: user.role } : null} audience={audience} />
+        <Header lang={lang} user={user ? { name: user.name, role: user.role } : null} audience={audience} attention={attention} />
         {children}
         <Footer lang={lang} />
         <AssistantLauncher lang={lang} />

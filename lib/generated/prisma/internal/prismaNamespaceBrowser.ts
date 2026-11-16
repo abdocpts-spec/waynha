@@ -65,7 +65,9 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Report: 'Report',
-  Translation: 'Translation'
+  Translation: 'Translation',
+  ProcedureProgress: 'ProcedureProgress',
+  ProcedureFile: 'ProcedureFile'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -290,12 +292,51 @@ export const TranslationScalarFieldEnum = {
 export type TranslationScalarFieldEnum = (typeof TranslationScalarFieldEnum)[keyof typeof TranslationScalarFieldEnum]
 
 
+export const ProcedureProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  serviceId: 'serviceId',
+  stage: 'stage',
+  reviewStatus: 'reviewStatus',
+  reviewNote: 'reviewNote',
+  submittedAt: 'submittedAt',
+  reviewedAt: 'reviewedAt',
+  stageDates: 'stageDates',
+  reminderAt: 'reminderAt',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProcedureProgressScalarFieldEnum = (typeof ProcedureProgressScalarFieldEnum)[keyof typeof ProcedureProgressScalarFieldEnum]
+
+
+export const ProcedureFileScalarFieldEnum = {
+  id: 'id',
+  progressId: 'progressId',
+  name: 'name',
+  storedName: 'storedName',
+  mime: 'mime',
+  size: 'size',
+  createdAt: 'createdAt'
+} as const
+
+export type ProcedureFileScalarFieldEnum = (typeof ProcedureFileScalarFieldEnum)[keyof typeof ProcedureFileScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -312,4 +353,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

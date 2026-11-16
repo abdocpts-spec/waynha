@@ -43,5 +43,29 @@ export default async function DashboardPage() {
       date: formatDate(s.lastReviewedAt!.toISOString(), lang),
     }));
 
-  return <DashboardView lang={lang} services={services} updates={updates} user={user ? { name: user.name, role: user.role } : null} />;
+  const progress = user
+    ? await prisma.procedureProgress.findMany({
+        where: { userId: user.id },
+        orderBy: { updatedAt: "desc" },
+        include: { service: { select: { icon: true, titleAr: true, titleEn: true } } },
+      })
+    : [];
+  const procedures = progress.map((p) => ({
+    id: p.serviceId,
+    icon: p.service.icon,
+    title: lang === "ar" ? p.service.titleAr : p.service.titleEn,
+    stage: p.stage,
+    review: p.reviewStatus,
+    reminder: p.reminderAt ? p.reminderAt.toISOString().slice(0, 10) : "",
+  }));
+
+  return (
+    <DashboardView
+      lang={lang}
+      services={services}
+      updates={updates}
+      procedures={procedures}
+      user={user ? { name: user.name, role: user.role } : null}
+    />
+  );
 }

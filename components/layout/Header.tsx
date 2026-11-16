@@ -18,7 +18,7 @@ function initials(name: string): string {
 }
 
 /** ترويسة الموقع: تنقّل + تبديل المظهر واللغة (نفس تصميم النموذج الأولي). */
-export default function Header({ lang, user, audience }: { lang: Lang; user: HeaderUser; audience: Audience | null }) {
+export default function Header({ lang, user, audience, attention = 0 }: { lang: Lang; user: HeaderUser; audience: Audience | null; attention?: number }) {
   const pathname = usePathname();
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
@@ -114,6 +114,7 @@ export default function Header({ lang, user, audience }: { lang: Lang; user: Hea
               title={user.name}
             >
               {initials(user.name)}
+              {attention > 0 && <span className="chip-dot" aria-label={lang === "ar" ? "إجراء يحتاج تعديلاً" : "A procedure needs changes"} />}
             </Link>
           ) : (
             <Link href="/login" className="btn-outline header-login">

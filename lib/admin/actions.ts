@@ -183,3 +183,29 @@ export async function setUserActive(form: FormData) {
   if (!active) await prisma.session.deleteMany({ where: { userId: id } });
   revalidatePath("/admin/users");
 }
+
+// ─────────── مراجعة مستندات الزبائن ───────────
+
+/** قبول مستندات زبون (اكتمال فقط، وليس قبولاً رسمياً من الجهة) أو طلب تعديل مع ملاحظة. */
+export async function reviewProcedure(form: FormData) {
+  await requireAdmin();
+  const id = Number(form.get("id"));
+  const decision = z.enum(["APPROVE", "CHANGES"]).parse(form.get("decision"));
+  const note = String(form.get("note") ?? "").trim().slice(0, 500);
+  if (!Number.isInteger(id)) return;
+  if (decision === "CHANGES" && note.length < 3) return; // الملاحظة إلزامية عند طلب التعديل
+
+  const row = await prisma.procedureProgress.findUnique({ where: { id }, select: { serviceId: true, reviewStatus: true } });
+  if (!row || row.reviewStatus !== "PENDING") return;
+
+  await prisma.procedureProgress.update({
+    where: { id },
+    data:
+      decision === "APPROVE"
+        ? { reviewStatus: "APPROVED", reviewNote: null, reviewedAt: new Date() }
+        : { reviewStatus: "NEEDS_CHANGES", reviewNote: note, reviewedAt: new Date() },
+  });
+  revalidatePath("/admin/reviews");
+  revalidatePath(`/services/${row.serviceId}`);
+  revalidatePath("/dashboard");
+}
