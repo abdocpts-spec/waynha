@@ -1,5 +1,5 @@
 /**
- * إنشاء حساب أدمن (أو ترقية حساب موجود) من الخادم فقط — لا يمكن تسجيل أدمن من الموقع.
+ * إنشاء حساب أدمن جديد من الخادم فقط (لا يُرقّى أي حساب موجود) — لا يمكن تسجيل أدمن من الموقع.
  *
  *   npm run admin:create -- --login admin@waynha.ly --name "اسم المدير"
  *
@@ -41,12 +41,16 @@ const salt = randomBytes(16);
 const passwordHash = `${salt.toString("hex")}:${(await scryptAsync(password, salt, 64)).toString("hex")}`;
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }) });
-const user = await prisma.user.upsert({
-  where: { login },
-  update: { role: "ADMIN", active: true, passwordHash, name },
-  create: { login, name, role: "ADMIN", passwordHash },
+// حساب جديد فقط: لا نرقّي حساب مواطن أو أجنبي موجود إلى أدمن، ولا نعدّل أي حساب قائم
+const existing = await prisma.user.findFirst({ where: { OR: [{ login }, { email: login }] }, select: { id: true } });
+if (existing) {
+  console.error("✗ هذا البريد أو الهاتف مسجّل مسبقاً كحساب. اختر معرّفاً جديداً للأدمن (لا يُرقّى حساب موجود).");
+  await prisma.$disconnect();
+  process.exit(1);
+}
+await prisma.user.create({
+  data: { login, ...(/@/.test(login) ? { email: login } : {}), name, role: "ADMIN", active: true, passwordHash },
 });
-await prisma.session.deleteMany({ where: { userId: user.id } });
 await prisma.$disconnect();
 
 console.log(`✓ حساب الأدمن جاهز: ${login}`);

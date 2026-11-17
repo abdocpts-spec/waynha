@@ -1,7 +1,5 @@
 import Link from "next/link";
 import DemoDataBanner from "@/components/DemoDataBanner";
-import HeroParticles from "@/components/HeroParticles";
-import HomeSearch from "@/components/HomeSearch";
 import Lander from "@/components/Lander";
 import ServiceCard from "@/components/ServiceCard";
 import { toServicePayload } from "@/lib/ai/contextBuilder";
@@ -34,32 +32,10 @@ export default async function HomePage() {
   const verifiedCount = services.filter((service) => service.verified).length;
   const hasDemoData = services.some((service) => service.isDemo);
 
-  const steps = [
-    {
-      ar: ["اسأل بلغتك", "اكتب مشكلتك باللهجة الليبية، والمساعد يفهمك."],
-      en: ["Ask in your words", "Describe your need in plain Libyan Arabic."],
-    },
-    {
-      ar: ["نلقّالك الإجراء", "نبحث في قاعدة بيانات وينها عن الخدمة المناسبة."],
-      en: ["We find the procedure", "We search the WAYNHA database for the right service."],
-    },
-    {
-      ar: ["اعرف المطلوب", "الخطوات والمستندات والرسوم قدامك."],
-      en: ["Know what you need", "Steps, documents and fees, all in one place."],
-    },
-    {
-      ar: ["امشي بثقة", "نحددلك أقرب جهة حكومية وأوقات دوامها."],
-      en: ["Go with confidence", "We show the nearest office and its working hours."],
-    },
-  ];
-
   return (
     <main>
       <section className="hero">
-        <HeroParticles />
         <div className="container">
-          {/* مكان رمز الشعار الذي تشكّله النقاط في HeroParticles */}
-          <div className="hero-mark-slot" aria-hidden="true" />
           <h1>
             {t(lang, "مش عارف وين تمشي؟", "Don't know where to go?")}
             <br />
@@ -68,14 +44,12 @@ export default async function HomePage() {
           <p className="subtitle">
             {t(
               lang,
-              "اسأل مساعد وينها بلهجتك، ويجاوبك من قاعدة بيانات الإجراءات الحكومية.",
-              "Ask the WAYNHA assistant in your own words — answers come from the procedures database.",
+              "دليل الإجراءات والخدمات الحكومية في ليبيا: الخطوات والمستندات والرسوم وأقرب جهة، كلها في مكان واحد.",
+              "A guide to government procedures and services in Libya: steps, documents, fees and the nearest office, all in one place.",
             )}
           </p>
 
-          <HomeSearch lang={lang} />
-
-          <div className="stats-bar" style={{ marginTop: 48 }}>
+          <div className="stats-bar" style={{ marginTop: 40 }}>
             <div className="stat-item">
               <span className="stat-num">{services.length}</span>
               <span className="stat-txt">{t(lang, "إجراء في القاعدة", "procedures")}</span>
@@ -112,25 +86,6 @@ export default async function HomePage() {
                 lang={lang}
                 showPopularBadge
               />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section how-it-works-section">
-        <div className="container">
-          <h2 className="section-title" style={{ textAlign: "center", marginBottom: 48 }}>
-            {t(lang, "كيف تستخدم وينها؟", "How WAYNHA works")}
-          </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 8 }}>
-            {steps.map((step, index) => (
-              <div className="how-step" key={step.en[0]}>
-                <div className="how-step-num">{index + 1}</div>
-                <h3 style={{ marginBottom: 10, fontWeight: 700 }}>{lang === "ar" ? step.ar[0] : step.en[0]}</h3>
-                <p style={{ color: "var(--text-muted)", fontSize: "0.95rem", maxWidth: 200, margin: "0 auto" }}>
-                  {lang === "ar" ? step.ar[1] : step.en[1]}
-                </p>
-              </div>
             ))}
           </div>
         </div>
@@ -174,46 +129,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="ai-promo-wrap">
-            <div className="ai-icon-large">🤖</div>
-            <h2 style={{ fontSize: "2.1rem", marginBottom: 16, fontWeight: 800, position: "relative" }}>
-              {t(lang, "اسأل مساعد وينها", "Ask the WAYNHA assistant")}
-            </h2>
-            <p
-              style={{
-                fontSize: "1.05rem",
-                opacity: 0.92,
-                maxWidth: 540,
-                margin: "0 auto 32px",
-                lineHeight: 1.7,
-                position: "relative",
-              }}
-            >
-              {t(
-                lang,
-                "مساعد ذكي يفهم اللهجة الليبية، ويجاوبك من معلومات الإجراءات الموجودة في وينها فقط.",
-                "An AI assistant that understands Libyan Arabic and answers strictly from WAYNHA's procedure data.",
-              )}
-            </p>
-            <Link
-              href="/assistant"
-              className="btn-primary"
-              style={{
-                background: "rgba(255,255,255,0.2)",
-                border: "2px solid rgba(255,255,255,0.4)",
-                backdropFilter: "blur(10px)",
-                fontSize: "1.05rem",
-                padding: "14px 36px",
-                position: "relative",
-              }}
-            >
-              💬 {t(lang, "تحدث مع وينها الآن", "Chat with WAYNHA now")}
-            </Link>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
