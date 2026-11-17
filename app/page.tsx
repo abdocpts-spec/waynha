@@ -2,6 +2,7 @@ import Link from "next/link";
 import DemoDataBanner from "@/components/DemoDataBanner";
 import Lander from "@/components/Lander";
 import ServiceCard from "@/components/ServiceCard";
+import { computeReliability } from "@/lib/reliability";
 import { toServicePayload } from "@/lib/ai/contextBuilder";
 import { prisma } from "@/lib/db";
 import { t, uiLang } from "@/lib/i18n";
@@ -29,7 +30,7 @@ export default async function HomePage() {
   void serviceInclude;
 
   const popular = services.filter((service) => service.popular).slice(0, 3);
-  const verifiedCount = services.filter((service) => service.verified).length;
+  const verifiedCount = services.filter((service) => computeReliability(service).status === "REVIEWED").length;
   const hasDemoData = services.some((service) => service.isDemo);
 
   return (
@@ -62,7 +63,7 @@ export default async function HomePage() {
             <div className="stat-divider" />
             <div className="stat-item">
               <span className="stat-num">{verifiedCount}</span>
-              <span className="stat-txt">{t(lang, "إجراء موثق", "verified")}</span>
+              <span className="stat-txt">{t(lang, "إجراء تمت مراجعته", "reviewed")}</span>
             </div>
           </div>
         </div>

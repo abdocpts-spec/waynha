@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import type { OfficePayload, ServicePayload } from "@/lib/ai/contextBuilder";
-import { directionsUrl, isOfficeOpen } from "@/lib/format";
+import ReliabilityBadge from "@/components/ReliabilityBadge";
+import { OUTDATED_NOTE, RELIABILITY_META } from "@/lib/reliability";
+import { directionsUrl, distanceKm, formatDistance, isOfficeOpen } from "@/lib/format";
 import { t, type Lang } from "@/lib/i18n";
 
 /**
@@ -11,13 +14,28 @@ import { t, type Lang } from "@/lib/i18n";
  */
 export default function AIServiceCard({
   service,
-  offices,
+  offices: allOffices,
   lang,
 }: {
   service: ServicePayload;
   offices: OfficePayload[];
   lang: Lang;
 }) {
+  // الترتيب بالقرب يتم في المتصفح فقط بعد موافقة المستخدم؛ الموقع لا يُرسل ولا يُحفظ
+  const [here, setHere] = useState<{ lat: number; lng: number } | null>(null);
+  const [locMsg, setLocMsg] = useState("");
+  const offices = useMemo(
+    () => (here ? [...allOffices].sort((a, b) => distanceKm(here, a) - distanceKm(here, b)) : allOffices),
+    [allOffices, here],
+  );
+  function locate() {
+    if (!("geolocation" in navigator)) return setLocMsg(t(lang, "تعذّر تحديد الموقع.", "Location is unavailable."));
+    navigator.geolocation.getCurrentPosition(
+      (pos) => { setHere({ lat: pos.coords.latitude, lng: pos.coords.longitude }); setLocMsg(""); },
+      () => setLocMsg(t(lang, "لم تسمح بالموقع — افتح الخريطة واختر مدينتك.", "Location not allowed — open the map and choose your city.")),
+      { timeout: 12000, maximumAge: 60000 },
+    );
+  }
   const steps = service.steps.slice(0, 4);
   const documents = service.documents.slice(0, 4);
 
@@ -37,6 +55,9 @@ export default function AIServiceCard({
         <span>💰 {service.fees}</span>
         <span>⏱ {service.duration}</span>
         <span>🕒 {service.hours}</span>
+      </div>
+      <div className="card-rel" style={{ padding: "0 16px 8px" }}>
+        <ReliabilityBadge reliability={service.reliability} lang={lang} serviceId={service.id} />
       </div>
 
       {documents.length > 0 && (
@@ -99,8 +120,14 @@ export default function AIServiceCard({
                       : t(lang, "مغلق الآن", "Closed now")}
                   </span>
                 </span>
-                <span>{office.address} — {office.city}</span>
-                <span dir="ltr">☎ {office.phone}</span>
+                <span>{office.address || t(lang, "غير متوفر", "Not available")} — {office.city}</span>
+                {here && (
+                  <span>
+                    🧭 {formatDistance(distanceKm(here, office), lang)}{" "}
+                    <small>{t(lang, "بخط مستقيم (تقريبي)", "straight-line (approx.)")}</small>
+                  </span>
+                )}
+                <span dir="ltr">☎ {office.phone || t(lang, "غير متوفر", "Not available")}</span>
                 <span>🕒 {office.hours}</span>
                 <span style={{ display: "flex", gap: 10, marginTop: 4 }}>
                   <Link href={`/offices?office=${office.id}`} style={{ color: "var(--primary)", fontWeight: 600 }}>
@@ -118,19 +145,29 @@ export default function AIServiceCard({
               </li>
             ))}
           </ul>
+          <button type="button" className="btn-outline" style={{ marginTop: 8 }} onClick={locate}>
+            📍 {t(lang, "الأقرب إليّ", "Nearest to me")}
+          </button>
+          {locMsg && <p className="ai-note">{locMsg}</p>}
         </div>
       )}
 
-      {(service.isDemo || !service.verified) && (
+      {service.isDemo && (
         <p className="ai-note">
           ⚠️{" "}
-          {service.isDemo
-            ? t(
-                lang,
-                "بيانات تجريبية للعرض — تأكد من الجهة الرسمية قبل ما تمشي.",
-                "Demo data — confirm with the official authority before you go.",
-              )
-            : t(lang, "هذا الإجراء قيد المراجعة.", "This procedure is under review.")}
+          {t(
+            lang,
+            "بيانات تجريبية للعرض — تأكد من الجهة الرسمية قبل ما تمشي.",
+            "Demo data — confirm with the official authority before you go.",
+          )}
+        </p>
+      )}
+      {service.reliability.status !== "REVIEWED" && (
+        <p className="ai-note">
+          ⚠️{" "}
+          {service.reliability.status === "OUTDATED"
+            ? t(lang, OUTDATED_NOTE.ar, OUTDATED_NOTE.en)
+            : t(lang, RELIABILITY_META[service.reliability.status].descAr, RELIABILITY_META[service.reliability.status].descEn)}
         </p>
       )}
 
@@ -140,7 +177,7 @@ export default function AIServiceCard({
         </Link>
         {offices.length > 0 && (
           <Link href={`/offices?service=${service.id}`} className="btn-outline">
-            {t(lang, "عرض الأماكن", "Show locations")}
+            🗺️ {t(lang, "وين نمشي؟ (الخريطة)", "Where to go? (map)")}
           </Link>
         )}
       </div>

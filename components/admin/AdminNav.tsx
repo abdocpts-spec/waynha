@@ -5,11 +5,13 @@ import { usePathname } from "next/navigation";
 import { logout } from "@/lib/auth/actions";
 
 /** القائمة الجانبية للوحة الإدارة. */
-export default function AdminNav({ name, newReports, pendingReviews }: { name: string; newReports: number; pendingReviews: number }) {
+export default function AdminNav({ name, newReports, pendingReviews, needsReview }: { name: string; newReports: number; pendingReviews: number; needsReview: number }) {
   const pathname = usePathname();
   const items = [
     { href: "/admin", icon: "📊", label: "نظرة عامة" },
     { href: "/admin/services", icon: "📋", label: "الخدمات ومراحل الاعتماد" },
+    { href: "/admin/reliability", icon: "🛡️", label: "موثوقية المعلومات", badge: needsReview },
+    { href: "/admin/offices", icon: "📍", label: "مواقع الجهات" },
     { href: "/admin/reviews", icon: "📎", label: "مراجعة مستندات الزبائن", badge: pendingReviews },
     { href: "/admin/reports", icon: "⚠️", label: "بلاغات المستخدمين", badge: newReports },
     { href: "/admin/users", icon: "👥", label: "المستخدمون" },

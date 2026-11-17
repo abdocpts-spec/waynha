@@ -28,10 +28,12 @@ export type AggregateCategory = {
 
 export type CategoryAvgAggregateOutputType = {
   sortOrder: number | null
+  reviewIntervalDays: number | null
 }
 
 export type CategorySumAggregateOutputType = {
   sortOrder: number | null
+  reviewIntervalDays: number | null
 }
 
 export type CategoryMinAggregateOutputType = {
@@ -41,6 +43,7 @@ export type CategoryMinAggregateOutputType = {
   titleAr: string | null
   titleEn: string | null
   sortOrder: number | null
+  reviewIntervalDays: number | null
 }
 
 export type CategoryMaxAggregateOutputType = {
@@ -50,6 +53,7 @@ export type CategoryMaxAggregateOutputType = {
   titleAr: string | null
   titleEn: string | null
   sortOrder: number | null
+  reviewIntervalDays: number | null
 }
 
 export type CategoryCountAggregateOutputType = {
@@ -59,16 +63,19 @@ export type CategoryCountAggregateOutputType = {
   titleAr: number
   titleEn: number
   sortOrder: number
+  reviewIntervalDays: number
   _all: number
 }
 
 
 export type CategoryAvgAggregateInputType = {
   sortOrder?: true
+  reviewIntervalDays?: true
 }
 
 export type CategorySumAggregateInputType = {
   sortOrder?: true
+  reviewIntervalDays?: true
 }
 
 export type CategoryMinAggregateInputType = {
@@ -78,6 +85,7 @@ export type CategoryMinAggregateInputType = {
   titleAr?: true
   titleEn?: true
   sortOrder?: true
+  reviewIntervalDays?: true
 }
 
 export type CategoryMaxAggregateInputType = {
@@ -87,6 +95,7 @@ export type CategoryMaxAggregateInputType = {
   titleAr?: true
   titleEn?: true
   sortOrder?: true
+  reviewIntervalDays?: true
 }
 
 export type CategoryCountAggregateInputType = {
@@ -96,6 +105,7 @@ export type CategoryCountAggregateInputType = {
   titleAr?: true
   titleEn?: true
   sortOrder?: true
+  reviewIntervalDays?: true
   _all?: true
 }
 
@@ -192,6 +202,7 @@ export type CategoryGroupByOutputType = {
   titleAr: string
   titleEn: string
   sortOrder: number
+  reviewIntervalDays: number
   _count: CategoryCountAggregateOutputType | null
   _avg: CategoryAvgAggregateOutputType | null
   _sum: CategorySumAggregateOutputType | null
@@ -224,6 +235,7 @@ export type CategoryWhereInput = {
   titleAr?: Prisma.StringFilter<"Category"> | string
   titleEn?: Prisma.StringFilter<"Category"> | string
   sortOrder?: Prisma.IntFilter<"Category"> | number
+  reviewIntervalDays?: Prisma.IntFilter<"Category"> | number
   services?: Prisma.ServiceListRelationFilter
   offices?: Prisma.OfficeCategoryListRelationFilter
 }
@@ -235,6 +247,7 @@ export type CategoryOrderByWithRelationInput = {
   titleAr?: Prisma.SortOrder
   titleEn?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrder
   services?: Prisma.ServiceOrderByRelationAggregateInput
   offices?: Prisma.OfficeCategoryOrderByRelationAggregateInput
 }
@@ -249,6 +262,7 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   titleAr?: Prisma.StringFilter<"Category"> | string
   titleEn?: Prisma.StringFilter<"Category"> | string
   sortOrder?: Prisma.IntFilter<"Category"> | number
+  reviewIntervalDays?: Prisma.IntFilter<"Category"> | number
   services?: Prisma.ServiceListRelationFilter
   offices?: Prisma.OfficeCategoryListRelationFilter
 }, "id">
@@ -260,6 +274,7 @@ export type CategoryOrderByWithAggregationInput = {
   titleAr?: Prisma.SortOrder
   titleEn?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrder
   _count?: Prisma.CategoryCountOrderByAggregateInput
   _avg?: Prisma.CategoryAvgOrderByAggregateInput
   _max?: Prisma.CategoryMaxOrderByAggregateInput
@@ -277,6 +292,7 @@ export type CategoryScalarWhereWithAggregatesInput = {
   titleAr?: Prisma.StringWithAggregatesFilter<"Category"> | string
   titleEn?: Prisma.StringWithAggregatesFilter<"Category"> | string
   sortOrder?: Prisma.IntWithAggregatesFilter<"Category"> | number
+  reviewIntervalDays?: Prisma.IntWithAggregatesFilter<"Category"> | number
 }
 
 export type CategoryCreateInput = {
@@ -286,6 +302,7 @@ export type CategoryCreateInput = {
   titleAr: string
   titleEn: string
   sortOrder?: number
+  reviewIntervalDays?: number
   services?: Prisma.ServiceCreateNestedManyWithoutCategoryInput
   offices?: Prisma.OfficeCategoryCreateNestedManyWithoutCategoryInput
 }
@@ -297,6 +314,7 @@ export type CategoryUncheckedCreateInput = {
   titleAr: string
   titleEn: string
   sortOrder?: number
+  reviewIntervalDays?: number
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCategoryInput
   offices?: Prisma.OfficeCategoryUncheckedCreateNestedManyWithoutCategoryInput
 }
@@ -308,6 +326,7 @@ export type CategoryUpdateInput = {
   titleAr?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  reviewIntervalDays?: Prisma.IntFieldUpdateOperationsInput | number
   services?: Prisma.ServiceUpdateManyWithoutCategoryNestedInput
   offices?: Prisma.OfficeCategoryUpdateManyWithoutCategoryNestedInput
 }
@@ -319,6 +338,7 @@ export type CategoryUncheckedUpdateInput = {
   titleAr?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  reviewIntervalDays?: Prisma.IntFieldUpdateOperationsInput | number
   services?: Prisma.ServiceUncheckedUpdateManyWithoutCategoryNestedInput
   offices?: Prisma.OfficeCategoryUncheckedUpdateManyWithoutCategoryNestedInput
 }
@@ -330,6 +350,7 @@ export type CategoryCreateManyInput = {
   titleAr: string
   titleEn: string
   sortOrder?: number
+  reviewIntervalDays?: number
 }
 
 export type CategoryUpdateManyMutationInput = {
@@ -339,6 +360,7 @@ export type CategoryUpdateManyMutationInput = {
   titleAr?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  reviewIntervalDays?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type CategoryUncheckedUpdateManyInput = {
@@ -348,6 +370,7 @@ export type CategoryUncheckedUpdateManyInput = {
   titleAr?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  reviewIntervalDays?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type CategoryCountOrderByAggregateInput = {
@@ -357,10 +380,12 @@ export type CategoryCountOrderByAggregateInput = {
   titleAr?: Prisma.SortOrder
   titleEn?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrder
 }
 
 export type CategoryAvgOrderByAggregateInput = {
   sortOrder?: Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrder
 }
 
 export type CategoryMaxOrderByAggregateInput = {
@@ -370,6 +395,7 @@ export type CategoryMaxOrderByAggregateInput = {
   titleAr?: Prisma.SortOrder
   titleEn?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrder
 }
 
 export type CategoryMinOrderByAggregateInput = {
@@ -379,10 +405,12 @@ export type CategoryMinOrderByAggregateInput = {
   titleAr?: Prisma.SortOrder
   titleEn?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrder
 }
 
 export type CategorySumOrderByAggregateInput = {
   sortOrder?: Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrder
 }
 
 export type CategoryScalarRelationFilter = {
@@ -437,6 +465,7 @@ export type CategoryCreateWithoutServicesInput = {
   titleAr: string
   titleEn: string
   sortOrder?: number
+  reviewIntervalDays?: number
   offices?: Prisma.OfficeCategoryCreateNestedManyWithoutCategoryInput
 }
 
@@ -447,6 +476,7 @@ export type CategoryUncheckedCreateWithoutServicesInput = {
   titleAr: string
   titleEn: string
   sortOrder?: number
+  reviewIntervalDays?: number
   offices?: Prisma.OfficeCategoryUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -473,6 +503,7 @@ export type CategoryUpdateWithoutServicesInput = {
   titleAr?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  reviewIntervalDays?: Prisma.IntFieldUpdateOperationsInput | number
   offices?: Prisma.OfficeCategoryUpdateManyWithoutCategoryNestedInput
 }
 
@@ -483,6 +514,7 @@ export type CategoryUncheckedUpdateWithoutServicesInput = {
   titleAr?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  reviewIntervalDays?: Prisma.IntFieldUpdateOperationsInput | number
   offices?: Prisma.OfficeCategoryUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -493,6 +525,7 @@ export type CategoryCreateWithoutOfficesInput = {
   titleAr: string
   titleEn: string
   sortOrder?: number
+  reviewIntervalDays?: number
   services?: Prisma.ServiceCreateNestedManyWithoutCategoryInput
 }
 
@@ -503,6 +536,7 @@ export type CategoryUncheckedCreateWithoutOfficesInput = {
   titleAr: string
   titleEn: string
   sortOrder?: number
+  reviewIntervalDays?: number
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -529,6 +563,7 @@ export type CategoryUpdateWithoutOfficesInput = {
   titleAr?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  reviewIntervalDays?: Prisma.IntFieldUpdateOperationsInput | number
   services?: Prisma.ServiceUpdateManyWithoutCategoryNestedInput
 }
 
@@ -539,6 +574,7 @@ export type CategoryUncheckedUpdateWithoutOfficesInput = {
   titleAr?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  reviewIntervalDays?: Prisma.IntFieldUpdateOperationsInput | number
   services?: Prisma.ServiceUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -589,6 +625,7 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   titleAr?: boolean
   titleEn?: boolean
   sortOrder?: boolean
+  reviewIntervalDays?: boolean
   services?: boolean | Prisma.Category$servicesArgs<ExtArgs>
   offices?: boolean | Prisma.Category$officesArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -601,6 +638,7 @@ export type CategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   titleAr?: boolean
   titleEn?: boolean
   sortOrder?: boolean
+  reviewIntervalDays?: boolean
 }, ExtArgs["result"]["category"]>
 
 export type CategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -610,6 +648,7 @@ export type CategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   titleAr?: boolean
   titleEn?: boolean
   sortOrder?: boolean
+  reviewIntervalDays?: boolean
 }, ExtArgs["result"]["category"]>
 
 export type CategorySelectScalar = {
@@ -619,9 +658,10 @@ export type CategorySelectScalar = {
   titleAr?: boolean
   titleEn?: boolean
   sortOrder?: boolean
+  reviewIntervalDays?: boolean
 }
 
-export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "icon" | "color" | "titleAr" | "titleEn" | "sortOrder", ExtArgs["result"]["category"]>
+export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "icon" | "color" | "titleAr" | "titleEn" | "sortOrder" | "reviewIntervalDays", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   services?: boolean | Prisma.Category$servicesArgs<ExtArgs>
   offices?: boolean | Prisma.Category$officesArgs<ExtArgs>
@@ -643,6 +683,10 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     titleAr: string
     titleEn: string
     sortOrder: number
+    /**
+     * مدة المراجعة الافتراضية لخدمات هذا القسم بالأيام (يحدّدها الأدمن)
+     */
+    reviewIntervalDays: number
   }, ExtArgs["result"]["category"]>
   composites: {}
 }
@@ -1074,6 +1118,7 @@ export interface CategoryFieldRefs {
   readonly titleAr: Prisma.FieldRef<"Category", 'String'>
   readonly titleEn: Prisma.FieldRef<"Category", 'String'>
   readonly sortOrder: Prisma.FieldRef<"Category", 'Int'>
+  readonly reviewIntervalDays: Prisma.FieldRef<"Category", 'Int'>
 }
     
 

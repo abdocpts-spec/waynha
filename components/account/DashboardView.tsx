@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import ReliabilityBadge from "@/components/ReliabilityBadge";
 import { logout } from "@/lib/auth/actions";
+import type { ReliabilityPayload } from "@/lib/reliability";
 import { LAST_STAGE, STAGES } from "@/lib/progress/stages";
 import { t, type Lang } from "@/lib/i18n";
 import {
@@ -13,7 +15,7 @@ import {
   type RecentSearch,
 } from "@/lib/preferences";
 
-type ServiceItem = { id: string; icon: string; title: string; category: string };
+type ServiceItem = { id: string; icon: string; title: string; category: string; reliability: ReliabilityPayload };
 type Update = { id: string; title: string; date: string };
 type Procedure = { id: string; icon: string; title: string; stage: number; review: "NONE" | "PENDING" | "NEEDS_CHANGES" | "APPROVED"; reminder: string };
 
@@ -235,6 +237,7 @@ export default function DashboardView({
                       </div>
                       <div className="list-item-sub">{s.category}</div>
                     </Link>
+                    <ReliabilityBadge reliability={s.reliability} lang={lang} serviceId={s.id} />
                     <button
                       type="button"
                       className="link-btn"

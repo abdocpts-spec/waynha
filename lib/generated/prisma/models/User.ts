@@ -275,6 +275,8 @@ export type UserWhereInput = {
   sessions?: Prisma.SessionListRelationFilter
   reports?: Prisma.ReportListRelationFilter
   progress?: Prisma.ProcedureProgressListRelationFilter
+  reviewedServices?: Prisma.ServiceListRelationFilter
+  audits?: Prisma.ServiceAuditListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -293,6 +295,8 @@ export type UserOrderByWithRelationInput = {
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   reports?: Prisma.ReportOrderByRelationAggregateInput
   progress?: Prisma.ProcedureProgressOrderByRelationAggregateInput
+  reviewedServices?: Prisma.ServiceOrderByRelationAggregateInput
+  audits?: Prisma.ServiceAuditOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -314,6 +318,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sessions?: Prisma.SessionListRelationFilter
   reports?: Prisma.ReportListRelationFilter
   progress?: Prisma.ProcedureProgressListRelationFilter
+  reviewedServices?: Prisma.ServiceListRelationFilter
+  audits?: Prisma.ServiceAuditListRelationFilter
 }, "id" | "login" | "email" | "nationalIdHash" | "residenceIdHash">
 
 export type UserOrderByWithAggregationInput = {
@@ -369,6 +375,8 @@ export type UserCreateInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   reports?: Prisma.ReportCreateNestedManyWithoutUserInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutUserInput
+  reviewedServices?: Prisma.ServiceCreateNestedManyWithoutReviewedByInput
+  audits?: Prisma.ServiceAuditCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -387,6 +395,8 @@ export type UserUncheckedCreateInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutUserInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutUserInput
+  reviewedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutReviewedByInput
+  audits?: Prisma.ServiceAuditUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -404,6 +414,8 @@ export type UserUpdateInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   reports?: Prisma.ReportUpdateManyWithoutUserNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutUserNestedInput
+  reviewedServices?: Prisma.ServiceUpdateManyWithoutReviewedByNestedInput
+  audits?: Prisma.ServiceAuditUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -422,6 +434,8 @@ export type UserUncheckedUpdateInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutUserNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutUserNestedInput
+  reviewedServices?: Prisma.ServiceUncheckedUpdateManyWithoutReviewedByNestedInput
+  audits?: Prisma.ServiceAuditUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -466,6 +480,11 @@ export type UserUncheckedUpdateManyInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -526,9 +545,36 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
+export type UserCreateNestedOneWithoutReviewedServicesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewedServicesInput, Prisma.UserUncheckedCreateWithoutReviewedServicesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewedServicesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutReviewedServicesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewedServicesInput, Prisma.UserUncheckedCreateWithoutReviewedServicesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewedServicesInput
+  upsert?: Prisma.UserUpsertWithoutReviewedServicesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewedServicesInput, Prisma.UserUpdateWithoutReviewedServicesInput>, Prisma.UserUncheckedUpdateWithoutReviewedServicesInput>
+}
+
+export type UserCreateNestedOneWithoutAuditsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditsInput, Prisma.UserUncheckedCreateWithoutAuditsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutAuditsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditsInput, Prisma.UserUncheckedCreateWithoutAuditsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditsInput
+  upsert?: Prisma.UserUpsertWithoutAuditsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuditsInput, Prisma.UserUpdateWithoutAuditsInput>, Prisma.UserUncheckedUpdateWithoutAuditsInput>
 }
 
 export type EnumRoleFieldUpdateOperationsInput = {
@@ -579,6 +625,186 @@ export type UserUpdateOneRequiredWithoutProgressNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProgressInput, Prisma.UserUpdateWithoutProgressInput>, Prisma.UserUncheckedUpdateWithoutProgressInput>
 }
 
+export type UserCreateWithoutReviewedServicesInput = {
+  login: string
+  email?: string | null
+  nationalIdHash?: string | null
+  residenceIdHash?: string | null
+  name: string
+  role?: $Enums.Role
+  passwordHash: string
+  cityId?: string | null
+  active?: boolean
+  createdAt?: Date | string
+  lastLoginAt?: Date | string | null
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  reports?: Prisma.ReportCreateNestedManyWithoutUserInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutUserInput
+  audits?: Prisma.ServiceAuditCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReviewedServicesInput = {
+  id?: number
+  login: string
+  email?: string | null
+  nationalIdHash?: string | null
+  residenceIdHash?: string | null
+  name: string
+  role?: $Enums.Role
+  passwordHash: string
+  cityId?: string | null
+  active?: boolean
+  createdAt?: Date | string
+  lastLoginAt?: Date | string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutUserInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutUserInput
+  audits?: Prisma.ServiceAuditUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReviewedServicesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewedServicesInput, Prisma.UserUncheckedCreateWithoutReviewedServicesInput>
+}
+
+export type UserUpsertWithoutReviewedServicesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReviewedServicesInput, Prisma.UserUncheckedUpdateWithoutReviewedServicesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewedServicesInput, Prisma.UserUncheckedCreateWithoutReviewedServicesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReviewedServicesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReviewedServicesInput, Prisma.UserUncheckedUpdateWithoutReviewedServicesInput>
+}
+
+export type UserUpdateWithoutReviewedServicesInput = {
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residenceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  cityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutUserNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutUserNestedInput
+  audits?: Prisma.ServiceAuditUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReviewedServicesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residenceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  cityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutUserNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutUserNestedInput
+  audits?: Prisma.ServiceAuditUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAuditsInput = {
+  login: string
+  email?: string | null
+  nationalIdHash?: string | null
+  residenceIdHash?: string | null
+  name: string
+  role?: $Enums.Role
+  passwordHash: string
+  cityId?: string | null
+  active?: boolean
+  createdAt?: Date | string
+  lastLoginAt?: Date | string | null
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  reports?: Prisma.ReportCreateNestedManyWithoutUserInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutUserInput
+  reviewedServices?: Prisma.ServiceCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserUncheckedCreateWithoutAuditsInput = {
+  id?: number
+  login: string
+  email?: string | null
+  nationalIdHash?: string | null
+  residenceIdHash?: string | null
+  name: string
+  role?: $Enums.Role
+  passwordHash: string
+  cityId?: string | null
+  active?: boolean
+  createdAt?: Date | string
+  lastLoginAt?: Date | string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutUserInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutUserInput
+  reviewedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserCreateOrConnectWithoutAuditsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditsInput, Prisma.UserUncheckedCreateWithoutAuditsInput>
+}
+
+export type UserUpsertWithoutAuditsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuditsInput, Prisma.UserUncheckedUpdateWithoutAuditsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditsInput, Prisma.UserUncheckedCreateWithoutAuditsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuditsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuditsInput, Prisma.UserUncheckedUpdateWithoutAuditsInput>
+}
+
+export type UserUpdateWithoutAuditsInput = {
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residenceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  cityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutUserNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutUserNestedInput
+  reviewedServices?: Prisma.ServiceUpdateManyWithoutReviewedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuditsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residenceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  cityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutUserNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutUserNestedInput
+  reviewedServices?: Prisma.ServiceUncheckedUpdateManyWithoutReviewedByNestedInput
+}
+
 export type UserCreateWithoutSessionsInput = {
   login: string
   email?: string | null
@@ -593,6 +819,8 @@ export type UserCreateWithoutSessionsInput = {
   lastLoginAt?: Date | string | null
   reports?: Prisma.ReportCreateNestedManyWithoutUserInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutUserInput
+  reviewedServices?: Prisma.ServiceCreateNestedManyWithoutReviewedByInput
+  audits?: Prisma.ServiceAuditCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -610,6 +838,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   lastLoginAt?: Date | string | null
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutUserInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutUserInput
+  reviewedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutReviewedByInput
+  audits?: Prisma.ServiceAuditUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -642,6 +872,8 @@ export type UserUpdateWithoutSessionsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reports?: Prisma.ReportUpdateManyWithoutUserNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutUserNestedInput
+  reviewedServices?: Prisma.ServiceUpdateManyWithoutReviewedByNestedInput
+  audits?: Prisma.ServiceAuditUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -659,6 +891,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reports?: Prisma.ReportUncheckedUpdateManyWithoutUserNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutUserNestedInput
+  reviewedServices?: Prisma.ServiceUncheckedUpdateManyWithoutReviewedByNestedInput
+  audits?: Prisma.ServiceAuditUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReportsInput = {
@@ -675,6 +909,8 @@ export type UserCreateWithoutReportsInput = {
   lastLoginAt?: Date | string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutUserInput
+  reviewedServices?: Prisma.ServiceCreateNestedManyWithoutReviewedByInput
+  audits?: Prisma.ServiceAuditCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReportsInput = {
@@ -692,6 +928,8 @@ export type UserUncheckedCreateWithoutReportsInput = {
   lastLoginAt?: Date | string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutUserInput
+  reviewedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutReviewedByInput
+  audits?: Prisma.ServiceAuditUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReportsInput = {
@@ -724,6 +962,8 @@ export type UserUpdateWithoutReportsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutUserNestedInput
+  reviewedServices?: Prisma.ServiceUpdateManyWithoutReviewedByNestedInput
+  audits?: Prisma.ServiceAuditUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReportsInput = {
@@ -741,6 +981,8 @@ export type UserUncheckedUpdateWithoutReportsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutUserNestedInput
+  reviewedServices?: Prisma.ServiceUncheckedUpdateManyWithoutReviewedByNestedInput
+  audits?: Prisma.ServiceAuditUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProgressInput = {
@@ -757,6 +999,8 @@ export type UserCreateWithoutProgressInput = {
   lastLoginAt?: Date | string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   reports?: Prisma.ReportCreateNestedManyWithoutUserInput
+  reviewedServices?: Prisma.ServiceCreateNestedManyWithoutReviewedByInput
+  audits?: Prisma.ServiceAuditCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProgressInput = {
@@ -774,6 +1018,8 @@ export type UserUncheckedCreateWithoutProgressInput = {
   lastLoginAt?: Date | string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutUserInput
+  reviewedServices?: Prisma.ServiceUncheckedCreateNestedManyWithoutReviewedByInput
+  audits?: Prisma.ServiceAuditUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProgressInput = {
@@ -806,6 +1052,8 @@ export type UserUpdateWithoutProgressInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   reports?: Prisma.ReportUpdateManyWithoutUserNestedInput
+  reviewedServices?: Prisma.ServiceUpdateManyWithoutReviewedByNestedInput
+  audits?: Prisma.ServiceAuditUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProgressInput = {
@@ -823,6 +1071,8 @@ export type UserUncheckedUpdateWithoutProgressInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutUserNestedInput
+  reviewedServices?: Prisma.ServiceUncheckedUpdateManyWithoutReviewedByNestedInput
+  audits?: Prisma.ServiceAuditUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -834,12 +1084,16 @@ export type UserCountOutputType = {
   sessions: number
   reports: number
   progress: number
+  reviewedServices: number
+  audits: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   reports?: boolean | UserCountOutputTypeCountReportsArgs
   progress?: boolean | UserCountOutputTypeCountProgressArgs
+  reviewedServices?: boolean | UserCountOutputTypeCountReviewedServicesArgs
+  audits?: boolean | UserCountOutputTypeCountAuditsArgs
 }
 
 /**
@@ -873,6 +1127,20 @@ export type UserCountOutputTypeCountProgressArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.ProcedureProgressWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReviewedServicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuditsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceAuditWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -890,6 +1158,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   reports?: boolean | Prisma.User$reportsArgs<ExtArgs>
   progress?: boolean | Prisma.User$progressArgs<ExtArgs>
+  reviewedServices?: boolean | Prisma.User$reviewedServicesArgs<ExtArgs>
+  audits?: boolean | Prisma.User$auditsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -943,6 +1213,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   reports?: boolean | Prisma.User$reportsArgs<ExtArgs>
   progress?: boolean | Prisma.User$progressArgs<ExtArgs>
+  reviewedServices?: boolean | Prisma.User$reviewedServicesArgs<ExtArgs>
+  audits?: boolean | Prisma.User$auditsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -954,6 +1226,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     reports: Prisma.$ReportPayload<ExtArgs>[]
     progress: Prisma.$ProcedureProgressPayload<ExtArgs>[]
+    reviewedServices: Prisma.$ServicePayload<ExtArgs>[]
+    audits: Prisma.$ServiceAuditPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1380,6 +1654,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reports<T extends Prisma.User$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   progress<T extends Prisma.User$progressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$progressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProcedureProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviewedServices<T extends Prisma.User$reviewedServicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewedServicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  audits<T extends Prisma.User$auditsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceAuditPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1883,6 +2159,54 @@ export type User$progressArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.ProcedureProgressScalarFieldEnum | Prisma.ProcedureProgressScalarFieldEnum[]
+}
+
+/**
+ * User.reviewedServices
+ */
+export type User$reviewedServicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Service
+   */
+  select?: Prisma.ServiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Service
+   */
+  omit?: Prisma.ServiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceInclude<ExtArgs> | null
+  where?: Prisma.ServiceWhereInput
+  orderBy?: Prisma.ServiceOrderByWithRelationInput | Prisma.ServiceOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceScalarFieldEnum | Prisma.ServiceScalarFieldEnum[]
+}
+
+/**
+ * User.audits
+ */
+export type User$auditsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceAudit
+   */
+  select?: Prisma.ServiceAuditSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceAudit
+   */
+  omit?: Prisma.ServiceAuditOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceAuditInclude<ExtArgs> | null
+  where?: Prisma.ServiceAuditWhereInput
+  orderBy?: Prisma.ServiceAuditOrderByWithRelationInput | Prisma.ServiceAuditOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceAuditWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceAuditScalarFieldEnum | Prisma.ServiceAuditScalarFieldEnum[]
 }
 
 /**

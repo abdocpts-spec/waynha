@@ -24,6 +24,7 @@ export default async function AdminServices({
       audience: true,
       isDemo: true,
       lastReviewedAt: true,
+      reviewedById: true,
       reviewNote: true,
       category: { select: { titleAr: true } },
       _count: { select: { reports: { where: { status: { in: ["NEW", "IN_REVIEW"] } } } } },
@@ -71,7 +72,7 @@ export default async function AdminServices({
               <div className="list-item-sub">
                 {s.category.titleAr} · <code dir="ltr">{s.id}</code>
                 {s.isDemo && " · بيانات تجريبية"}
-                {s.lastReviewedAt && ` · آخر مراجعة: ${formatDate(s.lastReviewedAt.toISOString(), "ar")}`}
+                {s.lastReviewedAt && s.reviewedById && ` · آخر مراجعة: ${formatDate(s.lastReviewedAt.toISOString(), "ar")}`}
               </div>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 8, alignItems: "center" }}>
                 <span className={`pill pill-${SERVICE_STATUS[s.status].tone}`} title={SERVICE_STATUS[s.status].hint}>

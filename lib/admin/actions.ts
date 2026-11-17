@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { logAudit } from "@/lib/admin/audit";
 import { requireAdmin } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 import { normalizeText } from "@/lib/search/normalize";
@@ -24,20 +25,21 @@ function refreshPublic() {
 // ─────────── مراحل اعتماد الخدمة ───────────
 
 export async function setServiceStatus(form: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const id = String(form.get("id") ?? "");
   const status = z.enum(STATUSES).parse(form.get("status"));
   const note = String(form.get("note") ?? "").trim().slice(0, 500) || null;
+  const before = await prisma.service.findUnique({ where: { id }, select: { status: true } });
+  // نشر الخدمة لا يمنحها «تمت المراجعة»: تلك الحالة تأتي فقط من تسجيل مراجعة فعلية (/admin/reliability)
   await prisma.service.update({
     where: { id },
     data: {
       status,
       reviewNote: note,
-      // الاعتماد = مراجعة جديدة من فريق وينها (التاريخ يظهر للمستخدمين)
-      ...(status === "PUBLISHED" ? { lastReviewedAt: new Date(), verified: true } : {}),
       ...(status === "NEEDS_UPDATE" ? { verified: false } : {}),
     },
   });
+  await logAudit({ admin, serviceId: id, action: "STATUS", note, changes: { status: [before?.status ?? null, status] } });
   refreshPublic();
 }
 
@@ -91,7 +93,7 @@ function pairLines(arText: FormDataEntryValue | null, enText: FormDataEntryValue
 }
 
 export async function saveService(_prev: ServiceFormState, form: FormData): Promise<ServiceFormState> {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const isNew = form.get("isNew") === "1";
   const parsed = serviceSchema.safeParse(Object.fromEntries([...form.entries()].filter(([k]) => typeof form.get(k) === "string")));
   if (!parsed.success) {
@@ -115,12 +117,37 @@ export async function saveService(_prev: ServiceFormState, form: FormData): Prom
   );
 
   const { id, ...fields } = data;
+
+  // الحقول التي تغيّرت (للسجل، ولتعليم الخدمة «تحتاج مراجعة» إن عُدّلت بعد آخر مراجعة)
+  const changedFields: string[] = [];
+  if (!isNew) {
+    const before = await prisma.service.findUnique({
+      where: { id },
+      include: { steps: true, documents: true, notes: true, keywords: true },
+    });
+    if (before) {
+      for (const key of Object.keys(fields) as (keyof typeof fields)[]) {
+        if (String(before[key as keyof typeof before] ?? "") !== String(fields[key] ?? "")) changedFields.push(key);
+      }
+      const same = (a: { textAr: string; textEn: string }[], b: { textAr: string; textEn: string }[]) =>
+        JSON.stringify(a.map((x) => [x.textAr, x.textEn])) === JSON.stringify(b.map((x) => [x.textAr, x.textEn]));
+      if (!same([...before.steps].sort((a, b) => a.position - b.position), steps)) changedFields.push("steps");
+      if (!same([...before.documents].sort((a, b) => a.position - b.position), documents)) changedFields.push("documents");
+      if (!same([...before.notes].sort((a, b) => a.position - b.position), notes)) changedFields.push("notes");
+      const oldKw = before.keywords.map((k) => k.keyword).sort().join("|");
+      if (oldKw !== [...keywords].sort().join("|")) changedFields.push("keywords");
+    }
+  }
+
   await prisma.$transaction(async (tx) => {
     if (isNew) {
       // الخدمة الجديدة تبدأ مسودة ولا تظهر للزوار حتى يعتمدها الأدمن
       await tx.service.create({ data: { id, ...fields, searchText, status: "DRAFT", isDemo: false, verified: false } });
     } else {
-      await tx.service.update({ where: { id }, data: { ...fields, searchText } });
+      await tx.service.update({
+        where: { id },
+        data: { ...fields, searchText, ...(changedFields.length ? { contentEditedAt: new Date() } : {}) },
+      });
       await tx.serviceStep.deleteMany({ where: { serviceId: id } });
       await tx.serviceDocument.deleteMany({ where: { serviceId: id } });
       await tx.serviceNote.deleteMany({ where: { serviceId: id } });
@@ -133,6 +160,9 @@ export async function saveService(_prev: ServiceFormState, form: FormData): Prom
       await tx.serviceKeyword.createMany({ data: keywords.map((keyword) => ({ serviceId: id, keyword, weight: keyword.includes(" ") ? 5 : 3 })) });
   });
 
+  if (isNew) await logAudit({ admin, serviceId: id, action: "CREATED", changes: { title: data.titleAr } });
+  else if (changedFields.length) await logAudit({ admin, serviceId: id, action: "EDITED", changes: { fields: changedFields } });
+
   refreshPublic();
   redirect(`/admin/services?saved=${encodeURIComponent(id)}`);
 }
@@ -142,7 +172,7 @@ export async function saveService(_prev: ServiceFormState, form: FormData): Prom
 const REPORT_STATUSES = ["NEW", "IN_REVIEW", "RESOLVED", "REJECTED"] as const;
 
 export async function setReportStatus(form: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const id = Number(form.get("id"));
   const status = z.enum(REPORT_STATUSES).parse(form.get("status"));
   const note = String(form.get("note") ?? "").trim().slice(0, 500) || null;
@@ -154,6 +184,9 @@ export async function setReportStatus(form: FormData) {
       resolvedAt: status === "RESOLVED" || status === "REJECTED" ? new Date() : null,
     },
   });
+  if (report.serviceId) {
+    await logAudit({ admin, serviceId: report.serviceId, action: "REPORT", note, changes: { reportId: report.id, kind: report.kind, status } });
+  }
   // قبول البلاغ يعني أن المعلومة تحتاج تحديثاً: نعلّم الخدمة حتى يراها الزوار مع تنبيه
   if (status === "IN_REVIEW" && report.serviceId) {
     await prisma.service.updateMany({ where: { id: report.serviceId, status: "PUBLISHED" }, data: { status: "NEEDS_UPDATE", verified: false } });

@@ -56,6 +56,9 @@ export type OfficeMinAggregateOutputType = {
   openTime: string | null
   closeTime: string | null
   isDemo: boolean | null
+  mapsUrl: string | null
+  active: boolean | null
+  status: $Enums.ContentStatus | null
   searchText: string | null
 }
 
@@ -75,6 +78,9 @@ export type OfficeMaxAggregateOutputType = {
   openTime: string | null
   closeTime: string | null
   isDemo: boolean | null
+  mapsUrl: string | null
+  active: boolean | null
+  status: $Enums.ContentStatus | null
   searchText: string | null
 }
 
@@ -95,6 +101,9 @@ export type OfficeCountAggregateOutputType = {
   openTime: number
   closeTime: number
   isDemo: number
+  mapsUrl: number
+  active: number
+  status: number
   searchText: number
   _all: number
 }
@@ -130,6 +139,9 @@ export type OfficeMinAggregateInputType = {
   openTime?: true
   closeTime?: true
   isDemo?: true
+  mapsUrl?: true
+  active?: true
+  status?: true
   searchText?: true
 }
 
@@ -149,6 +161,9 @@ export type OfficeMaxAggregateInputType = {
   openTime?: true
   closeTime?: true
   isDemo?: true
+  mapsUrl?: true
+  active?: true
+  status?: true
   searchText?: true
 }
 
@@ -169,6 +184,9 @@ export type OfficeCountAggregateInputType = {
   openTime?: true
   closeTime?: true
   isDemo?: true
+  mapsUrl?: true
+  active?: true
+  status?: true
   searchText?: true
   _all?: true
 }
@@ -276,6 +294,9 @@ export type OfficeGroupByOutputType = {
   openTime: string
   closeTime: string
   isDemo: boolean
+  mapsUrl: string | null
+  active: boolean
+  status: $Enums.ContentStatus
   searchText: string
   _count: OfficeCountAggregateOutputType | null
   _avg: OfficeAvgAggregateOutputType | null
@@ -319,9 +340,13 @@ export type OfficeWhereInput = {
   openTime?: Prisma.StringFilter<"Office"> | string
   closeTime?: Prisma.StringFilter<"Office"> | string
   isDemo?: Prisma.BoolFilter<"Office"> | boolean
+  mapsUrl?: Prisma.StringNullableFilter<"Office"> | string | null
+  active?: Prisma.BoolFilter<"Office"> | boolean
+  status?: Prisma.EnumContentStatusFilter<"Office"> | $Enums.ContentStatus
   searchText?: Prisma.StringFilter<"Office"> | string
   city?: Prisma.XOR<Prisma.CityScalarRelationFilter, Prisma.CityWhereInput>
   categories?: Prisma.OfficeCategoryListRelationFilter
+  services?: Prisma.OfficeServiceListRelationFilter
   reports?: Prisma.ReportListRelationFilter
 }
 
@@ -342,9 +367,13 @@ export type OfficeOrderByWithRelationInput = {
   openTime?: Prisma.SortOrder
   closeTime?: Prisma.SortOrder
   isDemo?: Prisma.SortOrder
+  mapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  active?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   searchText?: Prisma.SortOrder
   city?: Prisma.CityOrderByWithRelationInput
   categories?: Prisma.OfficeCategoryOrderByRelationAggregateInput
+  services?: Prisma.OfficeServiceOrderByRelationAggregateInput
   reports?: Prisma.ReportOrderByRelationAggregateInput
 }
 
@@ -368,9 +397,13 @@ export type OfficeWhereUniqueInput = Prisma.AtLeast<{
   openTime?: Prisma.StringFilter<"Office"> | string
   closeTime?: Prisma.StringFilter<"Office"> | string
   isDemo?: Prisma.BoolFilter<"Office"> | boolean
+  mapsUrl?: Prisma.StringNullableFilter<"Office"> | string | null
+  active?: Prisma.BoolFilter<"Office"> | boolean
+  status?: Prisma.EnumContentStatusFilter<"Office"> | $Enums.ContentStatus
   searchText?: Prisma.StringFilter<"Office"> | string
   city?: Prisma.XOR<Prisma.CityScalarRelationFilter, Prisma.CityWhereInput>
   categories?: Prisma.OfficeCategoryListRelationFilter
+  services?: Prisma.OfficeServiceListRelationFilter
   reports?: Prisma.ReportListRelationFilter
 }, "id">
 
@@ -391,6 +424,9 @@ export type OfficeOrderByWithAggregationInput = {
   openTime?: Prisma.SortOrder
   closeTime?: Prisma.SortOrder
   isDemo?: Prisma.SortOrder
+  mapsUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  active?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   searchText?: Prisma.SortOrder
   _count?: Prisma.OfficeCountOrderByAggregateInput
   _avg?: Prisma.OfficeAvgOrderByAggregateInput
@@ -419,6 +455,9 @@ export type OfficeScalarWhereWithAggregatesInput = {
   openTime?: Prisma.StringWithAggregatesFilter<"Office"> | string
   closeTime?: Prisma.StringWithAggregatesFilter<"Office"> | string
   isDemo?: Prisma.BoolWithAggregatesFilter<"Office"> | boolean
+  mapsUrl?: Prisma.StringNullableWithAggregatesFilter<"Office"> | string | null
+  active?: Prisma.BoolWithAggregatesFilter<"Office"> | boolean
+  status?: Prisma.EnumContentStatusWithAggregatesFilter<"Office"> | $Enums.ContentStatus
   searchText?: Prisma.StringWithAggregatesFilter<"Office"> | string
 }
 
@@ -437,9 +476,13 @@ export type OfficeCreateInput = {
   openTime: string
   closeTime: string
   isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
   searchText?: string
   city: Prisma.CityCreateNestedOneWithoutOfficesInput
   categories?: Prisma.OfficeCategoryCreateNestedManyWithoutOfficeInput
+  services?: Prisma.OfficeServiceCreateNestedManyWithoutOfficeInput
   reports?: Prisma.ReportCreateNestedManyWithoutOfficeInput
 }
 
@@ -460,8 +503,12 @@ export type OfficeUncheckedCreateInput = {
   openTime: string
   closeTime: string
   isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
   searchText?: string
   categories?: Prisma.OfficeCategoryUncheckedCreateNestedManyWithoutOfficeInput
+  services?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutOfficeInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutOfficeInput
 }
 
@@ -480,9 +527,13 @@ export type OfficeUpdateInput = {
   openTime?: Prisma.StringFieldUpdateOperationsInput | string
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.CityUpdateOneRequiredWithoutOfficesNestedInput
   categories?: Prisma.OfficeCategoryUpdateManyWithoutOfficeNestedInput
+  services?: Prisma.OfficeServiceUpdateManyWithoutOfficeNestedInput
   reports?: Prisma.ReportUpdateManyWithoutOfficeNestedInput
 }
 
@@ -503,8 +554,12 @@ export type OfficeUncheckedUpdateInput = {
   openTime?: Prisma.StringFieldUpdateOperationsInput | string
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.OfficeCategoryUncheckedUpdateManyWithoutOfficeNestedInput
+  services?: Prisma.OfficeServiceUncheckedUpdateManyWithoutOfficeNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutOfficeNestedInput
 }
 
@@ -525,6 +580,9 @@ export type OfficeCreateManyInput = {
   openTime: string
   closeTime: string
   isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
   searchText?: string
 }
 
@@ -543,6 +601,9 @@ export type OfficeUpdateManyMutationInput = {
   openTime?: Prisma.StringFieldUpdateOperationsInput | string
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -563,6 +624,9 @@ export type OfficeUncheckedUpdateManyInput = {
   openTime?: Prisma.StringFieldUpdateOperationsInput | string
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -601,6 +665,9 @@ export type OfficeCountOrderByAggregateInput = {
   openTime?: Prisma.SortOrder
   closeTime?: Prisma.SortOrder
   isDemo?: Prisma.SortOrder
+  mapsUrl?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   searchText?: Prisma.SortOrder
 }
 
@@ -627,6 +694,9 @@ export type OfficeMaxOrderByAggregateInput = {
   openTime?: Prisma.SortOrder
   closeTime?: Prisma.SortOrder
   isDemo?: Prisma.SortOrder
+  mapsUrl?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   searchText?: Prisma.SortOrder
 }
 
@@ -646,6 +716,9 @@ export type OfficeMinOrderByAggregateInput = {
   openTime?: Prisma.SortOrder
   closeTime?: Prisma.SortOrder
   isDemo?: Prisma.SortOrder
+  mapsUrl?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   searchText?: Prisma.SortOrder
 }
 
@@ -739,6 +812,20 @@ export type OfficeUpdateOneRequiredWithoutCategoriesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OfficeUpdateToOneWithWhereWithoutCategoriesInput, Prisma.OfficeUpdateWithoutCategoriesInput>, Prisma.OfficeUncheckedUpdateWithoutCategoriesInput>
 }
 
+export type OfficeCreateNestedOneWithoutServicesInput = {
+  create?: Prisma.XOR<Prisma.OfficeCreateWithoutServicesInput, Prisma.OfficeUncheckedCreateWithoutServicesInput>
+  connectOrCreate?: Prisma.OfficeCreateOrConnectWithoutServicesInput
+  connect?: Prisma.OfficeWhereUniqueInput
+}
+
+export type OfficeUpdateOneRequiredWithoutServicesNestedInput = {
+  create?: Prisma.XOR<Prisma.OfficeCreateWithoutServicesInput, Prisma.OfficeUncheckedCreateWithoutServicesInput>
+  connectOrCreate?: Prisma.OfficeCreateOrConnectWithoutServicesInput
+  upsert?: Prisma.OfficeUpsertWithoutServicesInput
+  connect?: Prisma.OfficeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OfficeUpdateToOneWithWhereWithoutServicesInput, Prisma.OfficeUpdateWithoutServicesInput>, Prisma.OfficeUncheckedUpdateWithoutServicesInput>
+}
+
 export type OfficeCreateNestedOneWithoutReportsInput = {
   create?: Prisma.XOR<Prisma.OfficeCreateWithoutReportsInput, Prisma.OfficeUncheckedCreateWithoutReportsInput>
   connectOrCreate?: Prisma.OfficeCreateOrConnectWithoutReportsInput
@@ -770,8 +857,12 @@ export type OfficeCreateWithoutCityInput = {
   openTime: string
   closeTime: string
   isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
   searchText?: string
   categories?: Prisma.OfficeCategoryCreateNestedManyWithoutOfficeInput
+  services?: Prisma.OfficeServiceCreateNestedManyWithoutOfficeInput
   reports?: Prisma.ReportCreateNestedManyWithoutOfficeInput
 }
 
@@ -791,8 +882,12 @@ export type OfficeUncheckedCreateWithoutCityInput = {
   openTime: string
   closeTime: string
   isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
   searchText?: string
   categories?: Prisma.OfficeCategoryUncheckedCreateNestedManyWithoutOfficeInput
+  services?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutOfficeInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutOfficeInput
 }
 
@@ -842,6 +937,9 @@ export type OfficeScalarWhereInput = {
   openTime?: Prisma.StringFilter<"Office"> | string
   closeTime?: Prisma.StringFilter<"Office"> | string
   isDemo?: Prisma.BoolFilter<"Office"> | boolean
+  mapsUrl?: Prisma.StringNullableFilter<"Office"> | string | null
+  active?: Prisma.BoolFilter<"Office"> | boolean
+  status?: Prisma.EnumContentStatusFilter<"Office"> | $Enums.ContentStatus
   searchText?: Prisma.StringFilter<"Office"> | string
 }
 
@@ -860,8 +958,12 @@ export type OfficeCreateWithoutCategoriesInput = {
   openTime: string
   closeTime: string
   isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
   searchText?: string
   city: Prisma.CityCreateNestedOneWithoutOfficesInput
+  services?: Prisma.OfficeServiceCreateNestedManyWithoutOfficeInput
   reports?: Prisma.ReportCreateNestedManyWithoutOfficeInput
 }
 
@@ -882,7 +984,11 @@ export type OfficeUncheckedCreateWithoutCategoriesInput = {
   openTime: string
   closeTime: string
   isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
   searchText?: string
+  services?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutOfficeInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutOfficeInput
 }
 
@@ -917,8 +1023,12 @@ export type OfficeUpdateWithoutCategoriesInput = {
   openTime?: Prisma.StringFieldUpdateOperationsInput | string
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.CityUpdateOneRequiredWithoutOfficesNestedInput
+  services?: Prisma.OfficeServiceUpdateManyWithoutOfficeNestedInput
   reports?: Prisma.ReportUpdateManyWithoutOfficeNestedInput
 }
 
@@ -939,7 +1049,125 @@ export type OfficeUncheckedUpdateWithoutCategoriesInput = {
   openTime?: Prisma.StringFieldUpdateOperationsInput | string
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  services?: Prisma.OfficeServiceUncheckedUpdateManyWithoutOfficeNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutOfficeNestedInput
+}
+
+export type OfficeCreateWithoutServicesInput = {
+  nameAr: string
+  nameEn: string
+  departmentAr: string
+  departmentEn: string
+  addressAr: string
+  addressEn: string
+  phone: string
+  lat: number
+  lng: number
+  temporarilyClosed?: boolean
+  openDays?: Prisma.OfficeCreateopenDaysInput | number[]
+  openTime: string
+  closeTime: string
+  isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
+  searchText?: string
+  city: Prisma.CityCreateNestedOneWithoutOfficesInput
+  categories?: Prisma.OfficeCategoryCreateNestedManyWithoutOfficeInput
+  reports?: Prisma.ReportCreateNestedManyWithoutOfficeInput
+}
+
+export type OfficeUncheckedCreateWithoutServicesInput = {
+  id?: number
+  nameAr: string
+  nameEn: string
+  departmentAr: string
+  departmentEn: string
+  cityId: string
+  addressAr: string
+  addressEn: string
+  phone: string
+  lat: number
+  lng: number
+  temporarilyClosed?: boolean
+  openDays?: Prisma.OfficeCreateopenDaysInput | number[]
+  openTime: string
+  closeTime: string
+  isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
+  searchText?: string
+  categories?: Prisma.OfficeCategoryUncheckedCreateNestedManyWithoutOfficeInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutOfficeInput
+}
+
+export type OfficeCreateOrConnectWithoutServicesInput = {
+  where: Prisma.OfficeWhereUniqueInput
+  create: Prisma.XOR<Prisma.OfficeCreateWithoutServicesInput, Prisma.OfficeUncheckedCreateWithoutServicesInput>
+}
+
+export type OfficeUpsertWithoutServicesInput = {
+  update: Prisma.XOR<Prisma.OfficeUpdateWithoutServicesInput, Prisma.OfficeUncheckedUpdateWithoutServicesInput>
+  create: Prisma.XOR<Prisma.OfficeCreateWithoutServicesInput, Prisma.OfficeUncheckedCreateWithoutServicesInput>
+  where?: Prisma.OfficeWhereInput
+}
+
+export type OfficeUpdateToOneWithWhereWithoutServicesInput = {
+  where?: Prisma.OfficeWhereInput
+  data: Prisma.XOR<Prisma.OfficeUpdateWithoutServicesInput, Prisma.OfficeUncheckedUpdateWithoutServicesInput>
+}
+
+export type OfficeUpdateWithoutServicesInput = {
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  addressAr?: Prisma.StringFieldUpdateOperationsInput | string
+  addressEn?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  lat?: Prisma.FloatFieldUpdateOperationsInput | number
+  lng?: Prisma.FloatFieldUpdateOperationsInput | number
+  temporarilyClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openDays?: Prisma.OfficeUpdateopenDaysInput | number[]
+  openTime?: Prisma.StringFieldUpdateOperationsInput | string
+  closeTime?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.CityUpdateOneRequiredWithoutOfficesNestedInput
+  categories?: Prisma.OfficeCategoryUpdateManyWithoutOfficeNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutOfficeNestedInput
+}
+
+export type OfficeUncheckedUpdateWithoutServicesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  cityId?: Prisma.StringFieldUpdateOperationsInput | string
+  addressAr?: Prisma.StringFieldUpdateOperationsInput | string
+  addressEn?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  lat?: Prisma.FloatFieldUpdateOperationsInput | number
+  lng?: Prisma.FloatFieldUpdateOperationsInput | number
+  temporarilyClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openDays?: Prisma.OfficeUpdateopenDaysInput | number[]
+  openTime?: Prisma.StringFieldUpdateOperationsInput | string
+  closeTime?: Prisma.StringFieldUpdateOperationsInput | string
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.OfficeCategoryUncheckedUpdateManyWithoutOfficeNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutOfficeNestedInput
 }
 
@@ -958,9 +1186,13 @@ export type OfficeCreateWithoutReportsInput = {
   openTime: string
   closeTime: string
   isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
   searchText?: string
   city: Prisma.CityCreateNestedOneWithoutOfficesInput
   categories?: Prisma.OfficeCategoryCreateNestedManyWithoutOfficeInput
+  services?: Prisma.OfficeServiceCreateNestedManyWithoutOfficeInput
 }
 
 export type OfficeUncheckedCreateWithoutReportsInput = {
@@ -980,8 +1212,12 @@ export type OfficeUncheckedCreateWithoutReportsInput = {
   openTime: string
   closeTime: string
   isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
   searchText?: string
   categories?: Prisma.OfficeCategoryUncheckedCreateNestedManyWithoutOfficeInput
+  services?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutOfficeInput
 }
 
 export type OfficeCreateOrConnectWithoutReportsInput = {
@@ -1015,9 +1251,13 @@ export type OfficeUpdateWithoutReportsInput = {
   openTime?: Prisma.StringFieldUpdateOperationsInput | string
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.CityUpdateOneRequiredWithoutOfficesNestedInput
   categories?: Prisma.OfficeCategoryUpdateManyWithoutOfficeNestedInput
+  services?: Prisma.OfficeServiceUpdateManyWithoutOfficeNestedInput
 }
 
 export type OfficeUncheckedUpdateWithoutReportsInput = {
@@ -1037,8 +1277,12 @@ export type OfficeUncheckedUpdateWithoutReportsInput = {
   openTime?: Prisma.StringFieldUpdateOperationsInput | string
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.OfficeCategoryUncheckedUpdateManyWithoutOfficeNestedInput
+  services?: Prisma.OfficeServiceUncheckedUpdateManyWithoutOfficeNestedInput
 }
 
 export type OfficeCreateManyCityInput = {
@@ -1057,6 +1301,9 @@ export type OfficeCreateManyCityInput = {
   openTime: string
   closeTime: string
   isDemo?: boolean
+  mapsUrl?: string | null
+  active?: boolean
+  status?: $Enums.ContentStatus
   searchText?: string
 }
 
@@ -1075,8 +1322,12 @@ export type OfficeUpdateWithoutCityInput = {
   openTime?: Prisma.StringFieldUpdateOperationsInput | string
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.OfficeCategoryUpdateManyWithoutOfficeNestedInput
+  services?: Prisma.OfficeServiceUpdateManyWithoutOfficeNestedInput
   reports?: Prisma.ReportUpdateManyWithoutOfficeNestedInput
 }
 
@@ -1096,8 +1347,12 @@ export type OfficeUncheckedUpdateWithoutCityInput = {
   openTime?: Prisma.StringFieldUpdateOperationsInput | string
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.OfficeCategoryUncheckedUpdateManyWithoutOfficeNestedInput
+  services?: Prisma.OfficeServiceUncheckedUpdateManyWithoutOfficeNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutOfficeNestedInput
 }
 
@@ -1117,6 +1372,9 @@ export type OfficeUncheckedUpdateManyWithoutCityInput = {
   openTime?: Prisma.StringFieldUpdateOperationsInput | string
   closeTime?: Prisma.StringFieldUpdateOperationsInput | string
   isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mapsUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   searchText?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -1127,11 +1385,13 @@ export type OfficeUncheckedUpdateManyWithoutCityInput = {
 
 export type OfficeCountOutputType = {
   categories: number
+  services: number
   reports: number
 }
 
 export type OfficeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   categories?: boolean | OfficeCountOutputTypeCountCategoriesArgs
+  services?: boolean | OfficeCountOutputTypeCountServicesArgs
   reports?: boolean | OfficeCountOutputTypeCountReportsArgs
 }
 
@@ -1150,6 +1410,13 @@ export type OfficeCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
  */
 export type OfficeCountOutputTypeCountCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OfficeCategoryWhereInput
+}
+
+/**
+ * OfficeCountOutputType without action
+ */
+export type OfficeCountOutputTypeCountServicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OfficeServiceWhereInput
 }
 
 /**
@@ -1177,9 +1444,13 @@ export type OfficeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   openTime?: boolean
   closeTime?: boolean
   isDemo?: boolean
+  mapsUrl?: boolean
+  active?: boolean
+  status?: boolean
   searchText?: boolean
   city?: boolean | Prisma.CityDefaultArgs<ExtArgs>
   categories?: boolean | Prisma.Office$categoriesArgs<ExtArgs>
+  services?: boolean | Prisma.Office$servicesArgs<ExtArgs>
   reports?: boolean | Prisma.Office$reportsArgs<ExtArgs>
   _count?: boolean | Prisma.OfficeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["office"]>
@@ -1201,6 +1472,9 @@ export type OfficeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   openTime?: boolean
   closeTime?: boolean
   isDemo?: boolean
+  mapsUrl?: boolean
+  active?: boolean
+  status?: boolean
   searchText?: boolean
   city?: boolean | Prisma.CityDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["office"]>
@@ -1222,6 +1496,9 @@ export type OfficeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   openTime?: boolean
   closeTime?: boolean
   isDemo?: boolean
+  mapsUrl?: boolean
+  active?: boolean
+  status?: boolean
   searchText?: boolean
   city?: boolean | Prisma.CityDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["office"]>
@@ -1243,13 +1520,17 @@ export type OfficeSelectScalar = {
   openTime?: boolean
   closeTime?: boolean
   isDemo?: boolean
+  mapsUrl?: boolean
+  active?: boolean
+  status?: boolean
   searchText?: boolean
 }
 
-export type OfficeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nameAr" | "nameEn" | "departmentAr" | "departmentEn" | "cityId" | "addressAr" | "addressEn" | "phone" | "lat" | "lng" | "temporarilyClosed" | "openDays" | "openTime" | "closeTime" | "isDemo" | "searchText", ExtArgs["result"]["office"]>
+export type OfficeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nameAr" | "nameEn" | "departmentAr" | "departmentEn" | "cityId" | "addressAr" | "addressEn" | "phone" | "lat" | "lng" | "temporarilyClosed" | "openDays" | "openTime" | "closeTime" | "isDemo" | "mapsUrl" | "active" | "status" | "searchText", ExtArgs["result"]["office"]>
 export type OfficeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   city?: boolean | Prisma.CityDefaultArgs<ExtArgs>
   categories?: boolean | Prisma.Office$categoriesArgs<ExtArgs>
+  services?: boolean | Prisma.Office$servicesArgs<ExtArgs>
   reports?: boolean | Prisma.Office$reportsArgs<ExtArgs>
   _count?: boolean | Prisma.OfficeCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1265,6 +1546,7 @@ export type $OfficePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     city: Prisma.$CityPayload<ExtArgs>
     categories: Prisma.$OfficeCategoryPayload<ExtArgs>[]
+    services: Prisma.$OfficeServicePayload<ExtArgs>[]
     reports: Prisma.$ReportPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1293,6 +1575,18 @@ export type $OfficePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
      * بيانات تجريبية للعرض فقط
      */
     isDemo: boolean
+    /**
+     * رابط الموقع على Google Maps إن وُجد (اختياري، يدخله الأدمن)
+     */
+    mapsUrl: string | null
+    /**
+     * تعطيل الموقع بدل حذفه (لا يظهر للزوار)
+     */
+    active: boolean
+    /**
+     * مرحلة النشر: الزوار يرون PUBLISHED فقط (المسودة تُراجع قبل النشر)
+     */
+    status: $Enums.ContentStatus
     searchText: string
   }, ExtArgs["result"]["office"]>
   composites: {}
@@ -1690,6 +1984,7 @@ export interface Prisma__OfficeClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   city<T extends Prisma.CityDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CityDefaultArgs<ExtArgs>>): Prisma.Prisma__CityClient<runtime.Types.Result.GetResult<Prisma.$CityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   categories<T extends Prisma.Office$categoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Office$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OfficeCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  services<T extends Prisma.Office$servicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Office$servicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OfficeServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reports<T extends Prisma.Office$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Office$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1736,6 +2031,9 @@ export interface OfficeFieldRefs {
   readonly openTime: Prisma.FieldRef<"Office", 'String'>
   readonly closeTime: Prisma.FieldRef<"Office", 'String'>
   readonly isDemo: Prisma.FieldRef<"Office", 'Boolean'>
+  readonly mapsUrl: Prisma.FieldRef<"Office", 'String'>
+  readonly active: Prisma.FieldRef<"Office", 'Boolean'>
+  readonly status: Prisma.FieldRef<"Office", 'ContentStatus'>
   readonly searchText: Prisma.FieldRef<"Office", 'String'>
 }
     
@@ -2159,6 +2457,30 @@ export type Office$categoriesArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.OfficeCategoryScalarFieldEnum | Prisma.OfficeCategoryScalarFieldEnum[]
+}
+
+/**
+ * Office.services
+ */
+export type Office$servicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OfficeService
+   */
+  select?: Prisma.OfficeServiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OfficeService
+   */
+  omit?: Prisma.OfficeServiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OfficeServiceInclude<ExtArgs> | null
+  where?: Prisma.OfficeServiceWhereInput
+  orderBy?: Prisma.OfficeServiceOrderByWithRelationInput | Prisma.OfficeServiceOrderByWithRelationInput[]
+  cursor?: Prisma.OfficeServiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OfficeServiceScalarFieldEnum | Prisma.OfficeServiceScalarFieldEnum[]
 }
 
 /**

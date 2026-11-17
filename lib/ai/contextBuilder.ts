@@ -6,6 +6,7 @@ import type {
 } from "@/lib/search/serviceSearch";
 import type { Clarification } from "@/lib/search/clarify";
 import { normalizeText } from "@/lib/search/normalize";
+import { toReliabilityPayload, type ReliabilityPayload } from "@/lib/reliability";
 
 export type Lang = "ar" | "en";
 
@@ -26,10 +27,9 @@ export type ServicePayload = {
   notes: string[];
   faqs: { question: string; answer: string }[];
   related: { id: string; title: string; icon: string }[];
-  source: string;
-  lastReviewedAt: string | null;
-  verified: boolean;
   isDemo: boolean;
+  /** يحسبه الـ Backend من البيانات المسجلة (انظر lib/reliability.ts) */
+  reliability: ReliabilityPayload;
 };
 
 export type OfficePayload = {
@@ -95,10 +95,8 @@ export function toServicePayload(service: ServiceWithDetails, lang: Lang): Servi
       title: pick(r.to.titleAr, r.to.titleEn),
       icon: r.to.icon,
     })),
-    source: pick(service.sourceAr, service.sourceEn),
-    lastReviewedAt: service.lastReviewedAt ? service.lastReviewedAt.toISOString().slice(0, 10) : null,
-    verified: service.verified,
     isDemo: service.isDemo,
+    reliability: toReliabilityPayload(service, lang),
   };
 }
 
@@ -192,8 +190,14 @@ function serviceContext(service: ServicePayload, focus: Set<Focus>) {
     ...(has("eligibility") ? { eligibility: service.eligibility } : {}),
     ...(all || focus.has("faq") ? { notes: service.notes } : {}),
     ...(focus.has("faq") ? { faqs: service.faqs } : {}),
-    verified: service.verified,
     isDemo: service.isDemo,
+    // حالة الموثوقية يحدّدها الـ Backend؛ النموذج ينقلها كما هي ولا يقرّر بنفسه أن المعلومة موثوقة
+    reliability: {
+      status: service.reliability.status,
+      lastReviewedAt: service.reliability.lastReviewedAt,
+      nextReviewAt: service.reliability.nextReviewAt,
+      sources: service.reliability.sources.map((s) => ({ name: s.name, type: s.type, url: s.url })),
+    },
   };
 }
 

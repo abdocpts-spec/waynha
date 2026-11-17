@@ -12,7 +12,7 @@ import {
   confidentMatch,
   getServiceCached,
   listOfficesCached,
-  officesForCategoryCached,
+  officesForServiceCached,
   searchServiceSummaries,
   type ServiceMatch,
   type ServiceSummary,
@@ -89,7 +89,7 @@ export async function retrieve(message: string, conversation: ChatTurn[], lang: 
   const [details, officeRecords] = await Promise.all([
     confident ? getServiceCached(confident.service.id) : Promise.resolve(null),
     confident
-      ? officesForCategoryCached(confident.service.categoryId)
+      ? officesForServiceCached(confident.service.id)
       : wantsLocation
         ? listOfficesCached()
         : Promise.resolve([]),

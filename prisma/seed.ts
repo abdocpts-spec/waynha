@@ -206,9 +206,18 @@ async function main() {
             .filter((id) => data.categories.some((c) => c.id === id))
             .map((categoryId) => ({ categoryId })),
         },
+        // ربط صريح جهة ↔ خدمة: كل خدمات الأقسام التي تخدمها الجهة (يعدّله الأدمن لاحقاً)
+        services: {
+          create: data.services
+            .filter((svc) => office.categoryIds.includes(svc.categoryId))
+            .map((svc) => ({ serviceId: svc.id })),
+        },
       },
     });
   }
+
+  // الجهات أُدخلت بمعرّفات صريحة: نُلحق التسلسل بها حتى تعمل إضافة جهة جديدة من لوحة الإدارة
+  await prisma.$executeRaw`SELECT setval(pg_get_serial_sequence('"offices"', 'id'), COALESCE((SELECT MAX("id") FROM "offices"), 0) + 1, false)`;
 
   const [services, offices, keywords] = await Promise.all([
     prisma.service.count(),

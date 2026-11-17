@@ -4,6 +4,8 @@ import { formatDate } from "@/lib/format";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getLang } from "@/lib/i18n.server";
 import { visibleServiceWhere } from "@/lib/search/serviceSearch";
+import { toReliabilityPayload } from "@/lib/reliability";
+import { uiLang } from "@/lib/i18n";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +23,14 @@ export default async function DashboardPage() {
       titleAr: true,
       titleEn: true,
       lastReviewedAt: true,
-      category: { select: { titleAr: true, titleEn: true } },
+      nextReviewAt: true,
+      reviewIntervalDays: true,
+      reviewedById: true,
+      contentEditedAt: true,
+      status: true,
+      sources: { select: { name: true, nameEn: true, type: true, url: true, accessedAt: true, linkStatus: true } },
+      reports: { where: { status: { in: ["NEW", "IN_REVIEW"] } }, select: { status: true } },
+      category: { select: { titleAr: true, titleEn: true, reviewIntervalDays: true } },
     },
   });
 
@@ -30,11 +39,12 @@ export default async function DashboardPage() {
     icon: s.icon,
     title: lang === "ar" ? s.titleAr : s.titleEn,
     category: lang === "ar" ? s.category.titleAr : s.category.titleEn,
+    reliability: toReliabilityPayload(s, uiLang(lang)),
   }));
 
   // بدل «الإشعارات» الثابتة في النموذج الأولي: آخر الإجراءات التي راجعها فريق وينها فعلاً
   const updates = records
-    .filter((s) => s.lastReviewedAt)
+    .filter((s) => s.lastReviewedAt && s.reviewedById)
     .sort((a, b) => b.lastReviewedAt!.getTime() - a.lastReviewedAt!.getTime())
     .slice(0, 4)
     .map((s) => ({

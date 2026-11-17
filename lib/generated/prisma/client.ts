@@ -57,6 +57,16 @@ export type City = Prisma.CityModel
  */
 export type Service = Prisma.ServiceModel
 /**
+ * Model ServiceSource
+ * مصدر معلومة الخدمة. وجود رابط وحده لا يكفي دليلاً على صحة المعلومة
+ */
+export type ServiceSource = Prisma.ServiceSourceModel
+/**
+ * Model ServiceAudit
+ * سجل مراجعات الخدمة وتعديلاتها (للأدمن فقط). لا يُحذف بحذف المستخدم
+ */
+export type ServiceAudit = Prisma.ServiceAuditModel
+/**
  * Model ServiceStep
  * 
  */
@@ -96,6 +106,11 @@ export type Office = Prisma.OfficeModel
  * 
  */
 export type OfficeCategory = Prisma.OfficeCategoryModel
+/**
+ * Model OfficeService
+ * الخدمات التي تقدمها الجهة (الخريطة تعرض للخدمة الجهات المرتبطة بها فقط)
+ */
+export type OfficeService = Prisma.OfficeServiceModel
 /**
  * Model User
  * 

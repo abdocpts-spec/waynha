@@ -34,6 +34,9 @@ export const serviceInclude = {
   faqs: { orderBy: { position: "asc" } },
   keywords: true,
   relatedTo: { include: { to: true } },
+  /** مصادر المعلومة والبلاغات المفتوحة: تدخل في حساب مؤشر الموثوقية */
+  sources: { orderBy: { id: "asc" } },
+  reports: { where: { status: { in: ["NEW", "IN_REVIEW"] } }, select: { status: true } },
 } satisfies Prisma.ServiceInclude;
 
 export type ServiceWithDetails = Prisma.ServiceGetPayload<{ include: typeof serviceInclude }>;
@@ -201,23 +204,24 @@ export const officeInclude = {
 
 export type OfficeWithCity = Prisma.OfficeGetPayload<{ include: typeof officeInclude }>;
 
-/** الجهات الحكومية المرتبطة بقسم الخدمة — لا يخترعها الذكاء الاصطناعي. */
-export async function officesForService(service: {
-  categoryId: string;
-}): Promise<OfficeWithCity[]> {
+/** الجهات التي تظهر للزوار: مفعّلة ومنشورة فقط (المسودات والمعطّلة للأدمن). */
+export const publicOfficeWhere = { active: true, status: "PUBLISHED" } satisfies Prisma.OfficeWhereInput;
+
+/** الجهات المرتبطة بالخدمة نفسها (جدول office_services) — لا يخترعها الذكاء الاصطناعي. */
+export async function officesForService(service: { id: string }): Promise<OfficeWithCity[]> {
   return prisma.office.findMany({
-    where: { categories: { some: { categoryId: service.categoryId } } },
+    where: { ...publicOfficeWhere, services: { some: { serviceId: service.id } } },
     include: officeInclude,
     orderBy: { id: "asc" },
   });
 }
 
 export async function listOffices(): Promise<OfficeWithCity[]> {
-  return prisma.office.findMany({ include: officeInclude, orderBy: { id: "asc" } });
+  return prisma.office.findMany({ where: publicOfficeWhere, include: officeInclude, orderBy: { id: "asc" } });
 }
 
-export function officesForCategoryCached(categoryId: string): Promise<OfficeWithCity[]> {
-  return officesCache(`category:${categoryId}`, () => officesForService({ categoryId }));
+export function officesForServiceCached(serviceId: string): Promise<OfficeWithCity[]> {
+  return officesCache(`service:${serviceId}`, () => officesForService({ id: serviceId }));
 }
 
 export function listOfficesCached(): Promise<OfficeWithCity[]> {

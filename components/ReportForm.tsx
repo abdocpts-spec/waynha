@@ -5,10 +5,15 @@ import { t, type Lang } from "@/lib/i18n";
 import { submitReport, type ReportState } from "@/lib/reports/actions";
 
 const KINDS = [
+  ["DOCUMENTS", "مستندات غير صحيحة", "Incorrect documents"],
+  ["STEPS", "خطوات قديمة", "Outdated steps"],
+  ["FEES", "رسوم غير صحيحة", "Incorrect fees"],
+  ["LOCATION", "عنوان جهة خاطئ", "Wrong office address"],
+  ["HOURS", "ساعات عمل غير صحيحة", "Incorrect working hours"],
   ["PHONE", "رقم الهاتف", "Phone number"],
-  ["LOCATION", "الموقع", "Location"],
+  ["SOURCE_LINK", "رابط مصدر لا يعمل", "Broken source link"],
+  ["MISSING", "معلومة ناقصة", "Missing info"],
   ["OUTDATED", "معلومة قديمة", "Outdated"],
-  ["MISSING", "ناقصة", "Missing info"],
   ["OTHER", "أخرى", "Other"],
 ] as const;
 
@@ -33,7 +38,7 @@ export default function ReportForm({ serviceId, lang }: { serviceId: string; lan
     <div className="content-card report-card">
       {!open ? (
         <button type="button" className="link-btn" onClick={() => setOpen(true)}>
-          ⚠️ {t(lang, "في معلومة غلط في هذي الصفحة؟ بلّغنا", "Something wrong on this page? Report it")}
+          ⚠️ {t(lang, "في معلومة غلط؟ بلّغنا", "Found a mistake? Report it")}
         </button>
       ) : (
         <form action={action}>
@@ -79,7 +84,7 @@ export default function ReportForm({ serviceId, lang }: { serviceId: string; lan
               {t(lang, "إلغاء", "Cancel")}
             </button>
             <span className="setting-desc" style={{ margin: 0 }}>
-              {t(lang, "يوصل لفريق وينها للمراجعة. لا تكتب بيانات شخصية.", "Goes to the WAYNHA team. Don't include personal data.")}
+              {t(lang, "يوصل لفريق وينها للمراجعة، ولا يغيّر حالة المعلومة تلقائياً. لا تكتب بيانات شخصية.", "Goes to the WAYNHA team for review and does not change the information status automatically. Don't include personal data.")}
             </span>
           </div>
         </form>

@@ -5,12 +5,14 @@ import SaveServiceButton from "@/components/account/SaveServiceButton";
 import ProcedureTracker, { StartProcedureButton } from "@/components/ProcedureTracker";
 import ReportForm from "@/components/ReportForm";
 import { toOfficePayload, toServicePayload } from "@/lib/ai/contextBuilder";
-import { directionsUrl, formatDate, isOfficeOpen, osmEmbedUrl } from "@/lib/format";
+import { directionsUrl, isOfficeOpen, osmEmbedUrl } from "@/lib/format";
 import { t, uiLang } from "@/lib/i18n";
 import { getLang } from "@/lib/i18n.server";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getService, officesForService } from "@/lib/search/serviceSearch";
+import { ReliabilitySection } from "@/components/ReliabilityBadge";
+import { RELIABILITY_META } from "@/lib/reliability";
 
 export const dynamic = "force-dynamic";
 
@@ -44,13 +46,15 @@ export default async function ServicePage(props: PageProps<"/services/[id]">) {
     <main>
       <div className="service-header">
         <div className="container">
-          <div className="verified-badge">
-            {service.isDemo
-              ? `⚠️ ${t(lang, "بيانات تجريبية — تأكد من الجهة الرسمية", "Demo data — confirm with the authority")}`
-              : service.verified
-                ? `✅ ${t(lang, "معلومة موثقة", "Verified information")}`
-                : `⏳ ${t(lang, "قيد المراجعة", "Under review")}`}
-          </div>
+          <a href="#reliability" className="verified-badge">
+            {RELIABILITY_META[service.reliability.status].icon}{" "}
+            {t(lang, RELIABILITY_META[service.reliability.status].ar, RELIABILITY_META[service.reliability.status].en)}
+          </a>
+          {service.isDemo && (
+            <div className="verified-badge" style={{ marginInlineStart: 8 }}>
+              ⚠️ {t(lang, "بيانات تجريبية — تأكد من الجهة الرسمية", "Demo data — confirm with the authority")}
+            </div>
+          )}
           {record.status === "NEEDS_UPDATE" && (
             <div className="verified-badge" style={{ marginInlineStart: 8, background: "rgba(245,158,11,0.25)" }}>
               ⏳ {t(lang, "قد تكون بعض المعلومات قديمة — فريق وينها يراجعها الآن", "Some details may be outdated — the WAYNHA team is reviewing them")}
@@ -89,10 +93,6 @@ export default async function ServicePage(props: PageProps<"/services/[id]">) {
               <StartProcedureButton serviceId={record.id} lang={lang} />
             )}
           </div>
-          <div style={{ fontSize: "0.88rem", opacity: 0.85, marginTop: 16 }}>
-            {t(lang, "آخر مراجعة:", "Last reviewed:")} {formatDate(service.lastReviewedAt, lang)} ·{" "}
-            {t(lang, "المصدر:", "Source:")} {service.source}
-          </div>
         </div>
       </div>
 
@@ -118,6 +118,8 @@ export default async function ServicePage(props: PageProps<"/services/[id]">) {
                 }}
               />
             )}
+
+            <ReliabilitySection reliability={service.reliability} lang={lang} />
 
             <div className="content-card">
               <h2 className="content-title">📋 {t(lang, "الخطوات", "Steps")}</h2>
@@ -212,12 +214,12 @@ export default async function ServicePage(props: PageProps<"/services/[id]">) {
                     </span>
                   </p>
                   <div className="office-actions" style={{ marginTop: 14 }}>
-                    <a className="btn-primary" style={{ fontSize: "0.85rem" }} href={directionsUrl(nearest)} target="_blank" rel="noopener noreferrer">
+                    <Link className="btn-primary" style={{ fontSize: "0.85rem" }} href={`/offices?service=${service.id}`}>
+                      📍 {t(lang, `وين نمشي؟ — الخريطة (${offices.length})`, `Where to go? — map (${offices.length})`)}
+                    </Link>
+                    <a className="btn-outline" href={directionsUrl(nearest)} target="_blank" rel="noopener noreferrer">
                       {t(lang, "فتح Google Maps", "Open Google Maps")}
                     </a>
-                    <Link className="btn-outline" href={`/offices?service=${service.id}`}>
-                      {t(lang, `كل الجهات (${offices.length})`, `All offices (${offices.length})`)}
-                    </Link>
                   </div>
                 </>
               ) : (

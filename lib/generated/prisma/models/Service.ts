@@ -20,8 +20,20 @@ export type ServiceModel = runtime.Types.Result.DefaultSelection<Prisma.$Service
 
 export type AggregateService = {
   _count: ServiceCountAggregateOutputType | null
+  _avg: ServiceAvgAggregateOutputType | null
+  _sum: ServiceSumAggregateOutputType | null
   _min: ServiceMinAggregateOutputType | null
   _max: ServiceMaxAggregateOutputType | null
+}
+
+export type ServiceAvgAggregateOutputType = {
+  reviewIntervalDays: number | null
+  reviewedById: number | null
+}
+
+export type ServiceSumAggregateOutputType = {
+  reviewIntervalDays: number | null
+  reviewedById: number | null
 }
 
 export type ServiceMinAggregateOutputType = {
@@ -48,6 +60,10 @@ export type ServiceMinAggregateOutputType = {
   sourceAr: string | null
   sourceEn: string | null
   lastReviewedAt: Date | null
+  nextReviewAt: Date | null
+  reviewIntervalDays: number | null
+  reviewedById: number | null
+  contentEditedAt: Date | null
   audience: $Enums.Audience | null
   status: $Enums.ContentStatus | null
   reviewNote: string | null
@@ -80,6 +96,10 @@ export type ServiceMaxAggregateOutputType = {
   sourceAr: string | null
   sourceEn: string | null
   lastReviewedAt: Date | null
+  nextReviewAt: Date | null
+  reviewIntervalDays: number | null
+  reviewedById: number | null
+  contentEditedAt: Date | null
   audience: $Enums.Audience | null
   status: $Enums.ContentStatus | null
   reviewNote: string | null
@@ -112,6 +132,10 @@ export type ServiceCountAggregateOutputType = {
   sourceAr: number
   sourceEn: number
   lastReviewedAt: number
+  nextReviewAt: number
+  reviewIntervalDays: number
+  reviewedById: number
+  contentEditedAt: number
   audience: number
   status: number
   reviewNote: number
@@ -121,6 +145,16 @@ export type ServiceCountAggregateOutputType = {
   _all: number
 }
 
+
+export type ServiceAvgAggregateInputType = {
+  reviewIntervalDays?: true
+  reviewedById?: true
+}
+
+export type ServiceSumAggregateInputType = {
+  reviewIntervalDays?: true
+  reviewedById?: true
+}
 
 export type ServiceMinAggregateInputType = {
   id?: true
@@ -146,6 +180,10 @@ export type ServiceMinAggregateInputType = {
   sourceAr?: true
   sourceEn?: true
   lastReviewedAt?: true
+  nextReviewAt?: true
+  reviewIntervalDays?: true
+  reviewedById?: true
+  contentEditedAt?: true
   audience?: true
   status?: true
   reviewNote?: true
@@ -178,6 +216,10 @@ export type ServiceMaxAggregateInputType = {
   sourceAr?: true
   sourceEn?: true
   lastReviewedAt?: true
+  nextReviewAt?: true
+  reviewIntervalDays?: true
+  reviewedById?: true
+  contentEditedAt?: true
   audience?: true
   status?: true
   reviewNote?: true
@@ -210,6 +252,10 @@ export type ServiceCountAggregateInputType = {
   sourceAr?: true
   sourceEn?: true
   lastReviewedAt?: true
+  nextReviewAt?: true
+  reviewIntervalDays?: true
+  reviewedById?: true
+  contentEditedAt?: true
   audience?: true
   status?: true
   reviewNote?: true
@@ -257,6 +303,18 @@ export type ServiceAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ServiceAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ServiceSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ServiceMinAggregateInputType
@@ -287,6 +345,8 @@ export type ServiceGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: ServiceCountAggregateInputType | true
+  _avg?: ServiceAvgAggregateInputType
+  _sum?: ServiceSumAggregateInputType
   _min?: ServiceMinAggregateInputType
   _max?: ServiceMaxAggregateInputType
 }
@@ -315,6 +375,10 @@ export type ServiceGroupByOutputType = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt: Date | null
+  nextReviewAt: Date | null
+  reviewIntervalDays: number | null
+  reviewedById: number | null
+  contentEditedAt: Date | null
   audience: $Enums.Audience
   status: $Enums.ContentStatus
   reviewNote: string | null
@@ -322,6 +386,8 @@ export type ServiceGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   _count: ServiceCountAggregateOutputType | null
+  _avg: ServiceAvgAggregateOutputType | null
+  _sum: ServiceSumAggregateOutputType | null
   _min: ServiceMinAggregateOutputType | null
   _max: ServiceMaxAggregateOutputType | null
 }
@@ -368,6 +434,10 @@ export type ServiceWhereInput = {
   sourceAr?: Prisma.StringFilter<"Service"> | string
   sourceEn?: Prisma.StringFilter<"Service"> | string
   lastReviewedAt?: Prisma.DateTimeNullableFilter<"Service"> | Date | string | null
+  nextReviewAt?: Prisma.DateTimeNullableFilter<"Service"> | Date | string | null
+  reviewIntervalDays?: Prisma.IntNullableFilter<"Service"> | number | null
+  reviewedById?: Prisma.IntNullableFilter<"Service"> | number | null
+  contentEditedAt?: Prisma.DateTimeNullableFilter<"Service"> | Date | string | null
   audience?: Prisma.EnumAudienceFilter<"Service"> | $Enums.Audience
   status?: Prisma.EnumContentStatusFilter<"Service"> | $Enums.ContentStatus
   reviewNote?: Prisma.StringNullableFilter<"Service"> | string | null
@@ -384,6 +454,9 @@ export type ServiceWhereInput = {
   relatedFrom?: Prisma.ServiceRelationListRelationFilter
   reports?: Prisma.ReportListRelationFilter
   progress?: Prisma.ProcedureProgressListRelationFilter
+  offices?: Prisma.OfficeServiceListRelationFilter
+  sources?: Prisma.ServiceSourceListRelationFilter
+  reviewedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type ServiceOrderByWithRelationInput = {
@@ -410,6 +483,10 @@ export type ServiceOrderByWithRelationInput = {
   sourceAr?: Prisma.SortOrder
   sourceEn?: Prisma.SortOrder
   lastReviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextReviewAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  contentEditedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   audience?: Prisma.SortOrder
   status?: Prisma.SortOrder
   reviewNote?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -426,6 +503,9 @@ export type ServiceOrderByWithRelationInput = {
   relatedFrom?: Prisma.ServiceRelationOrderByRelationAggregateInput
   reports?: Prisma.ReportOrderByRelationAggregateInput
   progress?: Prisma.ProcedureProgressOrderByRelationAggregateInput
+  offices?: Prisma.OfficeServiceOrderByRelationAggregateInput
+  sources?: Prisma.ServiceSourceOrderByRelationAggregateInput
+  reviewedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type ServiceWhereUniqueInput = Prisma.AtLeast<{
@@ -455,6 +535,10 @@ export type ServiceWhereUniqueInput = Prisma.AtLeast<{
   sourceAr?: Prisma.StringFilter<"Service"> | string
   sourceEn?: Prisma.StringFilter<"Service"> | string
   lastReviewedAt?: Prisma.DateTimeNullableFilter<"Service"> | Date | string | null
+  nextReviewAt?: Prisma.DateTimeNullableFilter<"Service"> | Date | string | null
+  reviewIntervalDays?: Prisma.IntNullableFilter<"Service"> | number | null
+  reviewedById?: Prisma.IntNullableFilter<"Service"> | number | null
+  contentEditedAt?: Prisma.DateTimeNullableFilter<"Service"> | Date | string | null
   audience?: Prisma.EnumAudienceFilter<"Service"> | $Enums.Audience
   status?: Prisma.EnumContentStatusFilter<"Service"> | $Enums.ContentStatus
   reviewNote?: Prisma.StringNullableFilter<"Service"> | string | null
@@ -471,6 +555,9 @@ export type ServiceWhereUniqueInput = Prisma.AtLeast<{
   relatedFrom?: Prisma.ServiceRelationListRelationFilter
   reports?: Prisma.ReportListRelationFilter
   progress?: Prisma.ProcedureProgressListRelationFilter
+  offices?: Prisma.OfficeServiceListRelationFilter
+  sources?: Prisma.ServiceSourceListRelationFilter
+  reviewedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type ServiceOrderByWithAggregationInput = {
@@ -497,6 +584,10 @@ export type ServiceOrderByWithAggregationInput = {
   sourceAr?: Prisma.SortOrder
   sourceEn?: Prisma.SortOrder
   lastReviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextReviewAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  contentEditedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   audience?: Prisma.SortOrder
   status?: Prisma.SortOrder
   reviewNote?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -504,8 +595,10 @@ export type ServiceOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ServiceCountOrderByAggregateInput
+  _avg?: Prisma.ServiceAvgOrderByAggregateInput
   _max?: Prisma.ServiceMaxOrderByAggregateInput
   _min?: Prisma.ServiceMinOrderByAggregateInput
+  _sum?: Prisma.ServiceSumOrderByAggregateInput
 }
 
 export type ServiceScalarWhereWithAggregatesInput = {
@@ -535,6 +628,10 @@ export type ServiceScalarWhereWithAggregatesInput = {
   sourceAr?: Prisma.StringWithAggregatesFilter<"Service"> | string
   sourceEn?: Prisma.StringWithAggregatesFilter<"Service"> | string
   lastReviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Service"> | Date | string | null
+  nextReviewAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Service"> | Date | string | null
+  reviewIntervalDays?: Prisma.IntNullableWithAggregatesFilter<"Service"> | number | null
+  reviewedById?: Prisma.IntNullableWithAggregatesFilter<"Service"> | number | null
+  contentEditedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Service"> | Date | string | null
   audience?: Prisma.EnumAudienceWithAggregatesFilter<"Service"> | $Enums.Audience
   status?: Prisma.EnumContentStatusWithAggregatesFilter<"Service"> | $Enums.ContentStatus
   reviewNote?: Prisma.StringNullableWithAggregatesFilter<"Service"> | string | null
@@ -566,6 +663,9 @@ export type ServiceCreateInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -582,6 +682,9 @@ export type ServiceCreateInput = {
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
 }
 
 export type ServiceUncheckedCreateInput = {
@@ -608,6 +711,10 @@ export type ServiceUncheckedCreateInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -623,6 +730,8 @@ export type ServiceUncheckedCreateInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUpdateInput = {
@@ -648,6 +757,9 @@ export type ServiceUpdateInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -664,6 +776,9 @@ export type ServiceUpdateInput = {
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
 }
 
 export type ServiceUncheckedUpdateInput = {
@@ -690,6 +805,10 @@ export type ServiceUncheckedUpdateInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -705,6 +824,8 @@ export type ServiceUncheckedUpdateInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateManyInput = {
@@ -731,6 +852,10 @@ export type ServiceCreateManyInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -762,6 +887,9 @@ export type ServiceUpdateManyMutationInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -794,6 +922,10 @@ export type ServiceUncheckedUpdateManyInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -836,12 +968,21 @@ export type ServiceCountOrderByAggregateInput = {
   sourceAr?: Prisma.SortOrder
   sourceEn?: Prisma.SortOrder
   lastReviewedAt?: Prisma.SortOrder
+  nextReviewAt?: Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrder
+  reviewedById?: Prisma.SortOrder
+  contentEditedAt?: Prisma.SortOrder
   audience?: Prisma.SortOrder
   status?: Prisma.SortOrder
   reviewNote?: Prisma.SortOrder
   searchText?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ServiceAvgOrderByAggregateInput = {
+  reviewIntervalDays?: Prisma.SortOrder
+  reviewedById?: Prisma.SortOrder
 }
 
 export type ServiceMaxOrderByAggregateInput = {
@@ -868,6 +1009,10 @@ export type ServiceMaxOrderByAggregateInput = {
   sourceAr?: Prisma.SortOrder
   sourceEn?: Prisma.SortOrder
   lastReviewedAt?: Prisma.SortOrder
+  nextReviewAt?: Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrder
+  reviewedById?: Prisma.SortOrder
+  contentEditedAt?: Prisma.SortOrder
   audience?: Prisma.SortOrder
   status?: Prisma.SortOrder
   reviewNote?: Prisma.SortOrder
@@ -900,12 +1045,21 @@ export type ServiceMinOrderByAggregateInput = {
   sourceAr?: Prisma.SortOrder
   sourceEn?: Prisma.SortOrder
   lastReviewedAt?: Prisma.SortOrder
+  nextReviewAt?: Prisma.SortOrder
+  reviewIntervalDays?: Prisma.SortOrder
+  reviewedById?: Prisma.SortOrder
+  contentEditedAt?: Prisma.SortOrder
   audience?: Prisma.SortOrder
   status?: Prisma.SortOrder
   reviewNote?: Prisma.SortOrder
   searchText?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ServiceSumOrderByAggregateInput = {
+  reviewIntervalDays?: Prisma.SortOrder
+  reviewedById?: Prisma.SortOrder
 }
 
 export type ServiceScalarRelationFilter = {
@@ -968,6 +1122,14 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type EnumAudienceFieldUpdateOperationsInput = {
   set?: $Enums.Audience
 }
@@ -982,6 +1144,20 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type ServiceCreateNestedOneWithoutSourcesInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutSourcesInput, Prisma.ServiceUncheckedCreateWithoutSourcesInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutSourcesInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUpdateOneRequiredWithoutSourcesNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutSourcesInput, Prisma.ServiceUncheckedCreateWithoutSourcesInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutSourcesInput
+  upsert?: Prisma.ServiceUpsertWithoutSourcesInput
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutSourcesInput, Prisma.ServiceUpdateWithoutSourcesInput>, Prisma.ServiceUncheckedUpdateWithoutSourcesInput>
 }
 
 export type ServiceCreateNestedOneWithoutStepsInput = {
@@ -1082,6 +1258,62 @@ export type ServiceUpdateOneRequiredWithoutRelatedFromNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutRelatedFromInput, Prisma.ServiceUpdateWithoutRelatedFromInput>, Prisma.ServiceUncheckedUpdateWithoutRelatedFromInput>
 }
 
+export type ServiceCreateNestedOneWithoutOfficesInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutOfficesInput, Prisma.ServiceUncheckedCreateWithoutOfficesInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutOfficesInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUpdateOneRequiredWithoutOfficesNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutOfficesInput, Prisma.ServiceUncheckedCreateWithoutOfficesInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutOfficesInput
+  upsert?: Prisma.ServiceUpsertWithoutOfficesInput
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutOfficesInput, Prisma.ServiceUpdateWithoutOfficesInput>, Prisma.ServiceUncheckedUpdateWithoutOfficesInput>
+}
+
+export type ServiceCreateNestedManyWithoutReviewedByInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutReviewedByInput, Prisma.ServiceUncheckedCreateWithoutReviewedByInput> | Prisma.ServiceCreateWithoutReviewedByInput[] | Prisma.ServiceUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutReviewedByInput | Prisma.ServiceCreateOrConnectWithoutReviewedByInput[]
+  createMany?: Prisma.ServiceCreateManyReviewedByInputEnvelope
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+}
+
+export type ServiceUncheckedCreateNestedManyWithoutReviewedByInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutReviewedByInput, Prisma.ServiceUncheckedCreateWithoutReviewedByInput> | Prisma.ServiceCreateWithoutReviewedByInput[] | Prisma.ServiceUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutReviewedByInput | Prisma.ServiceCreateOrConnectWithoutReviewedByInput[]
+  createMany?: Prisma.ServiceCreateManyReviewedByInputEnvelope
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+}
+
+export type ServiceUpdateManyWithoutReviewedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutReviewedByInput, Prisma.ServiceUncheckedCreateWithoutReviewedByInput> | Prisma.ServiceCreateWithoutReviewedByInput[] | Prisma.ServiceUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutReviewedByInput | Prisma.ServiceCreateOrConnectWithoutReviewedByInput[]
+  upsert?: Prisma.ServiceUpsertWithWhereUniqueWithoutReviewedByInput | Prisma.ServiceUpsertWithWhereUniqueWithoutReviewedByInput[]
+  createMany?: Prisma.ServiceCreateManyReviewedByInputEnvelope
+  set?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  disconnect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  delete?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  update?: Prisma.ServiceUpdateWithWhereUniqueWithoutReviewedByInput | Prisma.ServiceUpdateWithWhereUniqueWithoutReviewedByInput[]
+  updateMany?: Prisma.ServiceUpdateManyWithWhereWithoutReviewedByInput | Prisma.ServiceUpdateManyWithWhereWithoutReviewedByInput[]
+  deleteMany?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
+}
+
+export type ServiceUncheckedUpdateManyWithoutReviewedByNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutReviewedByInput, Prisma.ServiceUncheckedCreateWithoutReviewedByInput> | Prisma.ServiceCreateWithoutReviewedByInput[] | Prisma.ServiceUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutReviewedByInput | Prisma.ServiceCreateOrConnectWithoutReviewedByInput[]
+  upsert?: Prisma.ServiceUpsertWithWhereUniqueWithoutReviewedByInput | Prisma.ServiceUpsertWithWhereUniqueWithoutReviewedByInput[]
+  createMany?: Prisma.ServiceCreateManyReviewedByInputEnvelope
+  set?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  disconnect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  delete?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  connect?: Prisma.ServiceWhereUniqueInput | Prisma.ServiceWhereUniqueInput[]
+  update?: Prisma.ServiceUpdateWithWhereUniqueWithoutReviewedByInput | Prisma.ServiceUpdateWithWhereUniqueWithoutReviewedByInput[]
+  updateMany?: Prisma.ServiceUpdateManyWithWhereWithoutReviewedByInput | Prisma.ServiceUpdateManyWithWhereWithoutReviewedByInput[]
+  deleteMany?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
+}
+
 export type ServiceCreateNestedOneWithoutReportsInput = {
   create?: Prisma.XOR<Prisma.ServiceCreateWithoutReportsInput, Prisma.ServiceUncheckedCreateWithoutReportsInput>
   connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutReportsInput
@@ -1135,6 +1367,9 @@ export type ServiceCreateWithoutCategoryInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -1150,6 +1385,9 @@ export type ServiceCreateWithoutCategoryInput = {
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
 }
 
 export type ServiceUncheckedCreateWithoutCategoryInput = {
@@ -1175,6 +1413,10 @@ export type ServiceUncheckedCreateWithoutCategoryInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -1190,6 +1432,8 @@ export type ServiceUncheckedCreateWithoutCategoryInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutCategoryInput = {
@@ -1245,12 +1489,216 @@ export type ServiceScalarWhereInput = {
   sourceAr?: Prisma.StringFilter<"Service"> | string
   sourceEn?: Prisma.StringFilter<"Service"> | string
   lastReviewedAt?: Prisma.DateTimeNullableFilter<"Service"> | Date | string | null
+  nextReviewAt?: Prisma.DateTimeNullableFilter<"Service"> | Date | string | null
+  reviewIntervalDays?: Prisma.IntNullableFilter<"Service"> | number | null
+  reviewedById?: Prisma.IntNullableFilter<"Service"> | number | null
+  contentEditedAt?: Prisma.DateTimeNullableFilter<"Service"> | Date | string | null
   audience?: Prisma.EnumAudienceFilter<"Service"> | $Enums.Audience
   status?: Prisma.EnumContentStatusFilter<"Service"> | $Enums.ContentStatus
   reviewNote?: Prisma.StringNullableFilter<"Service"> | string | null
   searchText?: Prisma.StringFilter<"Service"> | string
   createdAt?: Prisma.DateTimeFilter<"Service"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Service"> | Date | string
+}
+
+export type ServiceCreateWithoutSourcesInput = {
+  id: string
+  icon?: string
+  popular?: boolean
+  verified?: boolean
+  isDemo?: boolean
+  titleAr: string
+  titleEn: string
+  shortDescAr: string
+  shortDescEn: string
+  departmentAr: string
+  departmentEn: string
+  feesAr: string
+  feesEn: string
+  durationAr: string
+  durationEn: string
+  hoursAr: string
+  hoursEn: string
+  eligibilityAr: string
+  eligibilityEn: string
+  sourceAr: string
+  sourceEn: string
+  lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
+  audience?: $Enums.Audience
+  status?: $Enums.ContentStatus
+  reviewNote?: string | null
+  searchText: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  category: Prisma.CategoryCreateNestedOneWithoutServicesInput
+  steps?: Prisma.ServiceStepCreateNestedManyWithoutServiceInput
+  documents?: Prisma.ServiceDocumentCreateNestedManyWithoutServiceInput
+  notes?: Prisma.ServiceNoteCreateNestedManyWithoutServiceInput
+  faqs?: Prisma.ServiceFaqCreateNestedManyWithoutServiceInput
+  keywords?: Prisma.ServiceKeywordCreateNestedManyWithoutServiceInput
+  relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
+  relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
+  reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
+}
+
+export type ServiceUncheckedCreateWithoutSourcesInput = {
+  id: string
+  categoryId: string
+  icon?: string
+  popular?: boolean
+  verified?: boolean
+  isDemo?: boolean
+  titleAr: string
+  titleEn: string
+  shortDescAr: string
+  shortDescEn: string
+  departmentAr: string
+  departmentEn: string
+  feesAr: string
+  feesEn: string
+  durationAr: string
+  durationEn: string
+  hoursAr: string
+  hoursEn: string
+  eligibilityAr: string
+  eligibilityEn: string
+  sourceAr: string
+  sourceEn: string
+  lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
+  audience?: $Enums.Audience
+  status?: $Enums.ContentStatus
+  reviewNote?: string | null
+  searchText: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  steps?: Prisma.ServiceStepUncheckedCreateNestedManyWithoutServiceInput
+  documents?: Prisma.ServiceDocumentUncheckedCreateNestedManyWithoutServiceInput
+  notes?: Prisma.ServiceNoteUncheckedCreateNestedManyWithoutServiceInput
+  faqs?: Prisma.ServiceFaqUncheckedCreateNestedManyWithoutServiceInput
+  keywords?: Prisma.ServiceKeywordUncheckedCreateNestedManyWithoutServiceInput
+  relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
+  relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutSourcesInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutSourcesInput, Prisma.ServiceUncheckedCreateWithoutSourcesInput>
+}
+
+export type ServiceUpsertWithoutSourcesInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutSourcesInput, Prisma.ServiceUncheckedUpdateWithoutSourcesInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutSourcesInput, Prisma.ServiceUncheckedCreateWithoutSourcesInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutSourcesInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutSourcesInput, Prisma.ServiceUncheckedUpdateWithoutSourcesInput>
+}
+
+export type ServiceUpdateWithoutSourcesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  popular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleAr?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescAr?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  feesAr?: Prisma.StringFieldUpdateOperationsInput | string
+  feesEn?: Prisma.StringFieldUpdateOperationsInput | string
+  durationAr?: Prisma.StringFieldUpdateOperationsInput | string
+  durationEn?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursAr?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursEn?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityAr?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityEn?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.CategoryUpdateOneRequiredWithoutServicesNestedInput
+  steps?: Prisma.ServiceStepUpdateManyWithoutServiceNestedInput
+  documents?: Prisma.ServiceDocumentUpdateManyWithoutServiceNestedInput
+  notes?: Prisma.ServiceNoteUpdateManyWithoutServiceNestedInput
+  faqs?: Prisma.ServiceFaqUpdateManyWithoutServiceNestedInput
+  keywords?: Prisma.ServiceKeywordUpdateManyWithoutServiceNestedInput
+  relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
+  relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutSourcesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  popular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleAr?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescAr?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  feesAr?: Prisma.StringFieldUpdateOperationsInput | string
+  feesEn?: Prisma.StringFieldUpdateOperationsInput | string
+  durationAr?: Prisma.StringFieldUpdateOperationsInput | string
+  durationEn?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursAr?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursEn?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityAr?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityEn?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  steps?: Prisma.ServiceStepUncheckedUpdateManyWithoutServiceNestedInput
+  documents?: Prisma.ServiceDocumentUncheckedUpdateManyWithoutServiceNestedInput
+  notes?: Prisma.ServiceNoteUncheckedUpdateManyWithoutServiceNestedInput
+  faqs?: Prisma.ServiceFaqUncheckedUpdateManyWithoutServiceNestedInput
+  keywords?: Prisma.ServiceKeywordUncheckedUpdateManyWithoutServiceNestedInput
+  relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
+  relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutStepsInput = {
@@ -1276,6 +1724,9 @@ export type ServiceCreateWithoutStepsInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -1291,6 +1742,9 @@ export type ServiceCreateWithoutStepsInput = {
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
 }
 
 export type ServiceUncheckedCreateWithoutStepsInput = {
@@ -1317,6 +1771,10 @@ export type ServiceUncheckedCreateWithoutStepsInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -1331,6 +1789,8 @@ export type ServiceUncheckedCreateWithoutStepsInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutStepsInput = {
@@ -1372,6 +1832,9 @@ export type ServiceUpdateWithoutStepsInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1387,6 +1850,9 @@ export type ServiceUpdateWithoutStepsInput = {
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutStepsInput = {
@@ -1413,6 +1879,10 @@ export type ServiceUncheckedUpdateWithoutStepsInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1427,6 +1897,8 @@ export type ServiceUncheckedUpdateWithoutStepsInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutDocumentsInput = {
@@ -1452,6 +1924,9 @@ export type ServiceCreateWithoutDocumentsInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -1467,6 +1942,9 @@ export type ServiceCreateWithoutDocumentsInput = {
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
 }
 
 export type ServiceUncheckedCreateWithoutDocumentsInput = {
@@ -1493,6 +1971,10 @@ export type ServiceUncheckedCreateWithoutDocumentsInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -1507,6 +1989,8 @@ export type ServiceUncheckedCreateWithoutDocumentsInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutDocumentsInput = {
@@ -1548,6 +2032,9 @@ export type ServiceUpdateWithoutDocumentsInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1563,6 +2050,9 @@ export type ServiceUpdateWithoutDocumentsInput = {
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutDocumentsInput = {
@@ -1589,6 +2079,10 @@ export type ServiceUncheckedUpdateWithoutDocumentsInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1603,6 +2097,8 @@ export type ServiceUncheckedUpdateWithoutDocumentsInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutNotesInput = {
@@ -1628,6 +2124,9 @@ export type ServiceCreateWithoutNotesInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -1643,6 +2142,9 @@ export type ServiceCreateWithoutNotesInput = {
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
 }
 
 export type ServiceUncheckedCreateWithoutNotesInput = {
@@ -1669,6 +2171,10 @@ export type ServiceUncheckedCreateWithoutNotesInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -1683,6 +2189,8 @@ export type ServiceUncheckedCreateWithoutNotesInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutNotesInput = {
@@ -1724,6 +2232,9 @@ export type ServiceUpdateWithoutNotesInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1739,6 +2250,9 @@ export type ServiceUpdateWithoutNotesInput = {
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutNotesInput = {
@@ -1765,6 +2279,10 @@ export type ServiceUncheckedUpdateWithoutNotesInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1779,6 +2297,8 @@ export type ServiceUncheckedUpdateWithoutNotesInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutFaqsInput = {
@@ -1804,6 +2324,9 @@ export type ServiceCreateWithoutFaqsInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -1819,6 +2342,9 @@ export type ServiceCreateWithoutFaqsInput = {
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
 }
 
 export type ServiceUncheckedCreateWithoutFaqsInput = {
@@ -1845,6 +2371,10 @@ export type ServiceUncheckedCreateWithoutFaqsInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -1859,6 +2389,8 @@ export type ServiceUncheckedCreateWithoutFaqsInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutFaqsInput = {
@@ -1900,6 +2432,9 @@ export type ServiceUpdateWithoutFaqsInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1915,6 +2450,9 @@ export type ServiceUpdateWithoutFaqsInput = {
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutFaqsInput = {
@@ -1941,6 +2479,10 @@ export type ServiceUncheckedUpdateWithoutFaqsInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1955,6 +2497,8 @@ export type ServiceUncheckedUpdateWithoutFaqsInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutKeywordsInput = {
@@ -1980,6 +2524,9 @@ export type ServiceCreateWithoutKeywordsInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -1995,6 +2542,9 @@ export type ServiceCreateWithoutKeywordsInput = {
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
 }
 
 export type ServiceUncheckedCreateWithoutKeywordsInput = {
@@ -2021,6 +2571,10 @@ export type ServiceUncheckedCreateWithoutKeywordsInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -2035,6 +2589,8 @@ export type ServiceUncheckedCreateWithoutKeywordsInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutKeywordsInput = {
@@ -2076,6 +2632,9 @@ export type ServiceUpdateWithoutKeywordsInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2091,6 +2650,9 @@ export type ServiceUpdateWithoutKeywordsInput = {
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutKeywordsInput = {
@@ -2117,6 +2679,10 @@ export type ServiceUncheckedUpdateWithoutKeywordsInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2131,6 +2697,8 @@ export type ServiceUncheckedUpdateWithoutKeywordsInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutRelatedToInput = {
@@ -2156,6 +2724,9 @@ export type ServiceCreateWithoutRelatedToInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -2171,6 +2742,9 @@ export type ServiceCreateWithoutRelatedToInput = {
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
 }
 
 export type ServiceUncheckedCreateWithoutRelatedToInput = {
@@ -2197,6 +2771,10 @@ export type ServiceUncheckedCreateWithoutRelatedToInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -2211,6 +2789,8 @@ export type ServiceUncheckedCreateWithoutRelatedToInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutRelatedToInput = {
@@ -2241,6 +2821,9 @@ export type ServiceCreateWithoutRelatedFromInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -2256,6 +2839,9 @@ export type ServiceCreateWithoutRelatedFromInput = {
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
 }
 
 export type ServiceUncheckedCreateWithoutRelatedFromInput = {
@@ -2282,6 +2868,10 @@ export type ServiceUncheckedCreateWithoutRelatedFromInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -2296,6 +2886,8 @@ export type ServiceUncheckedCreateWithoutRelatedFromInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutRelatedFromInput = {
@@ -2337,6 +2929,9 @@ export type ServiceUpdateWithoutRelatedToInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2352,6 +2947,9 @@ export type ServiceUpdateWithoutRelatedToInput = {
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutRelatedToInput = {
@@ -2378,6 +2976,10 @@ export type ServiceUncheckedUpdateWithoutRelatedToInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2392,6 +2994,8 @@ export type ServiceUncheckedUpdateWithoutRelatedToInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUpsertWithoutRelatedFromInput = {
@@ -2428,6 +3032,9 @@ export type ServiceUpdateWithoutRelatedFromInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2443,6 +3050,9 @@ export type ServiceUpdateWithoutRelatedFromInput = {
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutRelatedFromInput = {
@@ -2469,6 +3079,10 @@ export type ServiceUncheckedUpdateWithoutRelatedFromInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2483,6 +3097,326 @@ export type ServiceUncheckedUpdateWithoutRelatedFromInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutOfficesInput = {
+  id: string
+  icon?: string
+  popular?: boolean
+  verified?: boolean
+  isDemo?: boolean
+  titleAr: string
+  titleEn: string
+  shortDescAr: string
+  shortDescEn: string
+  departmentAr: string
+  departmentEn: string
+  feesAr: string
+  feesEn: string
+  durationAr: string
+  durationEn: string
+  hoursAr: string
+  hoursEn: string
+  eligibilityAr: string
+  eligibilityEn: string
+  sourceAr: string
+  sourceEn: string
+  lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
+  audience?: $Enums.Audience
+  status?: $Enums.ContentStatus
+  reviewNote?: string | null
+  searchText: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  category: Prisma.CategoryCreateNestedOneWithoutServicesInput
+  steps?: Prisma.ServiceStepCreateNestedManyWithoutServiceInput
+  documents?: Prisma.ServiceDocumentCreateNestedManyWithoutServiceInput
+  notes?: Prisma.ServiceNoteCreateNestedManyWithoutServiceInput
+  faqs?: Prisma.ServiceFaqCreateNestedManyWithoutServiceInput
+  keywords?: Prisma.ServiceKeywordCreateNestedManyWithoutServiceInput
+  relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
+  relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
+  reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
+}
+
+export type ServiceUncheckedCreateWithoutOfficesInput = {
+  id: string
+  categoryId: string
+  icon?: string
+  popular?: boolean
+  verified?: boolean
+  isDemo?: boolean
+  titleAr: string
+  titleEn: string
+  shortDescAr: string
+  shortDescEn: string
+  departmentAr: string
+  departmentEn: string
+  feesAr: string
+  feesEn: string
+  durationAr: string
+  durationEn: string
+  hoursAr: string
+  hoursEn: string
+  eligibilityAr: string
+  eligibilityEn: string
+  sourceAr: string
+  sourceEn: string
+  lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
+  audience?: $Enums.Audience
+  status?: $Enums.ContentStatus
+  reviewNote?: string | null
+  searchText: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  steps?: Prisma.ServiceStepUncheckedCreateNestedManyWithoutServiceInput
+  documents?: Prisma.ServiceDocumentUncheckedCreateNestedManyWithoutServiceInput
+  notes?: Prisma.ServiceNoteUncheckedCreateNestedManyWithoutServiceInput
+  faqs?: Prisma.ServiceFaqUncheckedCreateNestedManyWithoutServiceInput
+  keywords?: Prisma.ServiceKeywordUncheckedCreateNestedManyWithoutServiceInput
+  relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
+  relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutOfficesInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutOfficesInput, Prisma.ServiceUncheckedCreateWithoutOfficesInput>
+}
+
+export type ServiceUpsertWithoutOfficesInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutOfficesInput, Prisma.ServiceUncheckedUpdateWithoutOfficesInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutOfficesInput, Prisma.ServiceUncheckedCreateWithoutOfficesInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutOfficesInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutOfficesInput, Prisma.ServiceUncheckedUpdateWithoutOfficesInput>
+}
+
+export type ServiceUpdateWithoutOfficesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  popular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleAr?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescAr?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  feesAr?: Prisma.StringFieldUpdateOperationsInput | string
+  feesEn?: Prisma.StringFieldUpdateOperationsInput | string
+  durationAr?: Prisma.StringFieldUpdateOperationsInput | string
+  durationEn?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursAr?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursEn?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityAr?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityEn?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.CategoryUpdateOneRequiredWithoutServicesNestedInput
+  steps?: Prisma.ServiceStepUpdateManyWithoutServiceNestedInput
+  documents?: Prisma.ServiceDocumentUpdateManyWithoutServiceNestedInput
+  notes?: Prisma.ServiceNoteUpdateManyWithoutServiceNestedInput
+  faqs?: Prisma.ServiceFaqUpdateManyWithoutServiceNestedInput
+  keywords?: Prisma.ServiceKeywordUpdateManyWithoutServiceNestedInput
+  relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
+  relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutOfficesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  popular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleAr?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescAr?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  feesAr?: Prisma.StringFieldUpdateOperationsInput | string
+  feesEn?: Prisma.StringFieldUpdateOperationsInput | string
+  durationAr?: Prisma.StringFieldUpdateOperationsInput | string
+  durationEn?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursAr?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursEn?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityAr?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityEn?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  steps?: Prisma.ServiceStepUncheckedUpdateManyWithoutServiceNestedInput
+  documents?: Prisma.ServiceDocumentUncheckedUpdateManyWithoutServiceNestedInput
+  notes?: Prisma.ServiceNoteUncheckedUpdateManyWithoutServiceNestedInput
+  faqs?: Prisma.ServiceFaqUncheckedUpdateManyWithoutServiceNestedInput
+  keywords?: Prisma.ServiceKeywordUncheckedUpdateManyWithoutServiceNestedInput
+  relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
+  relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutReviewedByInput = {
+  id: string
+  icon?: string
+  popular?: boolean
+  verified?: boolean
+  isDemo?: boolean
+  titleAr: string
+  titleEn: string
+  shortDescAr: string
+  shortDescEn: string
+  departmentAr: string
+  departmentEn: string
+  feesAr: string
+  feesEn: string
+  durationAr: string
+  durationEn: string
+  hoursAr: string
+  hoursEn: string
+  eligibilityAr: string
+  eligibilityEn: string
+  sourceAr: string
+  sourceEn: string
+  lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
+  audience?: $Enums.Audience
+  status?: $Enums.ContentStatus
+  reviewNote?: string | null
+  searchText: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  category: Prisma.CategoryCreateNestedOneWithoutServicesInput
+  steps?: Prisma.ServiceStepCreateNestedManyWithoutServiceInput
+  documents?: Prisma.ServiceDocumentCreateNestedManyWithoutServiceInput
+  notes?: Prisma.ServiceNoteCreateNestedManyWithoutServiceInput
+  faqs?: Prisma.ServiceFaqCreateNestedManyWithoutServiceInput
+  keywords?: Prisma.ServiceKeywordCreateNestedManyWithoutServiceInput
+  relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
+  relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
+  reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutReviewedByInput = {
+  id: string
+  categoryId: string
+  icon?: string
+  popular?: boolean
+  verified?: boolean
+  isDemo?: boolean
+  titleAr: string
+  titleEn: string
+  shortDescAr: string
+  shortDescEn: string
+  departmentAr: string
+  departmentEn: string
+  feesAr: string
+  feesEn: string
+  durationAr: string
+  durationEn: string
+  hoursAr: string
+  hoursEn: string
+  eligibilityAr: string
+  eligibilityEn: string
+  sourceAr: string
+  sourceEn: string
+  lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
+  audience?: $Enums.Audience
+  status?: $Enums.ContentStatus
+  reviewNote?: string | null
+  searchText: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  steps?: Prisma.ServiceStepUncheckedCreateNestedManyWithoutServiceInput
+  documents?: Prisma.ServiceDocumentUncheckedCreateNestedManyWithoutServiceInput
+  notes?: Prisma.ServiceNoteUncheckedCreateNestedManyWithoutServiceInput
+  faqs?: Prisma.ServiceFaqUncheckedCreateNestedManyWithoutServiceInput
+  keywords?: Prisma.ServiceKeywordUncheckedCreateNestedManyWithoutServiceInput
+  relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
+  relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutReviewedByInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutReviewedByInput, Prisma.ServiceUncheckedCreateWithoutReviewedByInput>
+}
+
+export type ServiceCreateManyReviewedByInputEnvelope = {
+  data: Prisma.ServiceCreateManyReviewedByInput | Prisma.ServiceCreateManyReviewedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type ServiceUpsertWithWhereUniqueWithoutReviewedByInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutReviewedByInput, Prisma.ServiceUncheckedUpdateWithoutReviewedByInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutReviewedByInput, Prisma.ServiceUncheckedCreateWithoutReviewedByInput>
+}
+
+export type ServiceUpdateWithWhereUniqueWithoutReviewedByInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutReviewedByInput, Prisma.ServiceUncheckedUpdateWithoutReviewedByInput>
+}
+
+export type ServiceUpdateManyWithWhereWithoutReviewedByInput = {
+  where: Prisma.ServiceScalarWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateManyMutationInput, Prisma.ServiceUncheckedUpdateManyWithoutReviewedByInput>
 }
 
 export type ServiceCreateWithoutReportsInput = {
@@ -2508,6 +3442,9 @@ export type ServiceCreateWithoutReportsInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -2523,6 +3460,9 @@ export type ServiceCreateWithoutReportsInput = {
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   progress?: Prisma.ProcedureProgressCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
 }
 
 export type ServiceUncheckedCreateWithoutReportsInput = {
@@ -2549,6 +3489,10 @@ export type ServiceUncheckedCreateWithoutReportsInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -2563,6 +3507,8 @@ export type ServiceUncheckedCreateWithoutReportsInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   progress?: Prisma.ProcedureProgressUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutReportsInput = {
@@ -2604,6 +3550,9 @@ export type ServiceUpdateWithoutReportsInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2619,6 +3568,9 @@ export type ServiceUpdateWithoutReportsInput = {
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutReportsInput = {
@@ -2645,6 +3597,10 @@ export type ServiceUncheckedUpdateWithoutReportsInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2659,6 +3615,8 @@ export type ServiceUncheckedUpdateWithoutReportsInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutProgressInput = {
@@ -2684,6 +3642,9 @@ export type ServiceCreateWithoutProgressInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -2699,6 +3660,9 @@ export type ServiceCreateWithoutProgressInput = {
   relatedTo?: Prisma.ServiceRelationCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationCreateNestedManyWithoutToInput
   reports?: Prisma.ReportCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceCreateNestedManyWithoutServiceInput
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedServicesInput
 }
 
 export type ServiceUncheckedCreateWithoutProgressInput = {
@@ -2725,6 +3689,10 @@ export type ServiceUncheckedCreateWithoutProgressInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -2739,6 +3707,8 @@ export type ServiceUncheckedCreateWithoutProgressInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutFromInput
   relatedFrom?: Prisma.ServiceRelationUncheckedCreateNestedManyWithoutToInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutServiceInput
+  offices?: Prisma.OfficeServiceUncheckedCreateNestedManyWithoutServiceInput
+  sources?: Prisma.ServiceSourceUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutProgressInput = {
@@ -2780,6 +3750,9 @@ export type ServiceUpdateWithoutProgressInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2795,6 +3768,9 @@ export type ServiceUpdateWithoutProgressInput = {
   relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutProgressInput = {
@@ -2821,6 +3797,10 @@ export type ServiceUncheckedUpdateWithoutProgressInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2835,6 +3815,8 @@ export type ServiceUncheckedUpdateWithoutProgressInput = {
   relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateManyCategoryInput = {
@@ -2860,6 +3842,10 @@ export type ServiceCreateManyCategoryInput = {
   sourceAr: string
   sourceEn: string
   lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  reviewedById?: number | null
+  contentEditedAt?: Date | string | null
   audience?: $Enums.Audience
   status?: $Enums.ContentStatus
   reviewNote?: string | null
@@ -2891,6 +3877,9 @@ export type ServiceUpdateWithoutCategoryInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2906,6 +3895,9 @@ export type ServiceUpdateWithoutCategoryInput = {
   relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedServicesNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutCategoryInput = {
@@ -2931,6 +3923,10 @@ export type ServiceUncheckedUpdateWithoutCategoryInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2946,6 +3942,8 @@ export type ServiceUncheckedUpdateWithoutCategoryInput = {
   relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
   progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateManyWithoutCategoryInput = {
@@ -2971,6 +3969,172 @@ export type ServiceUncheckedUpdateManyWithoutCategoryInput = {
   sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
   sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reviewedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ServiceCreateManyReviewedByInput = {
+  id: string
+  categoryId: string
+  icon?: string
+  popular?: boolean
+  verified?: boolean
+  isDemo?: boolean
+  titleAr: string
+  titleEn: string
+  shortDescAr: string
+  shortDescEn: string
+  departmentAr: string
+  departmentEn: string
+  feesAr: string
+  feesEn: string
+  durationAr: string
+  durationEn: string
+  hoursAr: string
+  hoursEn: string
+  eligibilityAr: string
+  eligibilityEn: string
+  sourceAr: string
+  sourceEn: string
+  lastReviewedAt?: Date | string | null
+  nextReviewAt?: Date | string | null
+  reviewIntervalDays?: number | null
+  contentEditedAt?: Date | string | null
+  audience?: $Enums.Audience
+  status?: $Enums.ContentStatus
+  reviewNote?: string | null
+  searchText: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ServiceUpdateWithoutReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  popular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleAr?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescAr?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  feesAr?: Prisma.StringFieldUpdateOperationsInput | string
+  feesEn?: Prisma.StringFieldUpdateOperationsInput | string
+  durationAr?: Prisma.StringFieldUpdateOperationsInput | string
+  durationEn?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursAr?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursEn?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityAr?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityEn?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.CategoryUpdateOneRequiredWithoutServicesNestedInput
+  steps?: Prisma.ServiceStepUpdateManyWithoutServiceNestedInput
+  documents?: Prisma.ServiceDocumentUpdateManyWithoutServiceNestedInput
+  notes?: Prisma.ServiceNoteUpdateManyWithoutServiceNestedInput
+  faqs?: Prisma.ServiceFaqUpdateManyWithoutServiceNestedInput
+  keywords?: Prisma.ServiceKeywordUpdateManyWithoutServiceNestedInput
+  relatedTo?: Prisma.ServiceRelationUpdateManyWithoutFromNestedInput
+  relatedFrom?: Prisma.ServiceRelationUpdateManyWithoutToNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  popular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleAr?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescAr?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  feesAr?: Prisma.StringFieldUpdateOperationsInput | string
+  feesEn?: Prisma.StringFieldUpdateOperationsInput | string
+  durationAr?: Prisma.StringFieldUpdateOperationsInput | string
+  durationEn?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursAr?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursEn?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityAr?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityEn?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
+  status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  searchText?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  steps?: Prisma.ServiceStepUncheckedUpdateManyWithoutServiceNestedInput
+  documents?: Prisma.ServiceDocumentUncheckedUpdateManyWithoutServiceNestedInput
+  notes?: Prisma.ServiceNoteUncheckedUpdateManyWithoutServiceNestedInput
+  faqs?: Prisma.ServiceFaqUncheckedUpdateManyWithoutServiceNestedInput
+  keywords?: Prisma.ServiceKeywordUncheckedUpdateManyWithoutServiceNestedInput
+  relatedTo?: Prisma.ServiceRelationUncheckedUpdateManyWithoutFromNestedInput
+  relatedFrom?: Prisma.ServiceRelationUncheckedUpdateManyWithoutToNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutServiceNestedInput
+  progress?: Prisma.ProcedureProgressUncheckedUpdateManyWithoutServiceNestedInput
+  offices?: Prisma.OfficeServiceUncheckedUpdateManyWithoutServiceNestedInput
+  sources?: Prisma.ServiceSourceUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateManyWithoutReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  popular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDemo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titleAr?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescAr?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescEn?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentAr?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentEn?: Prisma.StringFieldUpdateOperationsInput | string
+  feesAr?: Prisma.StringFieldUpdateOperationsInput | string
+  feesEn?: Prisma.StringFieldUpdateOperationsInput | string
+  durationAr?: Prisma.StringFieldUpdateOperationsInput | string
+  durationEn?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursAr?: Prisma.StringFieldUpdateOperationsInput | string
+  hoursEn?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityAr?: Prisma.StringFieldUpdateOperationsInput | string
+  eligibilityEn?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceAr?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEn?: Prisma.StringFieldUpdateOperationsInput | string
+  lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewIntervalDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contentEditedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   audience?: Prisma.EnumAudienceFieldUpdateOperationsInput | $Enums.Audience
   status?: Prisma.EnumContentStatusFieldUpdateOperationsInput | $Enums.ContentStatus
   reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2994,6 +4158,8 @@ export type ServiceCountOutputType = {
   relatedFrom: number
   reports: number
   progress: number
+  offices: number
+  sources: number
 }
 
 export type ServiceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3006,6 +4172,8 @@ export type ServiceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   relatedFrom?: boolean | ServiceCountOutputTypeCountRelatedFromArgs
   reports?: boolean | ServiceCountOutputTypeCountReportsArgs
   progress?: boolean | ServiceCountOutputTypeCountProgressArgs
+  offices?: boolean | ServiceCountOutputTypeCountOfficesArgs
+  sources?: boolean | ServiceCountOutputTypeCountSourcesArgs
 }
 
 /**
@@ -3081,6 +4249,20 @@ export type ServiceCountOutputTypeCountProgressArgs<ExtArgs extends runtime.Type
   where?: Prisma.ProcedureProgressWhereInput
 }
 
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountOfficesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OfficeServiceWhereInput
+}
+
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountSourcesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceSourceWhereInput
+}
+
 
 export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3106,6 +4288,10 @@ export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   sourceAr?: boolean
   sourceEn?: boolean
   lastReviewedAt?: boolean
+  nextReviewAt?: boolean
+  reviewIntervalDays?: boolean
+  reviewedById?: boolean
+  contentEditedAt?: boolean
   audience?: boolean
   status?: boolean
   reviewNote?: boolean
@@ -3122,6 +4308,9 @@ export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   relatedFrom?: boolean | Prisma.Service$relatedFromArgs<ExtArgs>
   reports?: boolean | Prisma.Service$reportsArgs<ExtArgs>
   progress?: boolean | Prisma.Service$progressArgs<ExtArgs>
+  offices?: boolean | Prisma.Service$officesArgs<ExtArgs>
+  sources?: boolean | Prisma.Service$sourcesArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.Service$reviewedByArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["service"]>
 
@@ -3149,6 +4338,10 @@ export type ServiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   sourceAr?: boolean
   sourceEn?: boolean
   lastReviewedAt?: boolean
+  nextReviewAt?: boolean
+  reviewIntervalDays?: boolean
+  reviewedById?: boolean
+  contentEditedAt?: boolean
   audience?: boolean
   status?: boolean
   reviewNote?: boolean
@@ -3156,6 +4349,7 @@ export type ServiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   updatedAt?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.Service$reviewedByArgs<ExtArgs>
 }, ExtArgs["result"]["service"]>
 
 export type ServiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -3182,6 +4376,10 @@ export type ServiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   sourceAr?: boolean
   sourceEn?: boolean
   lastReviewedAt?: boolean
+  nextReviewAt?: boolean
+  reviewIntervalDays?: boolean
+  reviewedById?: boolean
+  contentEditedAt?: boolean
   audience?: boolean
   status?: boolean
   reviewNote?: boolean
@@ -3189,6 +4387,7 @@ export type ServiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   updatedAt?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.Service$reviewedByArgs<ExtArgs>
 }, ExtArgs["result"]["service"]>
 
 export type ServiceSelectScalar = {
@@ -3215,6 +4414,10 @@ export type ServiceSelectScalar = {
   sourceAr?: boolean
   sourceEn?: boolean
   lastReviewedAt?: boolean
+  nextReviewAt?: boolean
+  reviewIntervalDays?: boolean
+  reviewedById?: boolean
+  contentEditedAt?: boolean
   audience?: boolean
   status?: boolean
   reviewNote?: boolean
@@ -3223,7 +4426,7 @@ export type ServiceSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ServiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "icon" | "popular" | "verified" | "isDemo" | "titleAr" | "titleEn" | "shortDescAr" | "shortDescEn" | "departmentAr" | "departmentEn" | "feesAr" | "feesEn" | "durationAr" | "durationEn" | "hoursAr" | "hoursEn" | "eligibilityAr" | "eligibilityEn" | "sourceAr" | "sourceEn" | "lastReviewedAt" | "audience" | "status" | "reviewNote" | "searchText" | "createdAt" | "updatedAt", ExtArgs["result"]["service"]>
+export type ServiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "icon" | "popular" | "verified" | "isDemo" | "titleAr" | "titleEn" | "shortDescAr" | "shortDescEn" | "departmentAr" | "departmentEn" | "feesAr" | "feesEn" | "durationAr" | "durationEn" | "hoursAr" | "hoursEn" | "eligibilityAr" | "eligibilityEn" | "sourceAr" | "sourceEn" | "lastReviewedAt" | "nextReviewAt" | "reviewIntervalDays" | "reviewedById" | "contentEditedAt" | "audience" | "status" | "reviewNote" | "searchText" | "createdAt" | "updatedAt", ExtArgs["result"]["service"]>
 export type ServiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   steps?: boolean | Prisma.Service$stepsArgs<ExtArgs>
@@ -3235,13 +4438,18 @@ export type ServiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   relatedFrom?: boolean | Prisma.Service$relatedFromArgs<ExtArgs>
   reports?: boolean | Prisma.Service$reportsArgs<ExtArgs>
   progress?: boolean | Prisma.Service$progressArgs<ExtArgs>
+  offices?: boolean | Prisma.Service$officesArgs<ExtArgs>
+  sources?: boolean | Prisma.Service$sourcesArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.Service$reviewedByArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ServiceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.Service$reviewedByArgs<ExtArgs>
 }
 export type ServiceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  reviewedBy?: boolean | Prisma.Service$reviewedByArgs<ExtArgs>
 }
 
 export type $ServicePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3257,6 +4465,9 @@ export type $ServicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     relatedFrom: Prisma.$ServiceRelationPayload<ExtArgs>[]
     reports: Prisma.$ReportPayload<ExtArgs>[]
     progress: Prisma.$ProcedureProgressPayload<ExtArgs>[]
+    offices: Prisma.$OfficeServicePayload<ExtArgs>[]
+    sources: Prisma.$ServiceSourcePayload<ExtArgs>[]
+    reviewedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3285,6 +4496,22 @@ export type $ServicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     sourceAr: string
     sourceEn: string
     lastReviewedAt: Date | null
+    /**
+     * موعد المراجعة القادمة (إن لم يُحدَّد يُحسب من مدة المراجعة)
+     */
+    nextReviewAt: Date | null
+    /**
+     * مدة مراجعة خاصة بهذه الخدمة (تتقدم على مدة القسم)
+     */
+    reviewIntervalDays: number | null
+    /**
+     * المراجع الذي سجّل آخر مراجعة فعلية (بدونه لا تُعرض الخدمة كمراجَعة)
+     */
+    reviewedById: number | null
+    /**
+     * آخر تعديل لمحتوى الخدمة؛ إن جاء بعد المراجعة تحتاج مراجعة جديدة
+     */
+    contentEditedAt: Date | null
     /**
      * لمن هذه الخدمة: الكل، المواطن، أو الأجنبي
      */
@@ -3707,6 +4934,9 @@ export interface Prisma__ServiceClient<T, Null = never, ExtArgs extends runtime.
   relatedFrom<T extends Prisma.Service$relatedFromArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$relatedFromArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reports<T extends Prisma.Service$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   progress<T extends Prisma.Service$progressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$progressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProcedureProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  offices<T extends Prisma.Service$officesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$officesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OfficeServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sources<T extends Prisma.Service$sourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$sourcesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceSourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviewedBy<T extends Prisma.Service$reviewedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$reviewedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3759,6 +4989,10 @@ export interface ServiceFieldRefs {
   readonly sourceAr: Prisma.FieldRef<"Service", 'String'>
   readonly sourceEn: Prisma.FieldRef<"Service", 'String'>
   readonly lastReviewedAt: Prisma.FieldRef<"Service", 'DateTime'>
+  readonly nextReviewAt: Prisma.FieldRef<"Service", 'DateTime'>
+  readonly reviewIntervalDays: Prisma.FieldRef<"Service", 'Int'>
+  readonly reviewedById: Prisma.FieldRef<"Service", 'Int'>
+  readonly contentEditedAt: Prisma.FieldRef<"Service", 'DateTime'>
   readonly audience: Prisma.FieldRef<"Service", 'Audience'>
   readonly status: Prisma.FieldRef<"Service", 'ContentStatus'>
   readonly reviewNote: Prisma.FieldRef<"Service", 'String'>
@@ -4379,6 +5613,73 @@ export type Service$progressArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.ProcedureProgressScalarFieldEnum | Prisma.ProcedureProgressScalarFieldEnum[]
+}
+
+/**
+ * Service.offices
+ */
+export type Service$officesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OfficeService
+   */
+  select?: Prisma.OfficeServiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OfficeService
+   */
+  omit?: Prisma.OfficeServiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OfficeServiceInclude<ExtArgs> | null
+  where?: Prisma.OfficeServiceWhereInput
+  orderBy?: Prisma.OfficeServiceOrderByWithRelationInput | Prisma.OfficeServiceOrderByWithRelationInput[]
+  cursor?: Prisma.OfficeServiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OfficeServiceScalarFieldEnum | Prisma.OfficeServiceScalarFieldEnum[]
+}
+
+/**
+ * Service.sources
+ */
+export type Service$sourcesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceSource
+   */
+  select?: Prisma.ServiceSourceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceSource
+   */
+  omit?: Prisma.ServiceSourceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceSourceInclude<ExtArgs> | null
+  where?: Prisma.ServiceSourceWhereInput
+  orderBy?: Prisma.ServiceSourceOrderByWithRelationInput | Prisma.ServiceSourceOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceSourceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceSourceScalarFieldEnum | Prisma.ServiceSourceScalarFieldEnum[]
+}
+
+/**
+ * Service.reviewedBy
+ */
+export type Service$reviewedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

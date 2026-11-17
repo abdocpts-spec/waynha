@@ -54,6 +54,8 @@ export const ModelName = {
   Category: 'Category',
   City: 'City',
   Service: 'Service',
+  ServiceSource: 'ServiceSource',
+  ServiceAudit: 'ServiceAudit',
   ServiceStep: 'ServiceStep',
   ServiceDocument: 'ServiceDocument',
   ServiceNote: 'ServiceNote',
@@ -62,6 +64,7 @@ export const ModelName = {
   ServiceRelation: 'ServiceRelation',
   Office: 'Office',
   OfficeCategory: 'OfficeCategory',
+  OfficeService: 'OfficeService',
   User: 'User',
   Session: 'Session',
   Report: 'Report',
@@ -92,7 +95,8 @@ export const CategoryScalarFieldEnum = {
   color: 'color',
   titleAr: 'titleAr',
   titleEn: 'titleEn',
-  sortOrder: 'sortOrder'
+  sortOrder: 'sortOrder',
+  reviewIntervalDays: 'reviewIntervalDays'
 } as const
 
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -131,6 +135,10 @@ export const ServiceScalarFieldEnum = {
   sourceAr: 'sourceAr',
   sourceEn: 'sourceEn',
   lastReviewedAt: 'lastReviewedAt',
+  nextReviewAt: 'nextReviewAt',
+  reviewIntervalDays: 'reviewIntervalDays',
+  reviewedById: 'reviewedById',
+  contentEditedAt: 'contentEditedAt',
   audience: 'audience',
   status: 'status',
   reviewNote: 'reviewNote',
@@ -140,6 +148,38 @@ export const ServiceScalarFieldEnum = {
 } as const
 
 export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
+
+
+export const ServiceSourceScalarFieldEnum = {
+  id: 'id',
+  serviceId: 'serviceId',
+  name: 'name',
+  nameEn: 'nameEn',
+  type: 'type',
+  url: 'url',
+  accessedAt: 'accessedAt',
+  note: 'note',
+  linkStatus: 'linkStatus',
+  linkCheckedAt: 'linkCheckedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ServiceSourceScalarFieldEnum = (typeof ServiceSourceScalarFieldEnum)[keyof typeof ServiceSourceScalarFieldEnum]
+
+
+export const ServiceAuditScalarFieldEnum = {
+  id: 'id',
+  serviceId: 'serviceId',
+  userId: 'userId',
+  userName: 'userName',
+  action: 'action',
+  changes: 'changes',
+  sourceName: 'sourceName',
+  note: 'note',
+  createdAt: 'createdAt'
+} as const
+
+export type ServiceAuditScalarFieldEnum = (typeof ServiceAuditScalarFieldEnum)[keyof typeof ServiceAuditScalarFieldEnum]
 
 
 export const ServiceStepScalarFieldEnum = {
@@ -223,6 +263,9 @@ export const OfficeScalarFieldEnum = {
   openTime: 'openTime',
   closeTime: 'closeTime',
   isDemo: 'isDemo',
+  mapsUrl: 'mapsUrl',
+  active: 'active',
+  status: 'status',
   searchText: 'searchText'
 } as const
 
@@ -235,6 +278,14 @@ export const OfficeCategoryScalarFieldEnum = {
 } as const
 
 export type OfficeCategoryScalarFieldEnum = (typeof OfficeCategoryScalarFieldEnum)[keyof typeof OfficeCategoryScalarFieldEnum]
+
+
+export const OfficeServiceScalarFieldEnum = {
+  officeId: 'officeId',
+  serviceId: 'serviceId'
+} as const
+
+export type OfficeServiceScalarFieldEnum = (typeof OfficeServiceScalarFieldEnum)[keyof typeof OfficeServiceScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {

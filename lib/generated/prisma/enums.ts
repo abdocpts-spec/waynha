@@ -9,6 +9,27 @@
 * 🟢 You can import this file directly.
 */
 
+export const SourceType = {
+  OFFICIAL_WEBSITE: 'OFFICIAL_WEBSITE',
+  OFFICIAL_DOCUMENT: 'OFFICIAL_DOCUMENT',
+  OFFICE_VISIT: 'OFFICE_VISIT',
+  PHONE_CALL: 'PHONE_CALL',
+  ANNOUNCEMENT: 'ANNOUNCEMENT',
+  OTHER: 'OTHER'
+} as const
+
+export type SourceType = (typeof SourceType)[keyof typeof SourceType]
+
+
+export const LinkStatus = {
+  UNCHECKED: 'UNCHECKED',
+  OK: 'OK',
+  BROKEN: 'BROKEN'
+} as const
+
+export type LinkStatus = (typeof LinkStatus)[keyof typeof LinkStatus]
+
+
 export const Role = {
   CITIZEN: 'CITIZEN',
   FOREIGNER: 'FOREIGNER',
@@ -42,7 +63,12 @@ export const ReportKind = {
   LOCATION: 'LOCATION',
   OUTDATED: 'OUTDATED',
   MISSING: 'MISSING',
-  OTHER: 'OTHER'
+  OTHER: 'OTHER',
+  DOCUMENTS: 'DOCUMENTS',
+  STEPS: 'STEPS',
+  FEES: 'FEES',
+  HOURS: 'HOURS',
+  SOURCE_LINK: 'SOURCE_LINK'
 } as const
 
 export type ReportKind = (typeof ReportKind)[keyof typeof ReportKind]

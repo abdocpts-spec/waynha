@@ -10,7 +10,7 @@ export type ReportState = { ok?: boolean; error?: string } | undefined;
 
 const schema = z.object({
   serviceId: z.string().max(80),
-  kind: z.enum(["PHONE", "LOCATION", "OUTDATED", "MISSING", "OTHER"]),
+  kind: z.enum(["DOCUMENTS", "STEPS", "FEES", "LOCATION", "HOURS", "PHONE", "SOURCE_LINK", "OUTDATED", "MISSING", "OTHER"]),
   message: z.string().trim().min(5).max(1000),
 });
 

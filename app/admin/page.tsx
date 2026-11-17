@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { REPORT_STATUS, ROLE, SERVICE_STATUS } from "@/lib/admin/labels";
+import { loadReliabilityRows } from "@/lib/admin/reliabilityData";
 import { prisma } from "@/lib/db";
+import { RELIABILITY_META, type ReliabilityStatus } from "@/lib/reliability";
 
 export default async function AdminHome() {
-  const [byStatus, byReport, byRole] = await Promise.all([
+  const [reliability, byStatus, byReport, byRole] = await Promise.all([
+    loadReliabilityRows(),
     prisma.service.groupBy({ by: ["status"], _count: true }),
     prisma.report.groupBy({ by: ["status"], _count: true }),
     prisma.user.groupBy({ by: ["role"], _count: true }),
@@ -25,6 +28,20 @@ export default async function AdminHome() {
           + إضافة خدمة
         </Link>
       </div>
+
+      <Link href="/admin/reliability" className="dash-card" style={{ display: "block", marginBottom: 16 }}>
+        <h2 className="dash-card-title" style={{ marginBottom: 8 }}>
+          🛡️ {reliability.filter((r) => r.needsAttention && r.published).length} خدمات تحتاج إلى مراجعة
+        </h2>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {(Object.keys(RELIABILITY_META) as ReliabilityStatus[]).map((s) => (
+            <span key={s} className={`pill pill-${RELIABILITY_META[s].tone}`}>
+              {RELIABILITY_META[s].icon} {RELIABILITY_META[s].ar}: {reliability.filter((r) => r.status === s).length}
+            </span>
+          ))}
+          <span className="pill pill-amber">⏳ يقترب موعدها: {reliability.filter((r) => r.dueSoon).length}</span>
+        </div>
+      </Link>
 
       <div className="dash-grid">
         <div className="dash-card">
