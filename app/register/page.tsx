@@ -12,7 +12,7 @@ export default async function RegisterPage() {
   const [lang, user, audience] = await Promise.all([getLang(), getCurrentUser(), getAudience()]);
   if (user) redirect("/dashboard");
   // نوع الزائر يُختار في صفحة الترحيب أولاً
-  if (!audience) redirect("/");
+  if (!audience) redirect("/welcome");
   return (
     <main>
       <LoginForm lang={lang} mode="signup" defaultRole={audience ?? undefined} />

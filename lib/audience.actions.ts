@@ -25,14 +25,15 @@ export async function chooseAudience(formData: FormData) {
       if (isLang(current) && current !== "ar" && current !== "en")
         (await cookies()).set(LANG_COOKIE, "ar", { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
     }
-    // بعد الاختيار ننتقل مباشرة إلى تسجيل الدخول
-    redirect("/login");
+    // بعد الاختيار ننتقل إلى تسجيل الدخول (وفيه رابط إنشاء حساب جديد)
+    const next = String(formData.get("next") ?? "");
+    redirect(next.startsWith("/") && !next.startsWith("//") ? `/login?next=${encodeURIComponent(next)}` : "/login");
   }
-  redirect("/");
+  redirect("/welcome");
 }
 
 /** يمسح الاختيار للرجوع إلى صفحة الترحيب وتغييره. */
 export async function resetAudience() {
   (await cookies()).delete(AUDIENCE_COOKIE);
-  redirect("/");
+  redirect("/welcome");
 }

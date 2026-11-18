@@ -26,7 +26,7 @@ function Globe() {
 }
 
 /** صفحة الترحيب: بطاقتان بحجم الشاشة، أول ما يراه الزائر قبل بقية الموقع. */
-export default function Lander({ lang }: { lang: Lang }) {
+export default function Lander({ lang, next }: { lang: Lang; next?: string }) {
   const options = [
     {
       value: "CITIZEN",
@@ -60,6 +60,7 @@ export default function Lander({ lang }: { lang: Lang }) {
       </div>
 
       <form action={chooseAudience} className="lander-grid">
+        {next && <input type="hidden" name="next" value={next} />}
         {options.map((o) => (
           <button
             key={o.value}

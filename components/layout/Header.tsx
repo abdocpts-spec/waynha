@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { resetAudience } from "@/lib/audience.actions";
 import type { Audience } from "@/lib/audience";
 import type { Lang } from "@/lib/i18n";
 import BrandMark from "./BrandMark";
@@ -48,6 +47,7 @@ export default function Header({ lang, user, audience, attention = 0 }: { lang: 
     { href: "/assistant", ar: "المساعد الذكي", en: "AI Assistant" },
   ];
 
+  const shownType = user && user.role !== "ADMIN" ? user.role : audience;
   return (
     <header className={`header${scrolled ? " scrolled" : ""}`} id="header">
       <div className="container">
@@ -79,17 +79,15 @@ export default function Header({ lang, user, audience, attention = 0 }: { lang: 
             <span className="theme-icon-light" aria-hidden="true">🌙</span>
             <span className="theme-icon-dark" aria-hidden="true">☀️</span>
           </button>
-          {audience && (
-            <form action={resetAudience}>
-              <button
-                className="icon-btn"
-                type="submit"
-                title={lang === "ar" ? "تغيير النوع" : "Change who you are"}
-                aria-label={lang === "ar" ? "تغيير النوع" : "Change who you are"}
-              >
-                {audience === "CITIZEN" ? (lang === "ar" ? "مواطن" : "Citizen") : lang === "ar" ? "أجنبي" : "Foreigner"}
-              </button>
-            </form>
+          {(typeof shownType === "string") && (
+            // نوع الزائر للعرض فقط: يتغير بالدخول من صفحة الاختيار، ولا يتغير بالضغط هنا
+            <span
+              className="icon-btn"
+              style={{ cursor: "default", pointerEvents: "none" }}
+              aria-label={lang === "ar" ? "نوع الحساب" : "Account type"}
+            >
+              {shownType === "CITIZEN" ? (lang === "ar" ? "مواطن" : "Citizen") : lang === "ar" ? "أجنبي" : "Foreigner"}
+            </span>
           )}
           <LanguagePicker lang={lang} onlyBase={audience === "CITIZEN"} />
           <Link
@@ -117,7 +115,7 @@ export default function Header({ lang, user, audience, attention = 0 }: { lang: 
               {attention > 0 && <span className="chip-dot" aria-label={lang === "ar" ? "إجراء يحتاج تعديلاً" : "A procedure needs changes"} />}
             </Link>
           ) : (
-            <Link href="/login" className="btn-outline header-login">
+            <Link href="/welcome" className="btn-outline header-login">
               {lang === "ar" ? "دخول" : "Sign in"}
             </Link>
           )}

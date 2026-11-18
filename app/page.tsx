@@ -1,6 +1,6 @@
 import Link from "next/link";
 import DemoDataBanner from "@/components/DemoDataBanner";
-import Lander from "@/components/Lander";
+import HeroParticles from "@/components/HeroParticles";
 import ServiceCard from "@/components/ServiceCard";
 import { computeReliability } from "@/lib/reliability";
 import { toServicePayload } from "@/lib/ai/contextBuilder";
@@ -15,8 +15,7 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const [lang, user, audience] = await Promise.all([getLang(), getCurrentUser(), getAudience()]);
-  // أول ما يراه الزائر في كل زيارة: اختيار مواطن ليبي أو أجنبي
-  if (!audience) return <Lander lang={lang} />;
+  // الصفحة الرئيسية تُفتح أولاً للجميع؛ اختيار مواطن/أجنبي يأتي بعد الضغط على تسجيل الدخول (/welcome)
   const role = effectiveRole(audience, user);
 
   const [services, categories, officeCount] = await Promise.all([
@@ -36,7 +35,10 @@ export default async function HomePage() {
   return (
     <main>
       <section className="hero">
+        <HeroParticles />
         <div className="container">
+          {/* مكان رمز الشعار الذي تشكّله النقاط في HeroParticles */}
+          <div className="hero-mark-slot" aria-hidden="true" />
           <h1>
             {t(lang, "مش عارف وين تمشي؟", "Don't know where to go?")}
             <br />

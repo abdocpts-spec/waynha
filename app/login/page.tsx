@@ -11,6 +11,8 @@ export const metadata = {
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
   const [lang, user, audience, { next }] = await Promise.all([getLang(), getCurrentUser(), getAudience(), searchParams]);
   if (user) redirect(user.role === "ADMIN" ? "/admin" : "/dashboard");
+  // الدخول يمر دائماً بصفحة اختيار مواطن/أجنبي أولاً
+  if (!audience) redirect(next ? `/welcome?next=${encodeURIComponent(next)}` : "/welcome");
   const safeNext = next && next.startsWith("/") && !next.startsWith("//") ? next : undefined;
   return (
     <main>
