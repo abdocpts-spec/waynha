@@ -175,6 +175,9 @@ export default function AIServiceCard({
         <Link href={`/services/${service.id}`} className="btn-primary" style={{ fontSize: "0.85rem", padding: "8px 18px" }}>
           {t(lang, "عرض تفاصيل الخدمة", "View service details")}
         </Link>
+        <Link href={`/services/${service.id}#prepare`} className="btn-outline">
+          🎒 {t(lang, "جهزني", "Get me ready")}
+        </Link>
         {offices.length > 0 && (
           <Link href={`/offices?service=${service.id}`} className="btn-outline">
             🗺️ {t(lang, "وين نمشي؟ (الخريطة)", "Where to go? (map)")}

@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { Audience } from "@/lib/audience";
 import type { Lang } from "@/lib/i18n";
+import AccountMenu from "./AccountMenu";
 import BrandMark from "./BrandMark";
 import LanguagePicker from "./LanguagePicker";
 
@@ -69,6 +70,7 @@ export default function Header({ lang, user, audience, attention = 0 }: { lang: 
         </nav>
 
         <div className="header-actions">
+          <div className="hdr-old">
           <button
             className="icon-btn"
             onClick={toggleTheme}
@@ -89,7 +91,9 @@ export default function Header({ lang, user, audience, attention = 0 }: { lang: 
               {shownType === "CITIZEN" ? (lang === "ar" ? "مواطن" : "Citizen") : lang === "ar" ? "أجنبي" : "Foreigner"}
             </span>
           )}
+          </div>
           <LanguagePicker lang={lang} onlyBase={audience === "CITIZEN"} />
+          <div className="hdr-old">
           <Link
             href="/settings"
             className="icon-btn"
@@ -119,6 +123,15 @@ export default function Header({ lang, user, audience, attention = 0 }: { lang: 
               {lang === "ar" ? "دخول" : "Sign in"}
             </Link>
           )}
+          </div>
+          <div className="hdr-desk">
+            {!user && (
+              <Link href="/welcome" className="btn-outline header-login hdr-login">
+                {lang === "ar" ? "دخول" : "Sign in"}
+              </Link>
+            )}
+            <AccountMenu lang={lang} user={user} initials={user ? initials(user.name) : ""} attention={attention} />
+          </div>
           <Link href="/assistant" className="btn-primary">
             {lang === "ar" ? "اسأل وينها" : "Ask WAYNHA"}
           </Link>

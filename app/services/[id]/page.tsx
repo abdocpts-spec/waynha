@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SaveServiceButton from "@/components/account/SaveServiceButton";
 import ProcedureTracker, { StartProcedureButton } from "@/components/ProcedureTracker";
+import PrepareChecklist from "@/components/PrepareChecklist";
 import ReportForm from "@/components/ReportForm";
 import { toOfficePayload, toServicePayload } from "@/lib/ai/contextBuilder";
 import { directionsUrl, isOfficeOpen, osmEmbedUrl } from "@/lib/format";
@@ -72,6 +73,13 @@ export default async function ServicePage(props: PageProps<"/services/[id]">) {
             >
               💬 {t(lang, "اسأل وينها عن هذا الإجراء", "Ask WAYNHA about this")}
             </Link>
+            <a
+              href="#prepare"
+              className="btn-primary"
+              style={{ background: "rgba(255,255,255,0.18)", border: "1px solid rgba(255,255,255,0.35)" }}
+            >
+              🎒 {t(lang, "جهزني", "Get me ready")}
+            </a>
             <SaveServiceButton id={record.id} lang={lang} />
             {!user ? (
               <Link
@@ -118,6 +126,17 @@ export default async function ServicePage(props: PageProps<"/services/[id]">) {
                 }}
               />
             )}
+
+            <PrepareChecklist
+              serviceId={record.id}
+              lang={lang}
+              title={service.title}
+              documents={service.documents}
+              steps={service.steps}
+              fees={service.fees}
+              hours={service.hours}
+              officeName={nearest?.name}
+            />
 
             <ReliabilitySection reliability={service.reliability} lang={lang} />
 

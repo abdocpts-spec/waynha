@@ -1,6 +1,7 @@
 "use client";
 
 import AIServiceCard from "@/components/assistant/AIServiceCard";
+import SpeakButton from "@/components/SpeakButton";
 import TypingIndicator from "@/components/assistant/TypingIndicator";
 import type { ChatMessage as Message } from "@/components/assistant/useAssistant";
 import { t, type Lang } from "@/lib/i18n";
@@ -39,6 +40,13 @@ export default function ChatMessage({
           </div>
         )}
       </div>
+
+      {!isUser && message.status !== "error" && message.status !== "streaming" && message.text.length > 0 && (
+        <div className="chat-row">
+          <div className="chat-avatar" style={{ visibility: "hidden" }} aria-hidden="true" />
+          <SpeakButton text={message.text} lang={lang} compact />
+        </div>
+      )}
 
       {!isUser && message.data?.matchedService && (
         <div className="chat-row">
