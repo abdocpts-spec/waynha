@@ -38,6 +38,14 @@ function writeRaw(key: string, value: string) {
   listeners.forEach((cb) => cb());
 }
 
+const AR_ORDINALS = ["الأولى", "الثانية", "الثالثة", "الرابعة", "الخامسة", "السادسة", "السابعة", "الثامنة", "التاسعة", "العاشرة"];
+
+/** «الخطوة الأولى» / «Step 1» لقراءة الخطوات بترتيبها. */
+function stepLabel(lang: Lang, index: number): string {
+  if (lang !== "ar") return `Step ${index + 1}`;
+  return index < AR_ORDINALS.length ? `الخطوة ${AR_ORDINALS[index]}` : `الخطوة رقم ${index + 1}`;
+}
+
 function parse(raw: string): Record<string, boolean> {
   try {
     return raw ? (JSON.parse(raw) as Record<string, boolean>) : {};
@@ -93,15 +101,14 @@ export default function PrepareChecklist({
   const count = all.filter((i) => done[i.key]).length;
   const percent = all.length ? Math.round((count / all.length) * 100) : 0;
 
-  const spoken = [
+  // تُقرأ الأجزاء بالترتيب: العنوان، المستندات، ثم الخطوات (الأولى فالثانية...)، ثم الرسوم والدوام
+  const spoken: string[] = [
     title,
-    documents.length ? `${t(lang, "المستندات المطلوبة", "Required documents")}: ${documents.join(". ")}` : "",
-    steps.length ? `${t(lang, "الخطوات", "Steps")}: ${steps.map((s, i) => `${i + 1}. ${s}`).join(". ")}` : "",
+    documents.length ? `${t(lang, "المستندات المطلوبة", "Required documents")}: ${documents.join(lang === "ar" ? "، " : ", ")}` : "",
+    ...steps.map((s, i) => `${stepLabel(lang, i)}: ${s}`),
     fees ? `${t(lang, "الرسوم", "Fees")}: ${fees}` : "",
     hours ? `${t(lang, "ساعات العمل", "Working hours")}: ${hours}` : "",
-  ]
-    .filter(Boolean)
-    .join(". ");
+  ].filter(Boolean);
 
   if (all.length === 0) return null;
 
@@ -129,7 +136,7 @@ export default function PrepareChecklist({
           🎒 {t(lang, "جهزني قبل ما تمشي", "Get me ready")}
         </h2>
         <div className="prep-tools">
-          <SpeakButton text={spoken} lang={lang} />
+          <SpeakButton parts={spoken} lang={lang} />
           <button type="button" className="btn-outline" onClick={() => window.print()}>
             🖨 {t(lang, "طباعة", "Print")}
           </button>
