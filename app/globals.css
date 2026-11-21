@@ -788,12 +788,19 @@ html[dir="ltr"] .icon-field .form-input { padding-left: 46px; }
 }
 
 /* ─────────── ترويسة الكمبيوتر: قائمة حساب منسدلة بدل الأزرار المتفرقة (≥1024px) ─────────── */
-.hdr-old { display: contents; }
-.hdr-desk { display: none; }
+/* القائمة المنسدلة تُستخدم في كل الأحجام (على الهاتف تمنع تجاوز الترويسة لعرض الشاشة) */
+.hdr-old { display: none; }
+.hdr-desk { display: flex; align-items: center; gap: 8px; }
 @media (min-width: 1024px) {
-  .hdr-old { display: none; }
-  .hdr-desk { display: flex; align-items: center; gap: 10px; }
+  .hdr-desk { gap: 10px; }
   .hdr-login { display: inline-flex !important; }
+}
+/* الهاتف: زر اللغة مختصر (أيقونة فقط) ليتسع الشعار والقائمة في عرض 360px */
+@media (max-width: 480px) {
+  .lang-picker--header .lang-picker-current { display: none; }
+  .lang-picker--header .lang-picker-btn { padding: 0 10px; gap: 4px; }
+  .lang-picker-panel { width: min(270px, calc(100vw - 24px)); }
+  .acct-menu { max-width: calc(100vw - 24px); }
 }
 .acct { position: relative; }
 .acct-trigger { cursor: pointer; border: 0; }

@@ -96,6 +96,11 @@ export default function AccountMenu({
               <small>{roleLabel}</small>
             </div>
           )}
+          {!user && (
+            <Link href="/welcome" role="menuitem" className="acct-item" onClick={() => setOpen(false)}>
+              <span aria-hidden="true">🔑</span> {ar ? "تسجيل الدخول" : "Sign in"}
+            </Link>
+          )}
           {user && (
             <Link href="/dashboard" role="menuitem" className="acct-item" onClick={() => setOpen(false)}>
               <span aria-hidden="true">📊</span> {ar ? "لوحة التحكم" : "Dashboard"}
