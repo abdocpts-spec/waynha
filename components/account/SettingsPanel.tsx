@@ -23,6 +23,10 @@ const MODE_META: Record<ScreenMode, { ar: string; en: string; bg: string; card: 
   dark: { ar: "داكن (أزرق ليلي)", en: "Dark (night blue)", bg: "#060d1f", card: "#0d1b35", text: "#f1f5f9", line: "#1e2d4a" },
   sepia: { ar: "دافئ (للقراءة)", en: "Warm (reading)", bg: "#f4ecd8", card: "#fbf6e9", text: "#3a2e1c", line: "#e3d6b8" },
   sage: { ar: "أخضر هادئ", en: "Calm green", bg: "#eef4ee", card: "#fbfdfb", text: "#14281c", line: "#d5e3d8" },
+  sky: { ar: "سماوي فاتح", en: "Sky blue", bg: "#e8f4fb", card: "#fafdff", text: "#0c2233", line: "#cfe5f2" },
+  lavender: { ar: "لافندر", en: "Lavender", bg: "#f1eefb", card: "#fcfbff", text: "#241a3d", line: "#ddd5f3" },
+  forest: { ar: "أخضر غامق", en: "Deep forest", bg: "#08140d", card: "#0f2318", text: "#e6f4ea", line: "#1d3a2a" },
+  wine: { ar: "عنابي ليلي", en: "Wine night", bg: "#160a12", card: "#241220", text: "#f6e9f0", line: "#3d2236" },
   graphite: { ar: "رمادي داكن", en: "Graphite", bg: "#121212", card: "#1e1e1e", text: "#ececec", line: "#333333" },
   amoled: { ar: "أسود كامل", en: "Pure black", bg: "#000000", card: "#0b0b0b", text: "#f5f5f5", line: "#262626" },
 };

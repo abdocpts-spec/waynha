@@ -16,11 +16,11 @@ export const PREF_KEYS = {
 
 export type FontSize = "" | "large-text" | "xlarge-text";
 
-/** أوضاع الشاشة: فاتح وداكن، وأربعة أوضاع ألوان إضافية (كل وضع أساسه فاتح أو داكن). */
-export const SCREEN_MODES = ["light", "dark", "sepia", "sage", "graphite", "amoled"] as const;
+/** أوضاع الشاشة: فاتح وداكن، وثمانية أوضاع ألوان إضافية (كل وضع أساسه فاتح أو داكن). */
+export const SCREEN_MODES = ["light", "dark", "sepia", "sage", "sky", "lavender", "graphite", "amoled", "forest", "wine"] as const;
 export type ScreenMode = (typeof SCREEN_MODES)[number];
-const DARK_BASED: readonly string[] = ["dark", "graphite", "amoled"];
-const PALETTES: readonly string[] = ["sepia", "sage", "graphite", "amoled"];
+const DARK_BASED: readonly string[] = ["dark", "graphite", "amoled", "forest", "wine"];
+const PALETTES: readonly string[] = ["sepia", "sage", "sky", "lavender", "graphite", "amoled", "forest", "wine"];
 
 export function parseScreenMode(value: string): ScreenMode {
   return (SCREEN_MODES as readonly string[]).includes(value) ? (value as ScreenMode) : "light";
@@ -91,7 +91,7 @@ export function applyPreferences() {
  * نسخة نصية ثابتة من applyPreferences تعمل في <head> قبل أول رسم حتى لا تومض الصفحة.
  * لا تحتوي أي مدخلات مستخدم؛ اللون المخزّن يُفحص بتعبير نمطي قبل استخدامه.
  */
-export const PREFS_SCRIPT = `try{var s=localStorage,r=document.documentElement;var m=s.getItem('waynha-theme');r.setAttribute('data-theme',m==='dark'||m==='graphite'||m==='amoled'?'dark':'light');if(m==='sepia'||m==='sage'||m==='graphite'||m==='amoled')r.setAttribute('data-palette',m);var f=s.getItem('waynha-font');if(f==='large-text'||f==='xlarge-text')r.classList.add(f);var c=s.getItem('waynha-contrast')==='1';if(c)r.classList.add('high-contrast');if(s.getItem('waynha-simple')==='1')r.classList.add('simple-mode');var p=s.getItem('waynha-primary');if(!c&&p&&/^#[0-9a-f]{6}$/i.test(p)&&p.toLowerCase()!=='${DEFAULT_PRIMARY}')r.style.setProperty('--primary',p)}catch(e){}`;
+export const PREFS_SCRIPT = `try{var s=localStorage,r=document.documentElement;var m=s.getItem('waynha-theme');r.setAttribute('data-theme',m==='dark'||m==='graphite'||m==='amoled'||m==='forest'||m==='wine'?'dark':'light');if(m==='sepia'||m==='sage'||m==='sky'||m==='lavender'||m==='graphite'||m==='amoled'||m==='forest'||m==='wine')r.setAttribute('data-palette',m);var f=s.getItem('waynha-font');if(f==='large-text'||f==='xlarge-text')r.classList.add(f);var c=s.getItem('waynha-contrast')==='1';if(c)r.classList.add('high-contrast');if(s.getItem('waynha-simple')==='1')r.classList.add('simple-mode');var p=s.getItem('waynha-primary');if(!c&&p&&/^#[0-9a-f]{6}$/i.test(p)&&p.toLowerCase()!=='${DEFAULT_PRIMARY}')r.style.setProperty('--primary',p)}catch(e){}`;
 
 
 // ─────────── آخر عمليات البحث والإجراءات المحفوظة (نفس مفاتيح النموذج الأولي) ───────────
