@@ -26,6 +26,7 @@ export default function Footer({ lang }: { lang: Lang }) {
               <li><Link href="/services">{t(lang, "الخدمات الحكومية", "Government services")}</Link></li>
               <li><Link href="/offices">{t(lang, "الجهات الحكومية", "Government offices")}</Link></li>
               <li><Link href="/assistant">{t(lang, "مساعد وينها", "WAYNHA assistant")}</Link></li>
+              <li><Link href="/install">{t(lang, "ثبّت التطبيق على هاتفك", "Install the app")}</Link></li>
             </ul>
           </div>
           <div className="footer-col">

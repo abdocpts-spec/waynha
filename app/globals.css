@@ -843,3 +843,18 @@ html[dir="ltr"] .icon-field .form-input { padding-left: 46px; }
 .mode-swatch span:first-child { height: 20px; border: 1px solid; border-radius: 4px; }
 .mode-swatch span:last-child { height: 6px; width: 55%; border-radius: 3px; }
 .speak-note { display: block; flex-basis: 100%; font-size: 0.78rem; color: var(--warning); margin-top: 4px; }
+
+/* صفحة تثبيت التطبيق (QR) */
+.install-page { padding-top: 32px; padding-bottom: 60px; }
+.install-lead { color: var(--text-muted); max-width: 640px; margin: 8px 0 24px; line-height: 1.8; }
+.install-grid { display: grid; grid-template-columns: minmax(280px, 340px) 1fr; gap: 24px; align-items: start; }
+.install-qr { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.qr-box { background: #fff; border-radius: 16px; padding: 8px; line-height: 0; }
+.qr-box svg { width: 260px; height: 260px; max-width: 100%; }
+.install-url { font-size: 0.85rem; color: var(--text-muted); word-break: break-all; }
+.install-warn { font-size: 0.85rem; color: var(--warning); line-height: 1.7; }
+.install-ok { color: var(--success); font-weight: 700; }
+.install-steps { padding-inline-start: 22px; display: grid; gap: 8px; line-height: 1.8; }
+.install-note { font-size: 0.9rem; color: var(--text-muted); padding: 4px 8px; line-height: 1.8; }
+@media (max-width: 800px) { .install-grid { grid-template-columns: 1fr; } }
+@media print { .install-grid { grid-template-columns: 1fr 1fr; } }

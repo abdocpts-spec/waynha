@@ -54,3 +54,4 @@ next-env.d.ts
 
 # ملفات مستندات الزبائن (حساسة، لا تُرفع أبداً)
 /.private-uploads/
+.next-prod/
