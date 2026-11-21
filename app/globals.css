@@ -320,7 +320,7 @@ input.form-input:not(:placeholder-shown) { border-color: var(--primary); box-sha
 .toggle-switch input:checked + .toggle-track { background: var(--primary); }
 .toggle-switch input:checked + .toggle-track .toggle-thumb { inset-inline-start: 22px; }
 .toggle-switch input:focus-visible + .toggle-track { outline: 2px solid var(--primary); outline-offset: 2px; }
-.color-picker { display: flex; gap: 12px; }
+.color-picker { display: flex; gap: 12px; flex-wrap: wrap; }
 .color-btn { width: 40px; height: 40px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: var(--transition); }
 .color-btn.active { border-color: var(--text-main); transform: scale(1.1); }
 .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -833,3 +833,12 @@ html[dir="ltr"] .icon-field .form-input { padding-left: 46px; }
   header, footer, .service-header, .prep-tools, .layout-grid > div:last-child { display: none !important; }
   .prep { box-shadow: none; border: 0; }
 }
+
+/* اختيار وضع الشاشة في الإعدادات */
+.mode-picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 10px; }
+.mode-card { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px; background: var(--bg-card); color: var(--text-main); border: 2px solid var(--border-color); border-radius: var(--radius-md, 12px); font: inherit; font-weight: 600; cursor: pointer; }
+.mode-card:hover { border-color: var(--primary); }
+.mode-card.active { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+.mode-swatch { width: 100%; height: 58px; border: 1px solid; border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+.mode-swatch span:first-child { height: 20px; border: 1px solid; border-radius: 4px; }
+.mode-swatch span:last-child { height: 6px; width: 55%; border-radius: 3px; }

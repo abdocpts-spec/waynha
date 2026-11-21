@@ -9,11 +9,23 @@ import {
   DEFAULT_PRIMARY,
   PREF_KEYS,
   PRIMARY_COLORS,
+  SCREEN_MODES,
   applyPreferences,
+  parseScreenMode,
   readPref,
   writePref,
   type FontSize,
+  type ScreenMode,
 } from "@/lib/preferences";
+
+const MODE_META: Record<ScreenMode, { ar: string; en: string; bg: string; card: string; text: string; line: string }> = {
+  light: { ar: "فاتح", en: "Light", bg: "#f0f4ff", card: "#ffffff", text: "#0f172a", line: "#e2e8f0" },
+  dark: { ar: "داكن (أزرق ليلي)", en: "Dark (night blue)", bg: "#060d1f", card: "#0d1b35", text: "#f1f5f9", line: "#1e2d4a" },
+  sepia: { ar: "دافئ (للقراءة)", en: "Warm (reading)", bg: "#f4ecd8", card: "#fbf6e9", text: "#3a2e1c", line: "#e3d6b8" },
+  sage: { ar: "أخضر هادئ", en: "Calm green", bg: "#eef4ee", card: "#fbfdfb", text: "#14281c", line: "#d5e3d8" },
+  graphite: { ar: "رمادي داكن", en: "Graphite", bg: "#121212", card: "#1e1e1e", text: "#ececec", line: "#333333" },
+  amoled: { ar: "أسود كامل", en: "Pure black", bg: "#000000", card: "#0b0b0b", text: "#f5f5f5", line: "#262626" },
+};
 
 export type SectionId = "accessibility" | "appearance" | "account" | "language";
 type City = { id: string; nameAr: string; nameEn: string };
@@ -65,7 +77,7 @@ export default function SettingsPanel({
   const [font, setFont] = useState<FontSize>("");
   const [contrast, setContrast] = useState(false);
   const [simple, setSimple] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<ScreenMode>("light");
   const [primary, setPrimary] = useState<string>(DEFAULT_PRIMARY);
 
   // نقرأ القيم المحفوظة بعد التحميل (localStorage غير متاح على الخادم)،
@@ -76,7 +88,7 @@ export default function SettingsPanel({
       setFont(f === "large-text" || f === "xlarge-text" ? f : "");
       setContrast(readPref(PREF_KEYS.contrast) === "1");
       setSimple(readPref(PREF_KEYS.simple) === "1");
-      setTheme(readPref(PREF_KEYS.theme) === "dark" ? "dark" : "light");
+      setTheme(parseScreenMode(readPref(PREF_KEYS.theme)));
       setPrimary(readPref(PREF_KEYS.primary, DEFAULT_PRIMARY).toLowerCase());
     };
     load();
@@ -195,25 +207,28 @@ export default function SettingsPanel({
             <h2 className="section-title">{t(lang, "المظهر والألوان", "Appearance and colors")}</h2>
             <div className="setting-group">
               <div className="setting-label">{t(lang, "وضع الشاشة", "Screen mode")}</div>
-              <div className="btn-group">
-                <Option
-                  active={theme === "light"}
-                  onClick={() => {
-                    setTheme("light");
-                    update(PREF_KEYS.theme, "light");
-                  }}
-                >
-                  {t(lang, "فاتح ☀️", "Light ☀️")}
-                </Option>
-                <Option
-                  active={theme === "dark"}
-                  onClick={() => {
-                    setTheme("dark");
-                    update(PREF_KEYS.theme, "dark");
-                  }}
-                >
-                  {t(lang, "داكن 🌙", "Dark 🌙")}
-                </Option>
+              <div className="mode-picker" role="group" aria-label={t(lang, "وضع الشاشة", "Screen mode")}>
+                {SCREEN_MODES.map((mode) => {
+                  const meta = MODE_META[mode];
+                  return (
+                    <button
+                      key={mode}
+                      type="button"
+                      className={`mode-card${theme === mode ? " active" : ""}`}
+                      aria-pressed={theme === mode}
+                      onClick={() => {
+                        setTheme(mode);
+                        update(PREF_KEYS.theme, mode === "light" ? null : mode);
+                      }}
+                    >
+                      <span className="mode-swatch" style={{ background: meta.bg, borderColor: meta.line }} aria-hidden="true">
+                        <span style={{ background: meta.card, borderColor: meta.line }} />
+                        <span style={{ background: meta.text }} />
+                      </span>
+                      <span>{t(lang, meta.ar, meta.en)}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
             <div className="setting-group">

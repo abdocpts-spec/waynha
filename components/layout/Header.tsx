@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { Audience } from "@/lib/audience";
 import type { Lang } from "@/lib/i18n";
+import { toggleLightDark } from "@/lib/preferences";
 import AccountMenu from "./AccountMenu";
 import BrandMark from "./BrandMark";
 import LanguagePicker from "./LanguagePicker";
@@ -30,16 +31,7 @@ export default function Header({ lang, user, audience, attention = 0 }: { lang: 
   }, []);
 
   // المظهر الحالي مخزّن على <html data-theme> (يضبطه سكربت في layout قبل أول رسم)
-  const toggleTheme = () => {
-    const current = document.documentElement.getAttribute("data-theme");
-    const next = current === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    try {
-      localStorage.setItem("waynha-theme", next);
-    } catch {
-      // وضع التصفح الخاص — نكتفي بتغيير المظهر للجلسة الحالية
-    }
-  };
+  const toggleTheme = toggleLightDark;
 
   const links = [
     { href: "/", ar: "الرئيسية", en: "Home" },

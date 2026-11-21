@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { logout } from "@/lib/auth/actions";
 import type { Lang } from "@/lib/i18n";
+import { toggleLightDark } from "@/lib/preferences";
 
 type MenuUser = { name: string; role: "CITIZEN" | "FOREIGNER" | "ADMIN" } | null;
 
@@ -49,14 +50,8 @@ export default function AccountMenu({
   };
 
   const toggleTheme = () => {
-    const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    setDark(next === "dark");
-    try {
-      localStorage.setItem("waynha-theme", next);
-    } catch {
-      // وضع التصفح الخاص: نكتفي بتغيير المظهر للجلسة الحالية
-    }
+    toggleLightDark();
+    setDark(document.documentElement.getAttribute("data-theme") === "dark");
   };
 
   const roleLabel =

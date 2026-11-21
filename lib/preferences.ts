@@ -16,7 +16,39 @@ export const PREF_KEYS = {
 
 export type FontSize = "" | "large-text" | "xlarge-text";
 
-export const PRIMARY_COLORS = ["#1a56db", "#0d9488", "#059669", "#7c3aed"] as const;
+/** أوضاع الشاشة: فاتح وداكن، وأربعة أوضاع ألوان إضافية (كل وضع أساسه فاتح أو داكن). */
+export const SCREEN_MODES = ["light", "dark", "sepia", "sage", "graphite", "amoled"] as const;
+export type ScreenMode = (typeof SCREEN_MODES)[number];
+const DARK_BASED: readonly string[] = ["dark", "graphite", "amoled"];
+const PALETTES: readonly string[] = ["sepia", "sage", "graphite", "amoled"];
+
+export function parseScreenMode(value: string): ScreenMode {
+  return (SCREEN_MODES as readonly string[]).includes(value) ? (value as ScreenMode) : "light";
+}
+
+/** يطبّق وضع الشاشة على <html>: data-theme (فاتح/داكن) + data-palette (الألوان الإضافية). */
+export function applyScreenMode(mode: ScreenMode) {
+  const root = document.documentElement;
+  root.setAttribute("data-theme", DARK_BASED.includes(mode) ? "dark" : "light");
+  if (PALETTES.includes(mode)) root.setAttribute("data-palette", mode);
+  else root.removeAttribute("data-palette");
+}
+
+/** زر المظهر السريع: يبدّل بين فاتح وداكن (ويلغي أي وضع ألوان إضافي) ويحفظ الاختيار. */
+export function toggleLightDark() {
+  const next: ScreenMode = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  applyScreenMode(next);
+  try {
+    localStorage.setItem(PREF_KEYS.theme, next);
+  } catch {
+    // وضع التصفح الخاص: نكتفي بتغيير المظهر للجلسة الحالية
+  }
+}
+
+export const PRIMARY_COLORS = [
+  "#1a56db", "#0d9488", "#059669", "#7c3aed",
+  "#0e7490", "#ea580c", "#dc2626", "#db2777", "#b45309", "#475569",
+] as const;
 export const DEFAULT_PRIMARY = PRIMARY_COLORS[0];
 
 const HEX = /^#[0-9a-f]{6}$/i;
@@ -42,7 +74,7 @@ export function writePref(key: string, value: string | null) {
 /** يطبّق التفضيلات الحالية على <html>. نفس منطق PREFS_SCRIPT. */
 export function applyPreferences() {
   const root = document.documentElement;
-  root.setAttribute("data-theme", readPref(PREF_KEYS.theme) === "dark" ? "dark" : "light");
+  applyScreenMode(parseScreenMode(readPref(PREF_KEYS.theme)));
   root.classList.remove("large-text", "xlarge-text");
   const font = readPref(PREF_KEYS.font);
   if (font === "large-text" || font === "xlarge-text") root.classList.add(font);
@@ -59,7 +91,7 @@ export function applyPreferences() {
  * نسخة نصية ثابتة من applyPreferences تعمل في <head> قبل أول رسم حتى لا تومض الصفحة.
  * لا تحتوي أي مدخلات مستخدم؛ اللون المخزّن يُفحص بتعبير نمطي قبل استخدامه.
  */
-export const PREFS_SCRIPT = `try{var s=localStorage,r=document.documentElement;r.setAttribute('data-theme',s.getItem('waynha-theme')==='dark'?'dark':'light');var f=s.getItem('waynha-font');if(f==='large-text'||f==='xlarge-text')r.classList.add(f);var c=s.getItem('waynha-contrast')==='1';if(c)r.classList.add('high-contrast');if(s.getItem('waynha-simple')==='1')r.classList.add('simple-mode');var p=s.getItem('waynha-primary');if(!c&&p&&/^#[0-9a-f]{6}$/i.test(p)&&p.toLowerCase()!=='${DEFAULT_PRIMARY}')r.style.setProperty('--primary',p)}catch(e){}`;
+export const PREFS_SCRIPT = `try{var s=localStorage,r=document.documentElement;var m=s.getItem('waynha-theme');r.setAttribute('data-theme',m==='dark'||m==='graphite'||m==='amoled'?'dark':'light');if(m==='sepia'||m==='sage'||m==='graphite'||m==='amoled')r.setAttribute('data-palette',m);var f=s.getItem('waynha-font');if(f==='large-text'||f==='xlarge-text')r.classList.add(f);var c=s.getItem('waynha-contrast')==='1';if(c)r.classList.add('high-contrast');if(s.getItem('waynha-simple')==='1')r.classList.add('simple-mode');var p=s.getItem('waynha-primary');if(!c&&p&&/^#[0-9a-f]{6}$/i.test(p)&&p.toLowerCase()!=='${DEFAULT_PRIMARY}')r.style.setProperty('--primary',p)}catch(e){}`;
 
 
 // ─────────── آخر عمليات البحث والإجراءات المحفوظة (نفس مفاتيح النموذج الأولي) ───────────
