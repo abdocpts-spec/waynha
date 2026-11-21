@@ -455,7 +455,16 @@ enum ReviewStatus {
   APPROVED
 }
 
-/// ملف مستند رفعه الزبون. المحتوى على القرص خارج public (lib/progress/files.ts) والاسم عشوائي
+/// محتوى الملفات المرفوعة (في قاعدة البيانات حتى تعمل الاستضافة السحابية بلا قرص دائم). الاسم عشوائي ولا يُخدَم مباشرة.
+model StoredBlob {
+  storedName String   @id
+  data       Bytes
+  createdAt  DateTime @default(now())
+
+  @@map("stored_blobs")
+}
+
+/// ملف مستند رفعه الزبون. المحتوى في StoredBlob (lib/progress/files.ts) والاسم عشوائي
 model ProcedureFile {
   id         Int      @id @default(autoincrement())
   progressId Int

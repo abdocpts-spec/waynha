@@ -19,6 +19,7 @@ import { detectLanguage } from "@/lib/search/normalize";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 60; // ثوانٍ: بث رد Gemini
 
 const RequestSchema = z.object({
   message: z.string().trim().min(1).max(MAX_MESSAGE_LENGTH),

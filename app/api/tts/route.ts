@@ -4,6 +4,7 @@ import { getGeminiClient, isAiConfigured } from "@/lib/ai/gemini";
 import { checkRateLimit, clientKey } from "@/lib/ai/rateLimit";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60; // ثوانٍ: توليد الصوت/الرد قد يطول
 
 /**
  * قراءة صوتية بالعربية عندما لا يملك جهاز المستخدم صوتاً عربياً (Gemini TTS).

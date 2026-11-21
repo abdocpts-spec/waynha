@@ -3,7 +3,7 @@
  *   npx tsx scripts/check-search.ts
  */
 import { config as loadEnv } from "dotenv";
-loadEnv({ path: ".env.local", override: true, quiet: true });
+loadEnv({ path: process.env.ENV_FILE ?? ".env.local", override: true, quiet: true });
 
 const { searchServices, confidentMatch } = await import("@/lib/search/serviceSearch");
 const { buildClarification } = await import("@/lib/search/clarify");

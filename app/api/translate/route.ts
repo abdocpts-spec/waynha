@@ -7,6 +7,7 @@ import { prisma } from "@/lib/db";
 import { LANGUAGES, isBaseLang, isLang } from "@/lib/i18n";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 const MAX_TEXTS = 60;
 const MAX_TEXT_LENGTH = 600;

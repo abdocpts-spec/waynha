@@ -8,7 +8,7 @@
  * البحث في PostgreSQL، تذكّر المحادثة، وخدمة غير موجودة (يجب ألا يخترع معلومات).
  */
 import { config as loadEnv } from "dotenv";
-loadEnv({ path: ".env.local", override: true, quiet: true });
+loadEnv({ path: process.env.ENV_FILE ?? ".env.local", override: true, quiet: true });
 
 const BASE = process.env.WAYNHA_BASE_URL ?? "http://localhost:3000";
 /** مهلة بين الأسئلة حتى لا نتجاوز حد الطلبات في الدقيقة للخطة المجانية */

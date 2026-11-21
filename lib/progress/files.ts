@@ -1,15 +1,17 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
-import { mkdir, readFile, unlink, writeFile } from "node:fs/promises";
+import { readFile, unlink } from "node:fs/promises";
 import path from "node:path";
+import { prisma } from "@/lib/db";
 
 /**
- * تخزين ملفات مستندات الزبائن. الملفات خارج مجلد public فلا تُخدَم مباشرة أبداً:
+ * تخزين ملفات مستندات الزبائن في قاعدة البيانات (جدول stored_blobs)، فلا تُخدَم مباشرة أبداً:
  * الوصول فقط عبر /api/procedure-files/[id] بعد التحقق أنك صاحب الملف أو أدمن.
- * الاسم على القرص عشوائي بلا امتداد، والنوع يُتحقق منه من محتوى الملف لا من اسمه.
+ * الاسم عشوائي بلا امتداد، والنوع يُتحقق منه من محتوى الملف لا من اسمه.
+ * (الملفات القديمة التي حُفظت سابقاً على القرص تُقرأ من UPLOAD_DIR كاحتياط.)
  */
 export const UPLOAD_DIR = process.env.UPLOAD_DIR ?? path.join(process.cwd(), ".private-uploads");
-export const MAX_FILE_SIZE = 5 * 1024 * 1024;
+export const MAX_FILE_SIZE = 4 * 1024 * 1024; // حد الطلب في Vercel هو 4.5MB
 export const MAX_FILES = 10;
 
 export type FileMime = "image/jpeg" | "image/png" | "application/pdf";
@@ -24,15 +26,18 @@ export function detectMime(buf: Buffer): FileMime | null {
 
 export async function storeFile(buf: Buffer): Promise<string> {
   const storedName = randomBytes(16).toString("hex");
-  await mkdir(UPLOAD_DIR, { recursive: true });
-  await writeFile(path.join(UPLOAD_DIR, storedName), buf, { flag: "wx" });
+  await prisma.storedBlob.create({ data: { storedName, data: new Uint8Array(buf) } });
   return storedName;
 }
 
 export async function readStored(storedName: string): Promise<Buffer> {
+  const row = await prisma.storedBlob.findUnique({ where: { storedName }, select: { data: true } });
+  if (row) return Buffer.from(row.data);
+  // ملفات قديمة محفوظة على القرص قبل الانتقال لقاعدة البيانات
   return readFile(path.join(UPLOAD_DIR, path.basename(storedName)));
 }
 
 export async function deleteStored(storedNames: string[]) {
+  await prisma.storedBlob.deleteMany({ where: { storedName: { in: storedNames } } });
   await Promise.all(storedNames.map((name) => unlink(path.join(UPLOAD_DIR, path.basename(name))).catch(() => undefined)));
 }

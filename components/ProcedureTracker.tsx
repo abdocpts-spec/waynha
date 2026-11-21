@@ -89,7 +89,7 @@ export default function ProcedureTracker({ lang, serviceId, data }: { lang: Lang
         setUploadError(
           {
             type: t(lang, "الأنواع المسموحة: JPG أو PNG أو PDF.", "Allowed types: JPG, PNG or PDF."),
-            size: t(lang, "حجم الملف أقصاه 5 ميغابايت.", "Maximum file size is 5 MB."),
+            size: t(lang, "حجم الملف أقصاه 4 ميغابايت.", "Maximum file size is 4 MB."),
             limit: t(lang, "وصلت للحد الأقصى (10 ملفات).", "You reached the limit (10 files)."),
             locked: t(lang, "الملفات مقفلة الآن.", "Files are locked right now."),
             rate: t(lang, "محاولات كثيرة، استنى دقيقة.", "Too many uploads, wait a minute."),
@@ -219,7 +219,7 @@ export default function ProcedureTracker({ lang, serviceId, data }: { lang: Lang
                 />
               </label>
               <small className="form-hint" style={{ display: "block", marginTop: 6 }}>
-                {t(lang, "JPG أو PNG أو PDF، حتى 5 ميغابايت للملف و10 ملفات.", "JPG, PNG or PDF, up to 5 MB per file and 10 files.")}
+                {t(lang, "JPG أو PNG أو PDF، حتى 4 ميغابايت للملف و10 ملفات.", "JPG, PNG or PDF, up to 4 MB per file and 10 files.")}
               </small>
               {uploadError && (
                 <p className="form-error" role="alert">

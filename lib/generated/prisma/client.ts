@@ -137,7 +137,12 @@ export type Translation = Prisma.TranslationModel
  */
 export type ProcedureProgress = Prisma.ProcedureProgressModel
 /**
+ * Model StoredBlob
+ * محتوى الملفات المرفوعة (في قاعدة البيانات حتى تعمل الاستضافة السحابية بلا قرص دائم). الاسم عشوائي ولا يُخدَم مباشرة.
+ */
+export type StoredBlob = Prisma.StoredBlobModel
+/**
  * Model ProcedureFile
- * ملف مستند رفعه الزبون. المحتوى على القرص خارج public (lib/progress/files.ts) والاسم عشوائي
+ * ملف مستند رفعه الزبون. المحتوى في StoredBlob (lib/progress/files.ts) والاسم عشوائي
  */
 export type ProcedureFile = Prisma.ProcedureFileModel

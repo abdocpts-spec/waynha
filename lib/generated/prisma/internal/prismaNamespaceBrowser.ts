@@ -70,6 +70,7 @@ export const ModelName = {
   Report: 'Report',
   Translation: 'Translation',
   ProcedureProgress: 'ProcedureProgress',
+  StoredBlob: 'StoredBlob',
   ProcedureFile: 'ProcedureFile'
 } as const
 
@@ -360,6 +361,15 @@ export const ProcedureProgressScalarFieldEnum = {
 } as const
 
 export type ProcedureProgressScalarFieldEnum = (typeof ProcedureProgressScalarFieldEnum)[keyof typeof ProcedureProgressScalarFieldEnum]
+
+
+export const StoredBlobScalarFieldEnum = {
+  storedName: 'storedName',
+  data: 'data',
+  createdAt: 'createdAt'
+} as const
+
+export type StoredBlobScalarFieldEnum = (typeof StoredBlobScalarFieldEnum)[keyof typeof StoredBlobScalarFieldEnum]
 
 
 export const ProcedureFileScalarFieldEnum = {

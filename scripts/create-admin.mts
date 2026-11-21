@@ -11,7 +11,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { config as loadEnv } from "dotenv";
 import { PrismaClient } from "../lib/generated/prisma/client.js";
 
-loadEnv({ path: ".env.local", override: true, quiet: true });
+loadEnv({ path: process.env.ENV_FILE ?? ".env.local", override: true, quiet: true });
 
 const args = process.argv.slice(2);
 const arg = (name: string) => {

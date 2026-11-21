@@ -3,7 +3,7 @@ import { config as loadEnv } from "dotenv";
 import { defineConfig, env } from "prisma/config";
 
 // Prisma لا يقرأ .env.local تلقائياً (هذا ملف Next.js)، فنحمّله هنا.
-loadEnv({ path: ".env.local", override: true, quiet: true });
+loadEnv({ path: process.env.ENV_FILE ?? ".env.local", override: true, quiet: true });
 
 export default defineConfig({
   schema: "prisma/schema.prisma",

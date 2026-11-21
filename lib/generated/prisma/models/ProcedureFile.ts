@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model ProcedureFile
- * ملف مستند رفعه الزبون. المحتوى على القرص خارج public (lib/progress/files.ts) والاسم عشوائي
+ * ملف مستند رفعه الزبون. المحتوى في StoredBlob (lib/progress/files.ts) والاسم عشوائي
  */
 export type ProcedureFileModel = runtime.Types.Result.DefaultSelection<Prisma.$ProcedureFilePayload>
 

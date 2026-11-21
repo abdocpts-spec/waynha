@@ -13,7 +13,7 @@ import { config as loadEnv } from "dotenv";
 import { PrismaClient } from "../lib/generated/prisma/client.js";
 import { normalizeText } from "../lib/search/normalize.js";
 
-loadEnv({ path: ".env.local", override: true, quiet: true });
+loadEnv({ path: process.env.ENV_FILE ?? ".env.local", override: true, quiet: true });
 
 const ID = "issue-passport";
 

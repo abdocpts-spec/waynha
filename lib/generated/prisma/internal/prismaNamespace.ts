@@ -416,6 +416,7 @@ export const ModelName = {
   Report: 'Report',
   Translation: 'Translation',
   ProcedureProgress: 'ProcedureProgress',
+  StoredBlob: 'StoredBlob',
   ProcedureFile: 'ProcedureFile'
 } as const
 
@@ -432,7 +433,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "category" | "city" | "service" | "serviceSource" | "serviceAudit" | "serviceStep" | "serviceDocument" | "serviceNote" | "serviceFaq" | "serviceKeyword" | "serviceRelation" | "office" | "officeCategory" | "officeService" | "user" | "session" | "report" | "translation" | "procedureProgress" | "procedureFile"
+    modelProps: "category" | "city" | "service" | "serviceSource" | "serviceAudit" | "serviceStep" | "serviceDocument" | "serviceNote" | "serviceFaq" | "serviceKeyword" | "serviceRelation" | "office" | "officeCategory" | "officeService" | "user" | "session" | "report" | "translation" | "procedureProgress" | "storedBlob" | "procedureFile"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1842,6 +1843,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StoredBlob: {
+      payload: Prisma.$StoredBlobPayload<ExtArgs>
+      fields: Prisma.StoredBlobFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StoredBlobFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredBlobPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StoredBlobFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredBlobPayload>
+        }
+        findFirst: {
+          args: Prisma.StoredBlobFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredBlobPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StoredBlobFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredBlobPayload>
+        }
+        findMany: {
+          args: Prisma.StoredBlobFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredBlobPayload>[]
+        }
+        create: {
+          args: Prisma.StoredBlobCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredBlobPayload>
+        }
+        createMany: {
+          args: Prisma.StoredBlobCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StoredBlobCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredBlobPayload>[]
+        }
+        delete: {
+          args: Prisma.StoredBlobDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredBlobPayload>
+        }
+        update: {
+          args: Prisma.StoredBlobUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredBlobPayload>
+        }
+        deleteMany: {
+          args: Prisma.StoredBlobDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StoredBlobUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StoredBlobUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredBlobPayload>[]
+        }
+        upsert: {
+          args: Prisma.StoredBlobUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredBlobPayload>
+        }
+        aggregate: {
+          args: Prisma.StoredBlobAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStoredBlob>
+        }
+        groupBy: {
+          args: Prisma.StoredBlobGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoredBlobGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StoredBlobCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoredBlobCountAggregateOutputType> | number
+        }
+      }
+    }
     ProcedureFile: {
       payload: Prisma.$ProcedureFilePayload<ExtArgs>
       fields: Prisma.ProcedureFileFieldRefs
@@ -2228,6 +2303,15 @@ export const ProcedureProgressScalarFieldEnum = {
 export type ProcedureProgressScalarFieldEnum = (typeof ProcedureProgressScalarFieldEnum)[keyof typeof ProcedureProgressScalarFieldEnum]
 
 
+export const StoredBlobScalarFieldEnum = {
+  storedName: 'storedName',
+  data: 'data',
+  createdAt: 'createdAt'
+} as const
+
+export type StoredBlobScalarFieldEnum = (typeof StoredBlobScalarFieldEnum)[keyof typeof StoredBlobScalarFieldEnum]
+
+
 export const ProcedureFileScalarFieldEnum = {
   id: 'id',
   progressId: 'progressId',
@@ -2475,6 +2559,20 @@ export type EnumReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 export type ListEnumReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewStatus[]'>
     
 
+
+/**
+ * Reference to a field of type 'Bytes'
+ */
+export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
+    
+
+
+/**
+ * Reference to a field of type 'Bytes[]'
+ */
+export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -2645,6 +2743,7 @@ export type GlobalOmitConfig = {
   report?: Prisma.ReportOmit
   translation?: Prisma.TranslationOmit
   procedureProgress?: Prisma.ProcedureProgressOmit
+  storedBlob?: Prisma.StoredBlobOmit
   procedureFile?: Prisma.ProcedureFileOmit
 }
 
