@@ -3,7 +3,7 @@
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState } from "react";
 import { loadGoogleMaps } from "@/lib/maps/google";
-import { LIBYA_CENTER, type LatLng } from "@/lib/maps/types";
+import { LIBYA_CENTER, LIBYA_MAP_BOUNDS, inLibya, type LatLng } from "@/lib/maps/types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -61,6 +61,8 @@ export default function MapCanvas(props: Props) {
           const map = new gm.Map(node, {
             center: LIBYA_CENTER,
             zoom: 6,
+            minZoom: 5,
+            restriction: { latLngBounds: LIBYA_MAP_BOUNDS, strictBounds: true },
             mapTypeControl: false,
             streetViewControl: false,
             fullscreenControl: true,
@@ -104,7 +106,7 @@ export default function MapCanvas(props: Props) {
               pickPin = p ? new gm.Marker({ map, position: p }) : null;
             },
             fit(list, u) {
-              const pts = [...list.map((m) => ({ lat: m.lat, lng: m.lng })), ...(u ? [u] : [])];
+              const pts = [...list.map((m) => ({ lat: m.lat, lng: m.lng })), ...(u && inLibya(u) ? [u] : [])];
               if (pts.length === 0) {
                 map.setCenter(LIBYA_CENTER);
                 map.setZoom(6);
@@ -130,7 +132,13 @@ export default function MapCanvas(props: Props) {
         } else {
           const L = (await import("leaflet")).default;
           if (dead) return;
-          const map = L.map(node).setView([LIBYA_CENTER.lat, LIBYA_CENTER.lng], 6);
+          const libya = L.latLngBounds(
+            [LIBYA_MAP_BOUNDS.south, LIBYA_MAP_BOUNDS.west],
+            [LIBYA_MAP_BOUNDS.north, LIBYA_MAP_BOUNDS.east],
+          );
+          // الخريطة محصورة في ليبيا: لا سحب خارج الحدود ولا تصغير يكشف ما حولها
+          const map = L.map(node, { maxBounds: libya, maxBoundsViscosity: 1, minZoom: 5 }).setView([LIBYA_CENTER.lat, LIBYA_CENTER.lng], 6);
+          map.setMinZoom(Math.max(5, map.getBoundsZoom(libya, false)));
           L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
             maxZoom: 19,
             attribution: "© OpenStreetMap",
@@ -173,7 +181,7 @@ export default function MapCanvas(props: Props) {
             fit(list, u) {
               const pts: [number, number][] = [
                 ...list.map((m) => [m.lat, m.lng] as [number, number]),
-                ...(u ? [[u.lat, u.lng] as [number, number]] : []),
+                ...(u && inLibya(u) ? [[u.lat, u.lng] as [number, number]] : []),
               ];
               if (pts.length === 0) {
                 map.setView([LIBYA_CENTER.lat, LIBYA_CENTER.lng], 6);
@@ -192,7 +200,10 @@ export default function MapCanvas(props: Props) {
               map.remove();
             },
           };
-          setTimeout(() => map.invalidateSize(), 200);
+          setTimeout(() => {
+            map.invalidateSize();
+            map.setMinZoom(Math.max(5, map.getBoundsZoom(libya, false)));
+          }, 200);
         }
         engine.current = eng;
         setReady(true);

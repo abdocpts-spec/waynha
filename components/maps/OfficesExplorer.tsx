@@ -44,7 +44,6 @@ export default function OfficesExplorer({
 
   const [q, setQ] = useState("");
   const [cityId, setCityId] = useState("");
-  const [categoryId, setCategoryId] = useState("");
   const [serviceId, setServiceId] = useState(initialServiceId ?? "");
   const [nearOnly, setNearOnly] = useState(false);
   const [view, setView] = useState<"map" | "list">("map");
@@ -66,7 +65,6 @@ export default function OfficesExplorer({
     let list = data.offices.filter((o) => {
       if (serviceId && !o.serviceIds.includes(serviceId)) return false;
       if (cityId && o.cityId !== cityId) return false;
-      if (categoryId && !o.serviceIds.some((id) => serviceById.get(id)?.categoryId === categoryId)) return false;
       if (nq) {
         const city = cityById.get(o.cityId);
         const hay = norm(
@@ -88,7 +86,7 @@ export default function OfficesExplorer({
     list = withDist.map((x) => x.o);
     const shown = nearOnly && user ? withDist.slice(0, 3) : withDist;
     return shown;
-  }, [data.offices, serviceId, cityId, categoryId, q, user, nearOnly, serviceById, cityById]);
+  }, [data.offices, serviceId, cityId, q, user, nearOnly, serviceById, cityById]);
 
   const markers = useMemo(
     () => results.map(({ o }) => ({ id: o.id, lat: o.lat, lng: o.lng, label: pick(o.nameAr, o.nameEn) })),
@@ -250,8 +248,8 @@ export default function OfficesExplorer({
     );
   }
 
-  const resetAll = () => { setQ(""); setCityId(""); setCategoryId(""); setServiceId(""); setNearOnly(false); };
-  const filtered = Boolean(q || cityId || categoryId || serviceId);
+  const resetAll = () => { setQ(""); setCityId(""); setServiceId(""); setNearOnly(false); };
+  const filtered = Boolean(q || cityId || serviceId);
 
   return (
     <div className="omap">
@@ -264,16 +262,10 @@ export default function OfficesExplorer({
           placeholder={L("ابحث باسم الجهة أو الخدمة…", "Search by office or service name…")}
           aria-label={L("بحث", "Search")}
         />
-        <select className="form-input" value={serviceId} onChange={(e) => setServiceId(e.target.value)} aria-label={L("الخدمة", "Service")}>
+        <select className="form-input" value={serviceId} onChange={(e) => { setServiceId(e.target.value); setSelectedId(null); setView("map"); }} aria-label={L("الخدمة", "Service")}>
           <option value="">{L("كل الخدمات", "All services")}</option>
           {data.services.map((s) => (
             <option key={s.id} value={s.id}>{s.icon} {pick(s.titleAr, s.titleEn)}</option>
-          ))}
-        </select>
-        <select className="form-input" value={categoryId} onChange={(e) => setCategoryId(e.target.value)} aria-label={L("نوع الخدمة", "Service type")}>
-          <option value="">{L("كل أنواع الخدمات", "All service types")}</option>
-          {data.categories.map((c) => (
-            <option key={c.id} value={c.id}>{c.icon} {pick(c.titleAr, c.titleEn)}</option>
           ))}
         </select>
         <select ref={cityRef} className={`form-input${loc === "denied" ? " omap-attn" : ""}`} value={cityId} onChange={(e) => setCityId(e.target.value)} aria-label={L("المدينة", "City")}>

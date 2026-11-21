@@ -37,6 +37,8 @@ export type LatLng = { lat: number; lng: number };
 /** حدود تقريبية لليبيا للتحقق من الإحداثيات المدخلة. */
 export const LIBYA_BOUNDS = { minLat: 18, maxLat: 35, minLng: 8, maxLng: 26 };
 export const LIBYA_CENTER: LatLng = { lat: 32.8872, lng: 13.1913 };
+/** نطاق تحريك الخريطة: ليبيا مع هامش صغير؛ لا يمكن سحب الخريطة أو تصغيرها خارجه. */
+export const LIBYA_MAP_BOUNDS = { south: 19.0, north: 33.8, west: 9.0, east: 25.5 };
 
 export function inLibya(p: LatLng): boolean {
   return (

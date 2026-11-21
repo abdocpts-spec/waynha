@@ -640,7 +640,7 @@ html[dir="ltr"] .icon-field .form-input { padding-left: 46px; }
 .review-files a { color: var(--primary); font-weight: 600; margin-inline-end: 12px; }
 
 /* ─────────── خريطة الجهات (وين نمشي؟) ─────────── */
-.omap-filters { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.omap-filters { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
 .omap-filters .form-input { width: 100%; min-height: 48px; font-size: 1rem; }
 .omap-attn { outline: 3px solid var(--primary); outline-offset: 2px; }
 .omap-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 8px; }
